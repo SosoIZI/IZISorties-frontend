@@ -2,7 +2,7 @@
 
 .header {
 	display: flex;
-	align-items: center;
+	justify-content: space-between;
 	width: 100vw;
 	height: 60px;
 	background-color: rgb(46,70,86);
@@ -49,14 +49,27 @@
 	align-items: center;
 }
 
+.buttonContainer {
+
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 13px;     /*espace entre les élements enfants   */
+}
+
+
 .button {
-	border-radius: 4px;
-	height: 30px;
 	border: 1px solid grey;
+	border-radius: 15px;
+	width:100px;
+	height:50%;
 	cursor: pointer;
-	outline: none;
+	color:white;
+	background-color: rgb(242,175,119);
+	
 }
 
 .button:hover {
-	background-color: lightgrey;
+	color:black;
+	font-weight: bold;
 }

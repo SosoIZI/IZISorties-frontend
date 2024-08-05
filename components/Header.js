@@ -12,12 +12,9 @@ const handleConnect=()=>{
 
 
 const handleSubscribe=()=>{
-window.location.href = '/Inscription'
+window.location.href = '/Inscription' // The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
+
 }
-
-
-
-
 
 
 
@@ -52,17 +49,17 @@ window.location.href = '/Inscription'
         value={searchInput}
       />
       </div>
-      <div>
+      
+      <div className={styles.buttonContainer}>
       <button 
-					onClick={() =>handleConnect()}
-					className={styles.button}
-				></button>
-      </div>
-      <div>
+					onClick={() =>handleConnect()} 
+					className={styles.button}>Connexion
+				</button>
+      
       <button
-					onClick={() => handleSubscribe()}
-					className={styles.button}
-				></button>
+					onClick={() => handleSubscribe()} 
+					className={styles.button}>Inscription 
+				</button>
 
       </div>
     
