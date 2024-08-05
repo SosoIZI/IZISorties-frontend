@@ -3,55 +3,33 @@ import Link from 'next/link';
 
 
 function Footer() {
-  return ( // on englobe l'image avec la balise <a> pour qu'elle devienne l'enfant de link et effectue la bonne action 
+  return (
     <footer className={styles.footer}>
-        <div className={styles.logocontainer}>
-        <div >
-        <Link href="/Home"> 
-          <a>
-            <img className={styles.logo} src="logo.png" alt="Logo" />
-          </a>
+      <div className={styles.logocontainer}>
+        <Link href="/Home">
+          <img className={styles.logo} src="logo.png" alt="Logo" />
         </Link>
       </div>
-       </div>
-       
-      <div>@ 2024 IZI Tous droits réservés </div> 
-             <div className={styles.linkContainer}>
-               <Link className={styles.link}href="/MentionsLegales">
-          <a>Mentions Légales</a>
-        </Link> </div>   
 
-
-        <div className={styles.linkContainer}>
-            <Link className={styles.link} href="/Politique">
-            <a>Politique de confidentialité</a>
-            </Link> 
-          
-              </div>  
-               
-              <div className={styles.linkContainer}>
-            <Link className={styles.link}href="/Contact">
-            <a>Contact</a>
-            </Link> 
-            </div>
-            <div>
-
-            <div>
-      <a href="http://instagram.com" target="_blank">
-        <img className={styles.reseaux} src="Insta.png" alt="Instagram" />
-      </a>
-    </div>
-
+      <div className={styles.centerContainer}>
+      <div className={styles.topLine}>Oublie le “où qu'on va ?” La réponse c’est IZI</div>
+      <div className={styles.bottomLine}>
+        <div>@ 2024 IZI Tous droits réservés</div>
+        <Link className={styles.link} href="/MentionsLegales">Mentions Légales</Link>
+        <Link className={styles.link} href="/Politique">Politique de confidentialité</Link>
+        <Link className={styles.link} href="/Contact">Contact</Link>
       </div>
-      <div>
-      <a href="http://facebook.com" target="_blank">
-        <img className={styles.fbk} src="Facebook.png" alt="Facebook" />
-      </a>
       </div>
-      <div>
-      <a href="http://tiktok.com" target="_blank">
-        <img className={styles.reseaux} src="TikTok.png" alt="TikTok" />
-      </a>
+      <div className={styles.socialContainer}>
+        <a href="http://instagram.com" target="_blank">
+          <img className={styles.reseaux} src="Insta.png" alt="Instagram" />
+        </a>
+        <a href="http://facebook.com" target="_blank" >
+          <img className={styles.fbk} src="Facebook.png" alt="Facebook" />
+        </a>
+        <a href="http://tiktok.com" target="_blank" >
+          <img className={styles.reseaux} src="TikTok.png" alt="TikTok" />
+        </a>
       </div>
     </footer>
   );

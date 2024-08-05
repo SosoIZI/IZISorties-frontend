@@ -16,10 +16,10 @@ function Header() {
     setSearchInput(e.target.value)};
   
 
-  return (
+  return (// Utilisation de Link et de la balise <a> pour qu'au clic sur l'image on puisse se rediriger vers home //
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
-        <Link href="/Home">                                  {/* Utilisation de Link et de <a> pour que le clic sur le logo renvoie sur la page Home  */}
+        <Link href="/Home">                                 
           <a>
             <img className={styles.logo} src="logo.png" alt="Logo" />
           </a>
@@ -27,50 +27,55 @@ function Header() {
       </div>
 
       {token ? (                             // si token is true:=userconnected affiche ce header   //     
-        <div className={styles.iconContainer}>
-          <div>
-            <span onClick={() => router.push ("/CreateEvent")} className={styles.icon}> {/* router.push renvoie àla page CreateEvent */}
-              <i class="bx bxs-comment-add" style={{ color: "#f2af77" }}></i>  {/* Rajout de la couleur de l'icone aux couleurs de l'uikit grâce au style {{}} */}
-            </span>
-            <span className={styles.nameicon}> Créer un évènement </span>
-          </div>
-
-          <div>
-            <span onClick={() => router.push("/Calendrier")} className={styles.icon}>
-              <i class="bx bxs-calendar-star" style={{ color: "#f2af77" }}></i>
-            </span>
-            <span className={styles.nameicon}>Calendrier</span>
-          </div>
-
-          <div>
-            <span onClick={() => router.push("/Favoris")} className={styles.icon}>
-              <i class="bx bxs-heart-circle" style={{ color: "#f2af77" }}></i>
-            </span>
-            <span className={styles.nameicon}>Favoris</span>
-          </div>
-
-          <div>
-            <span onClick={() => router.push("/Profil")} className={styles.icon}>
-              <i
-                className="bx bxs-user-circle"
-                style={{ color: "#f2af77" }}
-              ></i>
-            </span>
-            <span className={styles.nameicon}>Profil</span>
-          </div>
-        </div>
+      <div className={styles.iconContainer}>
+      <div className={styles.iconItem}>
+        <span onClick={() => router.push("/CreateEvent")} className={styles.icon}>
+          <i className="bx bxs-comment-add" style={{ color: "#f2af77" }}></i>
+        </span>
+        <span className={styles.nameicon}>Créer un évènement</span>
+      </div>
+    
+      <div className={styles.iconItem}>
+        <span onClick={() => router.push("/Calendrier")} className={styles.icon}>
+          <i className="bx bxs-calendar-star" style={{ color: "#f2af77" }}></i>
+        </span>
+        <span className={styles.nameicon}>Calendrier</span>
+      </div>
+    
+      <div className={styles.iconItem}>
+        <span onClick={() => router.push("/Favoris")} className={styles.icon}>
+          <i className="bx bxs-heart-circle" style={{ color: "#f2af77" }}></i>
+        </span>
+        <span className={styles.nameicon}>Favoris</span>
+      </div>
+    
+      <div className={styles.iconItem}>
+        <span onClick={() => router.push("/Profil")} className={styles.icon}>
+          <i className="bx bxs-user-circle" style={{ color: "#f2af77" }}></i>
+        </span>
+        <span className={styles.nameicon}>Profil</span>
+      </div>
+    </div>
       ) : (
         <>
           <div className={styles.header}>
-            <div className={styles.logoAndSearchContainer}>
-              <input                 // input de la searchbar
-                className={styles.searchbar}
-                type="text"
-                placeholder="Rechercher une sortie"
-                onChange={handleChange}
-                value={searchInput}
-              />
-            </div>
+
+          <div className={styles.logoAndSearchContainer}>
+  <input           
+    className={styles.searchbar}
+    type="text"
+    placeholder="Rechercher une sortie"
+    onChange={handleChange}
+    value={searchInput}
+  />
+  {!searchInput?(<i 
+    className='bx bx-search-alt-2 bx-rotate-90' 
+    style={{ color: 'rgba(0,0,0,0.38)' }}
+  ></i>)
+:(
+<i className='bx bx-x'></i>)}
+</div>
+
             <div className={styles.logoAndSearchContainer}>
               <div className={styles.buttonContainer}>
                 <button
