@@ -7,7 +7,7 @@ function Footer() {
     <footer className={styles.footer}>
         <div className={styles.logocontainer}>
         <div >
-        <Link href="/Home">
+        <Link href="/Home"> 
           <a>
             <img className={styles.logo} src="logo.png" alt="Logo" />
           </a>

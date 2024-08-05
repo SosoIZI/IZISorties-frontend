@@ -14,7 +14,6 @@ color:white;
 font-size: 10px
 }
 
-
 .logo {
 	margin-left: 20px;
 	width: 100px;
@@ -29,24 +28,19 @@ font-size: 10px
 	cursor: pointer;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	font-size: 14px;
-	
+	font-size: 14px;	
 }
 
 .link:hover {
-	font-weight: 600;
+	font-weight: 600;/*au survol le texte devient gras */
 }
 
 .linkContainer {
 	width: 20vw;
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	
+	align-items: center;	
 }
-
-
-
 
 .reseaux{
 	margin-left: 20px;
@@ -55,6 +49,6 @@ font-size: 10px
 }
 
 .fbk{
-	margin-left: 20px;
+	margin-left: 20px;  /*Le logo fbk est plus petit que les autres. obligé de changer sa taille à part */ 
 	width: 55px;
 }
