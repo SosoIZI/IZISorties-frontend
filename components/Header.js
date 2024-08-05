@@ -1,68 +1,98 @@
 import styles from "../styles/Header.module.css";
 import React, { useState } from "react";
-import Link from 'next/link';
-
+import Link from "next/link";
+import "boxicons/css/boxicons.min.css";
+import {useRouter} from "next/router"
 
 function Header() {
-
-const handleConnect=()=>{
-    window.location.href = '/Connexion'  // The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
-
-}
+  const token = false;
+  const router = useRouter()
 
 
-const handleSubscribe=()=>{
-window.location.href = '/Inscription' // The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
-
-}
-
-
-
-  const searchBar = () => {};
+ 
   const [searchInput, setSearchInput] = useState("");
 
   const handleChange = (e) => {
-    e.preventDefault();
     setSearchInput(e.target.value);
   };
-
-  if (searchInput.length > 0) {
-    countries.filter((event) => {
-      return event.name.match(searchInput); // country à changer
-    });
-  }
 
   return (
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
-      <Link href="/Home">
+        <Link href="/Home">
           <a>
             <img className={styles.logo} src="logo.png" alt="Logo" />
           </a>
         </Link>
-      
-      <input
-        className={styles.searchbar}
-        type="text"
-        placeholder="Rechercher une sortie"
-        onChange={handleChange}
-        value={searchInput}
-      />
       </div>
-      
-      <div className={styles.buttonContainer}>
-      <button 
-					onClick={() =>handleConnect()} 
-					className={styles.button}>Connexion
-				</button>
-      
-      <button
-					onClick={() => handleSubscribe()} 
-					className={styles.button}>Inscription 
-				</button>
 
-      </div>
-    
+      {token ? (
+        <div className={styles.iconContainer}>
+          <div>
+            <span onClick={() => router.push ("/CreateEvent")} className={styles.icon}>
+              <i class="bx bxs-comment-add" style={{ color: "#f2af77" }}></i>
+            </span>
+            <span className={styles.nameicon}> Créer un évènement </span>
+          </div>
+
+          <div>
+            <span onClick={() => router.push("/Calendrier")} className={styles.icon}>
+              <i class="bx bxs-calendar-star" style={{ color: "#f2af77" }}></i>
+            </span>
+            <span className={styles.nameicon}>Calendrier</span>
+          </div>
+
+          <div>
+            <span onClick={() => router.push("/Favoris")} className={styles.icon}>
+              <i class="bx bxs-heart-circle" style={{ color: "#f2af77" }}></i>
+            </span>
+            <span className={styles.nameicon}>Favoris</span>
+          </div>
+
+          <div>
+            <span onClick={() => router.push("/Profil")} className={styles.icon}>
+              <i
+                className="bx bxs-user-circle"
+                style={{ color: "#f2af77" }}
+              ></i>
+            </span>
+            <span className={styles.nameicon}>Profil</span>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className={styles.header}>
+            <div className={styles.logoAndSearchContainer}>
+              <input
+                className={styles.searchbar}
+                type="text"
+                placeholder="Rechercher une sortie"
+                onChange={handleChange}
+                value={searchInput}
+              />
+            </div>
+            <div className={styles.logoAndSearchContainer}>
+              <div className={styles.buttonContainer}>
+                <button
+                  onClick={() => router.push("/Connexion") }
+                  className={styles.button}
+                >
+                  Connexion
+                </button>
+              </div>
+
+              <div className={styles.buttonContainer}>
+                <button
+                  onClick={() => router.push("/Inscription") }
+                  className={styles.button}
+                >
+                  Inscription
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }

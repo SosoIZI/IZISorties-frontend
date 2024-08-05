@@ -14,9 +14,8 @@ function Footer() {
         </Link>
       </div>
        </div>
-
-
-      <div className={styles.linkContainer}>@ 2024 IZI Tous droits réservés </div> 
+       
+      <div>@ 2024 IZI Tous droits réservés </div> 
              <div className={styles.linkContainer}>
                <Link className={styles.link}href="/MentionsLegales">
           <a>Mentions Légales</a>
@@ -36,25 +35,23 @@ function Footer() {
             </Link> 
             </div>
             <div>
-        <Link href="http://instagram.com">
-          <a>
-            <img className={styles.reseaux} src="Insta.png" alt="Instagram" />
-          </a>
-        </Link>
+
+            <div>
+      <a href="http://instagram.com" target="_blank">
+        <img className={styles.reseaux} src="Insta.png" alt="Instagram" />
+      </a>
+    </div>
+
       </div>
       <div>
-        <Link href="http://facebook.com">
-          <a>
-            <img className={styles.fbk} src="Facebook.png" alt="Facebook" />
-          </a>
-        </Link>
+      <a href="http://facebook.com" target="_blank">
+        <img className={styles.fbk} src="Facebook.png" alt="Facebook" />
+      </a>
       </div>
       <div>
-        <Link href="http://tiktok.com">
-          <a>
-            <img className={styles.reseaux} src="TikTok.png" alt="Tiktok" />
-          </a>
-        </Link>
+      <a href="http://tiktok.com" target="_blank">
+        <img className={styles.reseaux} src="TikTok.png" alt="TikTok" />
+      </a>
       </div>
     </footer>
   );
