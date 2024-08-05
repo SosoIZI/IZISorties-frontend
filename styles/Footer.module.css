@@ -1,0 +1,60 @@
+
+
+.footer{
+  display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100vw;
+	height: 60px;
+	background-color: rgb(46,70,86);
+	padding: 0px 20px 0px 20px;
+  position: fixed;  /* pour que le footer reste fixe en bas même en cas de défilement de la page   */
+  bottom: 0;/*bottom 0 positionne l'élément à une distance de 0 pixels du bas de la fenêtre du navigateur  */
+color:white;
+font-size: 10px
+}
+
+
+.logo {
+	margin-left: 20px;
+	width: 100px;
+}
+.logocontainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+} 
+
+.link {
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 14px;
+	
+}
+
+.link:hover {
+	font-weight: 600;
+}
+
+.linkContainer {
+	width: 20vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+
+
+
+
+.reseaux{
+	margin-left: 20px;
+	width: 40px;
+	
+}
+
+.fbk{
+	margin-left: 20px;
+	width: 55px;
+}

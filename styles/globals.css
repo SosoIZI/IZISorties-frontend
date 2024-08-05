@@ -8,3 +8,10 @@ body {
 * {
   box-sizing: border-box;
 }
+a {
+	text-decoration: none;
+	color: inherit;
+  }
+  /* pour éviter que les liens de redirection ait la couleur du lien par défaut: bleue */
+
+  
