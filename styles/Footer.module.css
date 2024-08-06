@@ -3,7 +3,7 @@
 	justify-content: space-between;  /*justify-content: space-between sépare les éléments sur toute la largeur du footer.  */
 	align-items: center;
 	width: 100vw;
-	height: 150px;
+	height: 100px;
 	background-color: rgb(46,70,86);
 	padding: 0 20px;
 	position: fixed;
@@ -17,10 +17,11 @@
 	display: flex;
 	justify-content: flex-start;/*Les éléments sont alignés à gauche.  */
 	align-items: center;
+	width:20vw
   }
   
   .logo {
-	width: 160px;
+	width: 140px;
 	margin-left: 20px;
   }
   
@@ -34,25 +35,33 @@
 	margin-top: 35px;
   }
   .topLine {
-	margin-bottom: 20px; 
+	margin-bottom: 10px; 
 	font-size: 16px; 
 }
 
 .bottomLine {
 	display: flex;
 	gap: 20px;
+	width: 70vw;/*Pour que totu s'affiche correctement la taille de bottomline est de 70% du footer  */
+justify-content: center;
 }
-  .link {
+
+.bottomLine div{
+	font-size: 14px;
+}
+  
+
+  .bottomLine a{   /* pour mettre du css uniquement sur les liens et pas sur @2024 IZY... */
+	padding-bottom: 40px;
+	text-decoration: underline;
 	cursor: pointer;
 	letter-spacing: 1px;
 	font-size: 14px;
-	color: black;
   }
   
-  .link:hover {
-	color:black;
+  .bottomLine a:hover {
+	color:rgb(242,175,119);
 	font-weight: 600;
-	text-decoration: underline;
 
   }
   
@@ -62,12 +71,13 @@
 	justify-content: flex-end;/*Les éléments sont alignés à droite  */
 	align-items: center;
 	gap: 20px;
+	width:10vw /* Uniquement 10% de la taille du footer */
   }
   
   .reseaux {
-	width: 30px;
+	width: 35px;
   }
   
   .fbk {
-	width: 40px;
+	width: 45px;
   }

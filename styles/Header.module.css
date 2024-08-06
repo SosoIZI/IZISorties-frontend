@@ -2,11 +2,10 @@
 
 
 .header {
-	
 	display: flex;
 	justify-content: space-between;
 	width: 100vw;
-	height: 130px;
+	height: 100px;
 	background-color: rgb(46,70,86);
 	padding: 0px 20px 0px 20px;
   
@@ -14,22 +13,28 @@
 .logoAndSearchContainer {
 	display: flex;
 	align-items: center;
-	gap:10px
+	gap:10px;
+	position: relative;
+	width:20vw
+  }
+
+  .logoAndSearchContainer i {
+	position: absolute;
+	right: 10px;
   }
 .logo {
 	margin-left: 20px;
-	width: 160px;
+	width: 140px;
 }
-
 
 
 .searchbar{
 	border: 1px solid grey;
     border-radius: 5px;
     height: 35px;
-    width: 130%;
+    width: 100%;
     padding: 2px 23px 2px 30px;
-    outline: 0;
+outline: none;
   }
 
 
@@ -54,7 +59,8 @@ gap: 20px;     /*espace entre les élements enfants   */
 }
 
 .button:hover {
-	color:black;
+	background-color: white;
+	color: rgb(242,175,119);
 	font-weight: bold;
 }
 
@@ -73,13 +79,12 @@ gap: 20px;     /*espace entre les élements enfants   */
 	gap: 10px;  /* Espace entre l'icône et le texte */
   }
   
-
+  
 	.icon{
 font-size: 35px;;  /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */ 
 
 	cursor: pointer;
 	
-
 	}
 	
 
@@ -88,4 +93,18 @@ color:white;
 align-items: center;
 	justify-content: center;
 margin-left: 5px;
+transition: 0.2s;/*pour que la couleur apparaisse avec un léger décalage */
 	}
+
+
+	.nameicon:hover {
+		color: rgb(242,175,119);
+		align-items: center;
+			justify-content: center;
+		margin-left: 5px;
+font-weight: bold;
+	
+
+	cursor: pointer;
+	
+			}

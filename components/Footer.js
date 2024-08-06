@@ -15,9 +15,11 @@ function Footer() {
       <div className={styles.topLine}>Oublie le “où qu'on va ?” La réponse c’est IZI</div>
       <div className={styles.bottomLine}>
         <div>@ 2024 IZI Tous droits réservés</div>
-        <Link className={styles.link} href="/MentionsLegales">Mentions Légales</Link>
-        <Link className={styles.link} href="/Politique">Politique de confidentialité</Link>
-        <Link className={styles.link} href="/Contact">Contact</Link>
+       
+        <Link  href="/MentionsLegales">Mentions Légales</Link>
+        <Link  href="/Politique">Politique de confidentialité</Link>
+        <Link  href="/Contact">Contact</Link>
+      
       </div>
       </div>
       <div className={styles.socialContainer}>
