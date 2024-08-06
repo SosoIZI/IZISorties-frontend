@@ -1,0 +1,86 @@
+.cardContainer {
+    width: 250px; 
+    height: 500px;
+    background-color: rgba(242, 175, 119, 0.2);
+    border-radius: 24px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+    margin: 10px; 
+    overflow: hidden; /* Le contenu reste à l'intérieur de la carte */
+    display: flex;
+    flex-direction: column;
+    position: relative; /* pour que le coeur ensuite se positionne sur la div cardAllContent*/
+}
+
+.cardAllContent {
+    width: 250px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    text-decoration: none; 
+}
+
+.heartButton {
+    position: absolute;  /* pour que le coeur se positionne sur la div cardAllContent qui est en position relative*/
+    top: 10px; 
+    right: 10px; 
+    border-radius: 50%; 
+    width: 30px; 
+    height: 30px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+    cursor: pointer; 
+    z-index: 1;
+    background-color: rgba(242, 175, 119);
+}
+
+.pic {
+    width: 100%; 
+    height: auto; 
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+    object-fit: cover; /* comment l'image s'adapte à sa div*/
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    cursor: pointer; 
+}
+
+.title {
+    padding: 15px;
+    font-size: 1.2em; 
+    margin: 0 0 10px 0; 
+    color: #2E4656;
+    font-weight: bold; 
+}
+
+.description {
+    padding: 15px;
+    font-size: 0.9em;
+    color: #2E4656; 
+    margin: 0 0 15px 0;
+}
+
+.knowMoreButton {
+    background-color: #F2AF77; 
+    color: white; 
+    text-align: center; 
+    padding: 10px; 
+    border: none;
+    border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    display: block; 
+    font-weight: bold; 
+    -webkit-filter: drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.7));
+    filter: drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.7));
+}
