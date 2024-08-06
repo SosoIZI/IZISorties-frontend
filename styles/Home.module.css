@@ -21,3 +21,8 @@
   text-decoration: underline;
 }
 
+.searchbar {
+  width: 200;
+  border-radius: 5;
+  height: 40;
+}

@@ -6,70 +6,72 @@ import { AutoComplete, Button, Select, Checkbox } from 'antd';
 import Multiselect from 'multiselect-react-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/Home.module.css';
-import { addSearch } from '../reducers/search';
+import { addCity, addDate, addCategories, removeCategories } from '../reducers/search';
 
-function searchBar() {
+function searchBar(props) {
+
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
 
-  const [place, setPlace] = useState('');
   const [categories, setCategories] = useState([]);
-  const [options, setOptions] = useState([]);
-  const [date, setDate] = useState(Date);
+  const [date, setDate] = useState(new Date());
+  const [city, setCity] = useState('')
 
   const dispatch = useDispatch();
-  const event = useSelector((state) => state.search.value)
+  const search = useSelector((state) => state.search.value)
 
-useEffect(() => {
-  fetch('/') 
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-  });
-})
-    
-  // fonctions pour filtrer la recherche et mettre à jour les états
+    // fonctions pour filtrer la recherche et mettre à jour les états
 
 const checkboxName = [{id: 1, name:'Restaurant'}]
 
-const onSelect = (data) => {
-  setCategories(data)
-  console.log('selected category', data)
+//on sélectionne une ville via le menu déroulant
+const selectCity = () => {
+  console.log('selected city')
+  setCity(e)
 }
 
-const onSelected = (selectedItem) => {
-  console.log('selected place', selectedItem)
-  setPlace(selectedItem)
+// on sélectionne une date via le calendrier
+const selectDate = (e) => {
+  setDate(e.target.value)
+  console.log('selected date')
 }
 
-const onRemove = (removedItem) => {
-  console.log('removed', removedItem)
-  setCategories(categories.filter((e) => e ==! removedItem))
+// on sélectionne une ou plusieurs catégories via la checkbox
+const selectCategories = (e) => {
+  setCategories(categories.push(e))
+  console.log('selected category') 
 }
-
-const onChangeDate = (date) => {
-  setDate(date)
-  console.log('selected', date)
+  
+// quand on décoche une case, la catégorie est supprimée de l'état
+const removeCategory = (e) => {
+  setCategories(categories.filter((category) => category ==! e));
+  console.log('removed category')
 }
 
   // au clic sur le bouton 'rerchercher', méthode filter pour récupérer les évènements correspondants aux filtres de recherche
   // empêcher les recherches avec choix d'au moins un filtre null
 
-// const handleClick = () => {
-//   console.log('salut')
-//   dispatch(addSearch())
-  
+const handleClick = () => {
+  console.log('salut')
+  dispatch(addCity(city));
+  dispatch(addDate(date));
+  dispatch(addCategories(categories));
+}
+
+// / méthode map pour afficher les cartes des évènements trouvés 
+
+  // const results = data.map ((data, i) => {
+  //     retun <Card key={i} />
+  // })
+
+
 // }
 
-
     return (
-      <div className={styles.container}>
+      <div>
 
-<Select
+    <Select  
          showSearch
-         style={{
-           width: 200,
-         }}
-         onSelect={onSelected}
+         onSelect={selectCity}
          placeholder="Lieu"
          optionFilterProp="children"
          filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -78,24 +80,26 @@ const onChangeDate = (date) => {
          }
          options={[
            {
-             value: '1',
+             value: 'null',
              label: 'Not Identified',
            },
            {
-             value: '2',
+             value: 'marseille',
              label: 'Marseille',
            },
            
          ]}
    />
-        <input type='date' onChange={onChangeDate} />  
+   {/* <FontAwesome name={location} color={}/> */}
+        <input type='date' onChange={selectDate} value={date} />  
 
-        <Multiselect
+        <Multiselect 
+            // customCloseIcon={<></>}
             showCheckbox
             options={checkboxName} 
             // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
-            onSelect={onSelect} 
-            onRemove={onRemove} 
+            onSelect={selectCategories} 
+            onRemove={removeCategory} 
             displayValue="name"
         /> 
 
@@ -106,15 +110,6 @@ const onChangeDate = (date) => {
     );
   };
 
-
-  // méthode map pour afficher les cartes des évènements trouvés 
-
-  // const results = data.map ((data, i) => {
-  //     retun <Card key={i} />
-  // })
-
-
-// }
 
 export default searchBar;
 
