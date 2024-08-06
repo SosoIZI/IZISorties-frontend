@@ -1,16 +1,41 @@
-import '../styles/globals.css';
-import Head from 'next/head';
+import "../styles/globals.css";
+import Head from "next/head";
+import user from "../reducers/user";
+import { Provider } from "react-redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import storage from "redux-persist/lib/storage";
+
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+const reducers = combineReducers({ user });
+const persistConfig = { key: "applicationName", storage };
+
+const store = configureStore({
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+});
+
+const persistor = persistStore(store);
 
 function App({ Component, pageProps }) {
   return (
-    <>
-      <Head>
-        <title>Next.js App</title>
-      </Head>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Head>
+          <title></title>
+        </Head>
+        <Header />
+        <div style={{ minHeight: "100vh" }}>
+          <Component {...pageProps} />
+        </div>
 
-      <Component {...pageProps} />
-      
-    </>
+        <Footer />
+      </PersistGate>
+    </Provider>
   );
 }
 

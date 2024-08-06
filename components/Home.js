@@ -1,15 +1,16 @@
-import styles from '../styles/Home.module.css';
 
-function Home() {
-  return (
-    <div>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-      </main>
-    </div>
-  );
-}
+import Header from'./Header'
+import Footer from './Footer';
 
-export default Home;
+    
+    function Home() {
+      return (
+        <div >
+         
+              <h1>HOME PAGE</h1> 
+        
+        </div>
+      );
+    }
+    
+    export default Home;
