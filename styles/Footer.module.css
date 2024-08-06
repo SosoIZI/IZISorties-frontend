@@ -16,7 +16,9 @@
 	display: flex;
 	justify-content: flex-start;/*Les éléments sont alignés à gauche.  */
 	align-items: center;
-	width:20vw
+	width:20vw;
+	overflow-y: hidden;/*tout ce qui dépasse de la DIv est caché   */
+	height: 100px;
   }
   
   .logo {
@@ -47,11 +49,14 @@ justify-content: center;
 
 .bottomLine div{
 	font-size: 14px;
+	transform: translateY(-10px);/* pour decaler l'axe Y (vertical ) de 10       */
+
 }
   
 
   .bottomLine a{   /* pour mettre du css uniquement sur les liens et pas sur @2024 IZY... */
-	padding-bottom: 40px;
+	/* padding-bottom: 40px; */
+	transform: translateY(-10px);
 	text-decoration: underline;
 	cursor: pointer;
 	letter-spacing: 1px;

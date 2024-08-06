@@ -2,8 +2,6 @@
 
 }
 
-
-
 .container {
     display: flex;
     flex-direction: column;
@@ -58,10 +56,9 @@ cursor: pointer;
 
 .button {
 
-
 	border: 1px solid grey;
 	border-radius: 15px;
-	width:150px;
+	width:140%;
 	height:40px;
 	cursor: pointer;
 	color:white;
@@ -85,18 +82,23 @@ cursor: pointer;
 }
 
 .buttonbis{
-    border: 1px solid grey;
-	border-radius: 15px;
-	width:150px;
-	height:40px;
+    width: 130%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+  
 	cursor: pointer;
-	color:white;
+    margin-left: 5px;
+outline: none;
+background-color: white;
 	
-    margin-top: 20px;
-
 }
 
 .buttonbis i {
 display: flex;
 color:black;
+}
+
+.stroke{
+    border: 2px solid black;
 }

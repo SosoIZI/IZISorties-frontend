@@ -43,7 +43,7 @@ function SignIn(props) {
 
   return (
     <div>
-      <Header />
+    
       <div className={styles.container}>
         <span className={styles.cross}>
           <button onClick={handleClick}>
@@ -77,7 +77,7 @@ function SignIn(props) {
               onChange={(e) => setSignInpassword(e.target.value)}
               placeholder="Confirmation du mot de passe"
             />
-          </div>
+       
 
           <button
             className={styles.button}
@@ -86,6 +86,7 @@ function SignIn(props) {
           >
             Inscription
           </button>
+          </div>
         </form>
       </div>
       <div className={styles.connectionWay}>
@@ -118,7 +119,7 @@ function SignIn(props) {
         </span>
       </div>
 
-      <Footer />
+     
     </div>
   );
 }

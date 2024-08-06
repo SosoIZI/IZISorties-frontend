@@ -7,6 +7,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const reducers = combineReducers({ user });
 const persistConfig = { key: "applicationName", storage };
@@ -26,7 +28,12 @@ function App({ Component, pageProps }) {
         <Head>
           <title></title>
         </Head>
-        <Component {...pageProps} />
+        <Header />
+        <div style={{ minHeight: "100vh" }}>
+          <Component {...pageProps} />
+        </div>
+
+        <Footer />
       </PersistGate>
     </Provider>
   );
