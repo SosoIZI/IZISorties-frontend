@@ -7,15 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../reducers/user";
 import React from "react";
 import "boxicons/css/boxicons.min.css";
+import {useRouter} from "next/router";
 
 // pop-up Créer un compte
 
 function SignIn(props) {
+  const router = useRouter() // pour pouvoir utiliser le hook Router.
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
-
+const[SignName, setSignName] = useState("");
   const [SignEmail, setSignEmail] = useState("");
-  const [SignInpassword, setSignInpassword] = useState("");
+  const [SignPassword, setSignPassword] = useState("");
 
   const handleSignIn = () => {
     fetch("http://localhost:3000/users/login", {
@@ -27,16 +29,13 @@ function SignIn(props) {
       .then((data) => {
         if (data.result) {
           dispatch(signIn({ username: SignEmail, token: data.token }));
+          setSignEmail("")
           setSignInusername("");
-          setSignInpassword("");
+          setSignPassword("");
         }
       });
   };
-
-  const handleClick = () => {
-    props.toggle();
-  };
-
+ 
   //   const handleButton = () => {
   //     return <Link href="/Home"/>
   //   }
@@ -45,11 +44,6 @@ function SignIn(props) {
     <div>
     
       <div className={styles.container}>
-        <span className={styles.cross}>
-          <button onClick={handleClick}>
-            <i className="bx bx-x"></i>
-          </button>
-        </span>
         <div className={styles.top}>
           <span className={styles.texte}>
             <h1>Inscription </h1>
@@ -59,22 +53,28 @@ function SignIn(props) {
 
         <form>
           <div className={styles.formula}>
+          <input
+              type="text"
+              value={SignName}
+              onChange={(e) => setSignName(e.target.value)}
+              placeholder="Nom"
+            />
             <input
               type="text"
               value={SignEmail}
-              onChange={(e) => setSignInusername(e.target.value)}
+              onChange={(e) => setSignEmail(e.target.value)}
               placeholder="E-mail"
             />
             <input
               type="password"
-              value={SignInpassword}
-              onChange={(e) => setSignInpassword(e.target.value)}
+              value={SignPassword}
+              onChange={(e) => setSignPassword(e.target.value)}
               placeholder="Mot de passe"
             />
             <input
               type="password"
-              value={SignInpassword}
-              onChange={(e) => setSignInpassword(e.target.value)}
+              value={SignPassword}
+              onChange={(e) => setSignPassword(e.target.value)}
               placeholder="Confirmation du mot de passe"
             />
        
@@ -87,7 +87,10 @@ function SignIn(props) {
             Inscription
           </button>
           </div>
-        </form>
+          </form>
+<span className={styles.stroke}></span>
+
+      
       </div>
       <div className={styles.connectionWay}>
         <span>
@@ -116,6 +119,10 @@ function SignIn(props) {
           >
             <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
           </button>
+        </span>
+        <span className={styles.sentence}
+        onClick={() => router.push("/Connexion")}
+        > J’ai déja un compte. Se connecter.
         </span>
       </div>
 

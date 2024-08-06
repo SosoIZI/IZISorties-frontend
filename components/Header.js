@@ -5,7 +5,7 @@ import "boxicons/css/boxicons.min.css"; // import de boxicons pour intégrer les
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
 
 function Header() {
-  const token = false;    // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
+  const token = true;    // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
   const router = useRouter() // pour pouvoir utiliser le hook Router.
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input

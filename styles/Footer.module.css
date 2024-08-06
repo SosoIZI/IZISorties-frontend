@@ -78,10 +78,18 @@ justify-content: center;
 	width:10vw /* Uniquement 10% de la taille du footer */
   }
   
+  
   .reseaux {
 	width: 35px;
   }
+  .reseaux:hover {
+	width: 65px;
+  }
+  
   
   .fbk {
 	width: 45px;
   }
+.fbk:hover{
+	width: 75px;
+}
