@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const eventSlice = createSlice({
-    name: 'event',
+    name: 'search',
    
      initialState,
     reducers: {
@@ -17,6 +17,6 @@ export const eventSlice = createSlice({
     },
    });
    
-   export const { addFriendToStore } = eventSlice.actions;
+   export const { addSearch } = eventSlice.actions;
    export default eventSlice.reducer;
    

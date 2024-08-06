@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { AutoComplete, Button, Select, Checkbox } from 'antd';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Multiselect from 'multiselect-react-dropdown';
-
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/Home.module.css';
+import { addSearch } from '../reducers/search';
 
 function searchBar() {
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
@@ -14,9 +15,19 @@ function searchBar() {
   const [categories, setCategories] = useState([]);
   const [options, setOptions] = useState([]);
   const [date, setDate] = useState(Date);
-  
 
-  // choix de filtres
+  const dispatch = useDispatch();
+  const event = useSelector((state) => state.search.value)
+
+useEffect(() => {
+  fetch('/') 
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+  });
+})
+    
+  // fonctions pour filtrer la recherche et mettre à jour les états
 
 const checkboxName = [{id: 1, name:'Restaurant'}]
 
@@ -43,9 +54,12 @@ const onChangeDate = (date) => {
   // au clic sur le bouton 'rerchercher', méthode filter pour récupérer les évènements correspondants aux filtres de recherche
   // empêcher les recherches avec choix d'au moins un filtre null
 
-const handleClick = () => {
-  console.log('salut')
-}
+// const handleClick = () => {
+//   console.log('salut')
+//   dispatch(addSearch())
+  
+// }
+
 
     return (
       <div className={styles.container}>
