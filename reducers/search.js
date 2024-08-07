@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: {date: null, city: null, categories: []}
+    value: {startDate: '', endDate: '', longitude: '', latitude: '', categories: []}
 };
 
 export const searchSlice = createSlice({
@@ -9,11 +9,14 @@ export const searchSlice = createSlice({
    
      initialState,
     reducers: {
-      addCity: (state, action) => {
-        state.value.city = action.payload;
+      addLongitude: (state, action) => {
+        state.value.long = action.payload;
       },
-      addDate: (state, action) => {
-        state.value.date = action.payload;
+      addLatitude: (state, action) => {
+        state.value.lat = action.payload;
+      },
+      addStartDate: (state, action) => {
+        state.value.startDate = action.payload;
       },
       addCategories: (state, action) => {
         state.value.categories = state.value.categories.push(action.payload);
@@ -21,9 +24,14 @@ export const searchSlice = createSlice({
       // removeCategories: (state, action) => {
       //   state.value.categories = state.value.categories.filter(e => e ==! action.payload);
       // },
+      addEndDate: (state, action) => {
+        state.value.endDate = action.payload;
+      },
+
+
     },
    });
    
-   export const { addCity, addDate, addCategories, removeCategories } = searchSlice.actions;
+   export const { addLongitude, addLatitude, addStartDate, addCategories, removeCategories, addEndDate } = searchSlice.actions;
    export default searchSlice.reducer;
    
