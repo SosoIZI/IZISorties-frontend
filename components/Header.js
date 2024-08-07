@@ -3,9 +3,22 @@ import React, { useState } from "react";
 import Link from "next/link";
 import "boxicons/css/boxicons.min.css"; // import de boxicons pour intégrer les icones directement 
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
+import {  Button } from 'react-bootstrap';
+import Connexion from "./Connexion";
 
 function Header() {
-  const token = false;    // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleShow = () => setModalVisible(true);
+  const handleClose = () => setModalVisible(false);
+
+
+
+
+
+
+  const token = false;  // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
   const router = useRouter() // pour pouvoir utiliser le hook Router.
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input
@@ -19,6 +32,7 @@ function Header() {
 
   return (// Utilisation de Link et de la balise <a> pour qu'au clic sur l'image on puisse se rediriger vers home //
     <header className={styles.header}>
+      
       <div className={styles.logoAndSearchContainer}>
         <Link href="/Home">                                 
           <a>
@@ -83,12 +97,11 @@ function Header() {
 </div>
             <div className={styles.logoAndSearchContainer}>
               <div className={styles.buttonContainer}>
-                <button
-                  onClick={() => router.push("/Connexion") }  // utilisation du hook router pour rediriger vers une autre page.
-                  className={styles.button}
-                >
-                  Connexion
-                </button>
+              <Button variant="primary"  className={styles.button}onClick={handleShow}>
+        Connexion
+      </Button>
+
+      <Connexion showModal={modalVisible} handleClose={handleClose} />
               </div>
 
               <div className={styles.buttonContainer}>

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
