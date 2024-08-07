@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+@font-face {
+  font-family: "Schabo Condensed";
+  src: url("fonts/SCHABO-Condensed.woff") format("woff"),
+    url("fonts/SCHABO-Condensed.woff2") format("woff2");
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -5,6 +13,21 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+h1,
+h2 {
+  font-family: "Schabo Condensed", sans-serif;
+  color: #2E4656;
+  font-size: 50px;
+  font-weight: lighter;
+  margin: 30px;
+}
+
 * {
   box-sizing: border-box;
+  font-family: "Lato", sans-serif;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* pour éviter que les liens de redirection ait la couleur du lien par défaut: bleue */

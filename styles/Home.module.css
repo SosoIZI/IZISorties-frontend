@@ -1,28 +1,30 @@
-.main {
+.mostConsultedContainer {
+  margin-left: 30px;
+  margin-bottom: 60px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 4rem 0;
 }
 
-.title {
-  line-height: 1.15;
-  font-size: 4rem;
+.roundButton {
+  margin-left: 30px;
+  font-size: 35px; /* taille de la flèche */
+  color: white;
+  background-color: #F2AF77;
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
+  border: none;
+  cursor: pointer; 
+  transition: background-color 0.3s ease; /* Animation de la couleur de fond */
 }
 
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover, .title a:focus, .title a:active {
-  text-decoration: underline;
-}
-
-.searchbar {
-  width: 200;
-  border-radius: 5;
-  height: 40;
+.roundButton:hover {
+  background-color: white; /* Couleur de fond au survol */
+  color: #F2AF77;
+  border-color: #F2AF77;
+  border: 1px solid;
 }
