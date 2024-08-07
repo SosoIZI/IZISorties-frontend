@@ -43,15 +43,16 @@ function Inscription() {
     // Regex pour valider le mot de passe
     const passwordRegex = /^(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])(?=.*[0-9])[A-Za-z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/
 
-    if ( SignInUsername==="" ||SignInEmail===""||SignInPassword ==="") {  // si un des champs est vide--> alert
-      Swal.fire({
+   if ( SignInUsername==="" ||SignInEmail===""||SignInPassword ==="") {  // si un des champs est vide--> alert
+Swal.fire({
         title: 'Attention!',
         text: 'Tous les champs de saisie ne sont pas remplis ',
         icon: 'warning',
         timer: 50000,
         confirmButtonText: 'Valider'})
-      return;
-    }
+      return;}
+    
+
 
     if (!emailRegex.test(SignInEmail)) { // Si le mail ne correspond pas (test method) alors alert error 
       Swal.fire({
