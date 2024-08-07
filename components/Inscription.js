@@ -22,6 +22,9 @@ function Inscription() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // état crée pour confirmer le password
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleShow = () => setModalVisible(true);
+  const handleClose = () => setModalVisible(false);
   const toggleShowPassword = () => {
     // Pour afficher où non le mot de passe
     setShowPassword(!showPassword);
@@ -108,6 +111,7 @@ function Inscription() {
           setSignInEmail("");
           setSignInPassword("");
           setConfirmPassword("");
+          router.push("/Home")   // à la fin du fetch si il est true, on lui fait reinitialiser tous les setters et on le redirige vers HOME
         }
       });
   };
@@ -201,11 +205,14 @@ function Inscription() {
       </span>
       <span
         className={styles.sentence}
-        onClick={() => router.push("/Connexion")}
+        onClick={handleShow}
       >
-        {" "}
         J’ai déja un compte. Se connecter.
       </span>
+     
+     <Connexion showModal={modalVisible} handleClose={handleClose} /> {/* utilisation de la modal pourpouvoir accèder à,la page de connexion directement sur le lien     */ }
+              
+
     </div>
   </div>
 );

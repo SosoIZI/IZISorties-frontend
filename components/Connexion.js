@@ -9,7 +9,7 @@ function Connexion({ showModal, handleClose }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const toggleShowPassword = () => {
+  const toggleShowPassword = () => {// montre ou cache le mot de passe lors de la saisie
     setShowPassword(!showPassword);
   };
 
@@ -21,7 +21,8 @@ function Connexion({ showModal, handleClose }) {
   return (
     <Modal show={showModal} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Connexion</Modal.Title>
+        <Modal.Title>Connexion
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} className={styles.formula}>

@@ -24,6 +24,7 @@
   .logo {
 	width: 140px;
 	margin-left: 20px;
+	cursor: pointer;
   }
   
   .centerContainer {   /* Englobe la seconde section  */
@@ -61,6 +62,7 @@ justify-content: center;
 	cursor: pointer;
 	letter-spacing: 1px;
 	font-size: 14px;
+	color:white
   }
   
   .bottomLine a:hover {
@@ -85,3 +87,15 @@ justify-content: center;
   .fbk {
 	width: 45px;
   }
+  .reseaux:hover {
+	width: 65px;
+  }
+
+
+  .fbk {
+	width: 45px;
+  }
+  
+.fbk:hover{
+	width: 75px;
+}

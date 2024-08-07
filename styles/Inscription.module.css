@@ -94,6 +94,7 @@ font-size: 32px;
 margin-right: 5%;
 }
 
+
 .buttonbis:hover {
 	background-color: white;
 	color: rgb(242,175,119);
@@ -104,9 +105,9 @@ margin-right: 5%;
 
 .stroke{
  
-        width: 70%;  /* Set the width to 70% */
-        height: 2px;  /* Define the height of the line */
-        background-color: black;  /* Set the color of the line */
+        width: 70%;  
+        height: 2px;  
+        background-color: black;  
         margin: 20px auto;  /* Center the line horizontally */
     
 }

@@ -5,20 +5,16 @@ import "boxicons/css/boxicons.min.css"; // import de boxicons pour intégrer les
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
 import {  Button } from 'react-bootstrap';
 import Connexion from "./Connexion";
-
+import { useSelector } from "react-redux";
 function Header() {
 
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);// import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
 
 
 
-
-
-
-  const token = false;  // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
+  const token = useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
   const router = useRouter() // pour pouvoir utiliser le hook Router.
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input
@@ -97,7 +93,7 @@ function Header() {
 </div>
             <div className={styles.logoAndSearchContainer}>
               <div className={styles.buttonContainer}>
-              <Button variant="primary"  className={styles.button}onClick={handleShow}>
+              <Button variant="primary"  className={styles.button}onClick={handleShow}>  {/*au clic ouvrre/ferme la modal   */}
         Connexion
       </Button>
 
