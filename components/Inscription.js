@@ -8,7 +8,6 @@ import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/router";
 import {  Button } from 'react-bootstrap';
 import Connexion from "./Connexion";
-// pop-up Créer un compte
 
 function Inscription() {
   const Swal = require('sweetalert2') //pour donner du style aux messages d'Alert 
@@ -207,7 +206,7 @@ function Inscription() {
         className={styles.sentence}
         onClick={handleShow}
       >
-        J’ai déja un compte. Se connecter.
+        J’ai déja un compte.    Se connecter.
       </span>
      
      <Connexion showModal={modalVisible} handleClose={handleClose} /> {/* utilisation de la modal pourpouvoir accèder à,la page de connexion directement sur le lien     */ }

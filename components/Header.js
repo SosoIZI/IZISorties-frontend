@@ -14,7 +14,7 @@ function Header() {
 
 
 
-  const token = useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
+  const token = false//useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
   const router = useRouter() // pour pouvoir utiliser le hook Router.
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input
