@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: {startDate: '', endDate: '', longitude: '', latitude: '', categories: []}
+    value: {startDate: null, endDate: null, longitude: null, latitude: null, categories: []}
 };
 
 export const searchSlice = createSlice({

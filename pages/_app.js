@@ -6,10 +6,11 @@ import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
-
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Script from 'next/script';
+
 
 const reducers = combineReducers({ user, search });
 const persistConfig = { key: "applicationName", storage };

@@ -1,0 +1,64 @@
+.icon {
+    
+    color: #e38d83;
+    display: flex;
+	align-items: center;
+	gap:10px;
+	position: relative;
+    font-size: 35px;
+    cursor:pointer
+}
+
+.filterContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-left: 30px;
+	margin-right: 30px; 
+}
+
+.searchBar i {
+
+	color: #e38d83;
+	margin-right: 5%;
+	}
+
+.searchbar{
+	/* border: 1px solid #e38d83; */
+    border-radius: 5px;
+    height: 35px;
+    width: 200px;
+    padding: 2px 23px 2px 30px;
+    outline: none;
+}
+
+
+
+.buttonContainer {
+
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 20px;     /*espace entre les élements enfants   */
+
+}
+
+
+.button {
+	border: 1px solid #e38d83;
+	border-radius: 15px;
+	width:150px;
+	height:40px;
+	cursor: pointer;
+	color:white;
+	background-color:#e38d83;
+	margin: 20px
+	
+}
+
+.button:hover {
+	background-color: yellow;
+	color: #e38d83;
+	font-weight: bold;
+}
+

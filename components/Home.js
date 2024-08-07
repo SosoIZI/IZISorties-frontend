@@ -22,6 +22,7 @@ function Home() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log(position)
           // 1- je récupère la géoloc de l'utilisateur
           const { latitude, longitude } = position.coords;
           setCurrentPosition(position.coords);
