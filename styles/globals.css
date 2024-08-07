@@ -13,13 +13,19 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-h1,
+
 h2 {
   font-family: "Schabo Condensed", sans-serif;
   color: #2E4656;
   font-size: 50px;
   font-weight: lighter;
-  margin: 30px;
+}
+
+h1 {
+  font-family: "Schabo Condensed", sans-serif;
+  color: #2E4656;
+  font-size: 80px;
+  font-weight: lighter;
 }
 
 * {

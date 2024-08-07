@@ -1,0 +1,97 @@
+.infoButton {
+  border: 1px solid #f2af77;
+  border-radius: 15px;
+  width: 280px;
+  height: 40px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(242, 175, 119);
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.infoButton:hover {
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+  border-color: #f2af77;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.container {
+    padding: 16px;
+    background-color: #fff;
+  }
+
+  .secondPartofPage {
+    display: flex;
+  }
+  
+  .header {
+    display: flex;
+    margin-bottom: 16px;
+  }
+  
+  .mainImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+  }
+  
+  .thumbnailContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  
+  .title {
+    margin: 15px;
+  }
+  
+  .description {
+    margin: 15px;
+  }
+  
+  .mapContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  
+  .mapImage {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .iconsContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 16px;
+  }
+  
+  .iconButton {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .infoContainer {
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .eventContent {
+    display: block;
+  }
