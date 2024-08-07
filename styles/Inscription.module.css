@@ -123,14 +123,3 @@ margin-top: 10px;
     cursor: pointer;
     
     }
-
-    .passwordContainer {
-        display: flex;
-        align-items: center;
-      }
-      
-      .eyeIcon {
-        margin-left: -28px;
-        cursor: pointer;
-        font-size: 25px;
-      }
