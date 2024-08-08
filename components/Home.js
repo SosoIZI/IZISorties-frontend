@@ -3,12 +3,16 @@ import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
 
 function Home() {
   //const [currentPosition, setCurrentPosition] = useState(null);
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
+const router=useRouter()
+
 
 
   useEffect(() => {
@@ -92,9 +96,11 @@ function Home() {
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
-              <button className={styles.roundButton}>
-                <i className="bx bx-right-arrow-alt"></i>
-              </button>
+            <button className={styles.roundButton}>
+      <i className="bx bx-right-arrow-alt"></i>
+    </button>
+
+
             </div>
           </div>
         </>
