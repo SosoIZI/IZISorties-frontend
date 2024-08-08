@@ -3,12 +3,12 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLongitude, addLatitude, addStartDate, addEndDate, addCategories } from '../reducers/search';
-import { Button, Select, DatePicker, LocaleProvider  } from 'antd';
+import { Button, Select, DatePicker, ConfigProvider  } from 'antd';
 import "boxicons/css/boxicons.min.css";
 import styles from '../styles/SearchBar.module.css';
 import 'antd/dist/reset.css'
-import frFR from 'antd/es/locale/fr_FR'; // Importer la localisation française
-import 'moment/locale/fr'; // Importer la localisation française pour moment
+import frFR from 'antd/locale/fr_FR';// Importer la localisation française
+import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
 
 
 function searchBar() {
@@ -21,8 +21,9 @@ function searchBar() {
   const [lat, setLat] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]) 
   const [geoError, setGeoError] = useState(null);
+  const [onSelect, setOnselect] = useState(false)
 
   const dispatch = useDispatch();
   const search = useSelector((state) => state.search.value)
@@ -49,6 +50,7 @@ function searchBar() {
   // fonctions pour filtrer la recherche et mettre à jour les états
 
   const checkboxName = [{ id: 1, name: 'Cinema' }, { id: 2, name: 'Musique' }] // noms des catégories à cocher
+  const router = useRouter()
 
   // on sélectionne une ville via le menu déroulant, et on récupère long/lat depuis une API 
 
@@ -96,15 +98,7 @@ function searchBar() {
     }
   };
 
-  // on sélectionne une date via le calendrier
-
-  // const selectDate = (e) => {
-  //     for(let i=0; i<e.length; i++) {
-  //       setStartDate(e[0].$d)
-  //       setEndDate(e[1].$d)
-  //     }
-  //     console.log('selected date', startDate, endDate)
-  // }
+  // on sélectionne une date de début et une date de fin via le calendrier
 
   const selectStartDate = (e) => {
     setStartDate(e)
@@ -115,31 +109,53 @@ function searchBar() {
   }
 
   // on sélectionne une ou plusieurs catégories via la checkbox
+  //quand on décoche une case, la catégorie est supprimée de son état
+
+  
   const selectCategories = (e) => {
     setCategories(e)
-    console.log('selected category')
-  }
+    console.log(categories);
+}
 
-  // quand on décoche une case, la catégorie est supprimée de son état
-  const removeCategory = (e) => {
-    setCategories(categories.filter((category) => category == !e));
-    console.log('removed category')
-  }
+const findResults = () => {
+  fetch(`events/${startDate}/${endDate}/${long}/${lat}`)
+  .then(response => response.json())
+  .then(data => {
+      // const results = data.map.slice((data, i) => {
+      //     if (!results) {
+      //         return  <h1>Aucun évènement ne correspond à votre recherche</h1> 
+      //     } else if (results && token) {
+      //     <EventCard key={i} {...data} />;
+      //        }
+      // })
+      console.log(data)
+})
+}
+
+  
+
+  // // quand on décoche une case, la catégorie est supprimée de son état
+  // const removeCategory = (e) => {
+  //   setCategories(categories.filter((category) => category == !e));
+  //   console.log('removed category')
+  // }
 
   // au clic sur le bouton 'rerchercher', on envoie les valeurs dans le reducer
   const handleClick = () => {
     console.log('salut')
-    dispatch(addLatitude(lat));
-    dispatch(addLongitude(long))
-    dispatch(addStartDate(startDate));
-    dispatch(addEndDate(endDate));
-    dispatch(addCategories(categories));
+    // dispatch(addLatitude(lat));
+    // dispatch(addLongitude(long))
+    // dispatch(addStartDate(startDate));
+    // dispatch(addEndDate(endDate));
+    // dispatch(addCategories(categories));
+    findResults()
+    // router.push('/Results')
   }
 
 
   return (
 
-  <LocaleProvider locale={frFR}>
+  <ConfigProvider locale={frFR}>
     <div className={styles.filterContainer}>
       <div>
 
@@ -185,14 +201,14 @@ function searchBar() {
       <div>
         <DatePicker className={styles.searchBar}
           suffixIcon={<i class='bx bxs-calendar bx-sm style=color:#00ff26'></i>}
-          format="DD/MM/YYYY"
+          format="YYYY-MM-DD"
           placeholder="Date de début"
           onChange={selectStartDate}
 
         />
         <DatePicker className={styles.searchBar}
           suffixIcon={<i class='bx bxs-calendar bx-sm style=color:#00ff26'></i>}
-          format="DD/MM/YYYY"
+          format="YYYY-MM-DD"
           placeholder="Date de fin"
           onChange={selectEndDate}
         />
@@ -202,6 +218,7 @@ function searchBar() {
         <Select
           className={styles.searchBar}
           mode="multiple"
+          allowClear
           style={{
             width: '200px',
           }}
@@ -222,7 +239,7 @@ function searchBar() {
         <Button className={styles.button} onClick={() => handleClick()}>Rechercher</Button>
       </div>
     </div>
-  </LocaleProvider>
+  </ConfigProvider>
   )
 }
 

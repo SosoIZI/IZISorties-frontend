@@ -10,16 +10,16 @@ export const searchSlice = createSlice({
      initialState,
     reducers: {
       addLongitude: (state, action) => {
-        state.value.long = action.payload;
+        state.value.long = action.payload.long;
       },
       addLatitude: (state, action) => {
-        state.value.lat = action.payload;
+        state.value.lat = action.payload.lat;
       },
       addStartDate: (state, action) => {
-        state.value.startDate = action.payload;
+        state.value.startDate = action.payload.startDate;
       },
       addCategories: (state, action) => {
-        state.value.categories = state.value.categories.push(action.payload);
+        state.value.categories = state.value.categories.push(action.payload.categories);
       },
       // removeCategories: (state, action) => {
       //   state.value.categories = state.value.categories.filter(e => e ==! action.payload);
