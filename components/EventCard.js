@@ -52,13 +52,18 @@ function EventCard(props) {
         ) : (
           <div></div>
         )}
+        {props._id ? (
         <Link href={`/event?hash=${props._id}`}>
           <div className={styles.cardContent}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
             <button className={styles.knowMoreButton}>En savoir plus</button>
           </div>
-        </Link>
+        </Link>) : (<div className={styles.cardContent}>
+            <p className={styles.title}>{props.eventName}</p>
+            <p className={styles.description}>{props.description}</p>
+            <button className={styles.knowMoreButton}>En savoir plus</button>
+          </div>)}
       </div>
     </div>
   );

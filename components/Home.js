@@ -10,6 +10,7 @@ function Home() {
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
 
+
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
     fetch("http://localhost:3000/events/top/liked")
