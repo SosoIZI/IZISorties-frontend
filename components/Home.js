@@ -11,7 +11,8 @@ function Home() {
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
-  const router = useRouter();
+const router=useRouter()
+
 
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
@@ -94,9 +95,11 @@ function Home() {
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
-              <button className={styles.roundButton}>
-                <i className="bx bx-right-arrow-alt"></i>
-              </button>
+            <button className={styles.roundButton}>
+      <i className="bx bx-right-arrow-alt"></i>
+    </button>
+
+
             </div>
           </div>
         </>
