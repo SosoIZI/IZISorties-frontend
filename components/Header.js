@@ -6,7 +6,7 @@ import {useRouter} from "next/router"  // import de useRouter pour afficher une 
 import {  Button } from 'react-bootstrap';
 import Connexion from "./Connexion";
 import { useDispatch, useSelector } from "react-redux";
-import { Popover} from 'antd';
+import { Popover,Menu} from 'antd';
 import { logout } from "../reducers/user";
 function Header() {
 
@@ -18,17 +18,30 @@ const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation 
   const handleClose = () => setModalVisible(false);
 
 
-  const popoverProfil = (
-    <p onClick={() => {
-      dispatch(logout());  // Exécute la déconnexion
-      router.push("/Home"); // Redirige vers la page d'accueil
-    }} className={styles.popover}>
-      
-      Déconnexion
-    </p>
-  );
 
 
+  const popoverContent = (
+    <Menu>
+      <Menu.Item key="1"  className={styles.popoverItem}onClick={() => router.push("/Profil")}>
+        Profil
+      </Menu.Item>
+      <Menu.Item key="2" className={styles.popoverItem} onClick={() => router.push("/Help")}>
+        Aide
+      </Menu.Item>
+      <Menu.Item key="3" className={styles.popoverItem}>
+        Langue
+        <Menu.SubMenu title="Langue">
+          <Menu.Item key="3.1" className={styles.popoverItem}>Français</Menu.Item>
+          <Menu.Item key="3.2" className={styles.popoverItem}>English</Menu.Item>
+        </Menu.SubMenu>
+      </Menu.Item>
+      <Menu.Item key="4" className={styles.popoverItem} onClick={() => {
+        dispatch(logout()); // Exécute la déconnexion
+        router.push("/Home"); // Redirige vers la page d'accueil
+      }}>
+        Déconnexion
+      </Menu.Item>
+    </Menu>)
 
 
 
@@ -82,17 +95,15 @@ const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation 
     
       <div className={styles.iconItem} onClick={() => router.push("/Profil")}>
         
+      <Popover className={styles.popoverContent} title="" content={popoverContent}>
 
-        <Popover className={styles.popoverContent} title="" content={popoverProfil} > 
-        <span className={styles.icon}>
-          <i className="bx bxs-user-circle" style={{ color: "#f2af77" }}></i>
-          
-        </span>
-          <span className={styles.nameicon}>
-            Profil
-            </span>
-    
-        </Popover>
+              <span className={styles.icon}>
+                <i className="bx bxs-user-circle" style={{ color: "#f2af77" }}></i>
+              </span>
+              <span className={styles.nameicon}>
+                Profil
+              </span>
+            </Popover>
       </div>
     </div>
       ) : (// si token is false:=userNot Connected affiche ce header   //    
@@ -115,7 +126,6 @@ const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation 
 :(
    // si searchInput est renseigné afficher la croix qui au clic,réinitialise la barre de setter //  
 <i className='bx bx-x' onClick={handleReset}></i>
-
 
 )}
 </div>

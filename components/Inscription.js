@@ -59,7 +59,7 @@ Swal.fire({
         text: "L'adresse mail n'est pas conforme",
         icon: 'error',
         timer: 50000,
-        confirmButtonText: 'Valider'})
+        confirmButtonText: 'Valider'})// ett
      
       return;
     }
