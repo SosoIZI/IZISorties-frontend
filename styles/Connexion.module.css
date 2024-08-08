@@ -94,7 +94,6 @@ font-size: 32px;
 margin-right: 5%;
 }
 
-
 .buttonbis:hover {
 	background-color: white;
 	color: rgb(242,175,119);
@@ -103,33 +102,13 @@ margin-right: 5%;
 
 
 
-.stroke{
- 
-        width: 70%;  
-        height: 2px;  
-        background-color: black;  
-        margin: 20px auto;  /* Center the line horizontally */
-    
-}
-
-.sentence{
-margin-top: 10px;
-
-}
-
-.sentence:hover{
-    background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
-    cursor: pointer;
-    
-    }
-
     .passwordContainer {
         display: flex;
         align-items: center;
       }
-      
+
+
+
       .eyeIcon {
         margin-left: -28px;
         cursor: pointer;

@@ -3,10 +3,39 @@ import React, { useState } from "react";
 import Link from "next/link";
 import "boxicons/css/boxicons.min.css"; // import de boxicons pour intégrer les icones directement 
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
-
+import {  Button } from 'react-bootstrap';
+import Connexion from "./Connexion";
+import { useDispatch, useSelector } from "react-redux";
+import { Popover} from 'antd';
+import { logout } from "../reducers/user";
 function Header() {
-  const token = true;    // dans un premier temps: soit le token est false= userNotConnected, soit true=USerConnected =autre header
-  const router = useRouter() // pour pouvoir utiliser le hook Router.
+
+const dispatch= useDispatch()
+const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
+
+  const [modalVisible, setModalVisible] = useState(false);// import de la modal pour l'utiliser au clic sur le bouton connexion du header
+  const handleShow = () => setModalVisible(true);
+  const handleClose = () => setModalVisible(false);
+
+
+  const popoverProfil = (
+    <p onClick={() => {
+      dispatch(logout());  // Exécute la déconnexion
+      router.push("/Home"); // Redirige vers la page d'accueil
+    }} className={styles.popover}>
+      
+      Déconnexion
+    </p>
+  );
+
+
+
+
+
+
+
+  const token = useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
+
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input
 
@@ -19,6 +48,7 @@ function Header() {
 
   return (// Utilisation de Link et de la balise <a> pour qu'au clic sur l'image on puisse se rediriger vers home //
     <header className={styles.header}>
+      
       <div className={styles.logoAndSearchContainer}>
         <Link href="/Home">                                 
           <a>
@@ -51,10 +81,18 @@ function Header() {
       </div>
     
       <div className={styles.iconItem} onClick={() => router.push("/Profil")}>
+        
+
+        <Popover className={styles.popoverContent} title="" content={popoverProfil} > 
         <span className={styles.icon}>
           <i className="bx bxs-user-circle" style={{ color: "#f2af77" }}></i>
+          
         </span>
-        <span className={styles.nameicon}>Profil</span>
+          <span className={styles.nameicon}>
+            Profil
+            </span>
+    
+        </Popover>
       </div>
     </div>
       ) : (// si token is false:=userNot Connected affiche ce header   //    
@@ -83,12 +121,11 @@ function Header() {
 </div>
             <div className={styles.logoAndSearchContainer}>
               <div className={styles.buttonContainer}>
-                <button
-                  onClick={() => router.push("/Connexion") }  // utilisation du hook router pour rediriger vers une autre page.
-                  className={styles.button}
-                >
-                  Connexion
-                </button>
+              <Button variant="primary"  className={styles.button}onClick={handleShow}>  {/*au clic ouvrre/ferme la modal   */}
+        Connexion
+      </Button>
+
+      <Connexion showModal={modalVisible} handleClose={handleClose} />
               </div>
 
               <div className={styles.buttonContainer}>

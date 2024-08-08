@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -72,9 +73,6 @@ const [signInMail, setSignInMail] = useState("");
             onChange={(e) => setSignInMail(e.target.value)}
             className="texte"
           /> </div>
-
-
-
 
 
         <div className={styles.passwordContainer}>
