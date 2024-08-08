@@ -9,6 +9,7 @@ import "boxicons/css/boxicons.min.css";
 
 function ForgotPassword({ showModal, handleClose }) {
 const Swal = require('sweetalert2')
+const [signInMail, setSignInMail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -62,6 +63,17 @@ const Swal = require('sweetalert2')
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} className={styles.formula}>
+        <div className={styles.passwordContainer}>
+          <input
+          
+            placeholder="Adresse Mail"
+               type="text"
+            value={signInMail}
+            onChange={(e) => setSignInMail(e.target.value)}
+            className="texte"
+          /> </div>
+
+
         <div className={styles.passwordContainer}>
           <input
           

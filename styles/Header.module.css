@@ -108,4 +108,38 @@ font-weight: bold;
 
 	cursor: pointer;
 	
-			}
+	}
+
+	.popoverContent{
+
+display:flex;
+align-items: center;
+justify-content: center;
+	}
+
+
+
+
+.popover {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 30px;
+	width: 100px;
+	background-color:rgb(46,70,86);
+	color: white;
+	border: 1px white solid;
+	border-radius: 4px;
+	transition-duration: 0.5s;
+	cursor: pointer;
+	font-weight:bold;
+	
+}
+
+.popover:hover {
+	background-color: white;
+	color: rgb(242,175,119);
+	border: none;
+	border: 1px solid grey;
+}
+

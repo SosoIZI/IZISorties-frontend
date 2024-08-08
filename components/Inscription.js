@@ -12,11 +12,10 @@ import Connexion from "./Connexion";
 function Inscription() {
   const Swal = require('sweetalert2') //pour donner du style aux messages d'Alert 
   const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
-  const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
-  const [SignInUsername, setSignInUsername] = useState("");
-  const [SignInEmail, setSignInEmail] = useState("");
-  const [SignInPassword, setSignInPassword] = useState("");
+  const [SignUpUsername, setSignUpUsername] = useState("");
+  const [SignUpEmail, setSignUpEmail] = useState("");
+  const [SignUpPassword, setSignUpPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // état crée pour confirmer le password
@@ -43,7 +42,7 @@ function Inscription() {
     // Regex pour valider le mot de passe
     const passwordRegex = /^(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])(?=.*[0-9])[A-Za-z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/
 
-   if ( SignInUsername==="" ||SignInEmail===""||SignInPassword ==="") {  // si un des champs est vide--> alert
+   if ( SignUpUsername==="" ||SignUpEmail===""||SignUpPassword ==="") {  // si un des champs est vide--> alert
 Swal.fire({
         title: 'Attention!',
         text: 'Tous les champs de saisie ne sont pas remplis ',
@@ -54,7 +53,7 @@ Swal.fire({
     
 
 
-    if (!emailRegex.test(SignInEmail)) { // Si le mail ne correspond pas (test method) alors alert error 
+    if (!emailRegex.test(SignUpEmail)) { // Si le mail ne correspond pas (test method) alors alert error 
       Swal.fire({
         title: 'Erreur!',
         text: "L'adresse mail n'est pas conforme",
@@ -65,7 +64,7 @@ Swal.fire({
       return;
     }
     
-    if (!passwordRegex.test(SignInPassword)) {// Si le password ne correspond pas (test method) alors alert error 
+    if (!passwordRegex.test(SignUpPassword)) {// Si le password ne correspond pas (test method) alors alert error 
       Swal.fire({
         title: 'Attention!',
         text: 'Le mot de passe doit contenir au moins 8 caractères, inclure au moins un chiffre (1-9) et un caractère spécial.',
@@ -76,7 +75,7 @@ Swal.fire({
       return;
     }
 
-    if (SignInPassword !== ConfirmPassword) { // si password n'est pas égal à confirm password alors error.
+    if (SignUpPassword !== ConfirmPassword) { // si password n'est pas égal à confirm password alors error.
       Swal.fire({
         title: 'Erreur!',
         text: 'Les mots de passe ne correspondent pas ',
@@ -92,9 +91,9 @@ Swal.fire({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: SignInUsername,
-        email: SignInEmail,
-        password: SignInPassword,
+        username: SignUpUsername,
+        email: SignUpEmail,
+        password: SignUpPassword,
       }),
     })
       .then((response) => response.json())
@@ -102,17 +101,26 @@ Swal.fire({
         if (data.result) {
           dispatch(
             signUp({
-              username: SignInUsername,
-              email: SignInEmail,
+              username: SignUpUsername,
+              email: SignUpEmail,
               token: data.token,
             })
           );
-          setSignInUsername("");
-          setSignInEmail("");
-          setSignInPassword("");
+          setSignUpUsername("");
+          setSignUpEmail("");
+          setSignUpPassword("");
           setConfirmPassword("");
           router.push("/Home")   // à la fin du fetch si il est true, on lui fait reinitialiser tous les setters et on le redirige vers HOME
         }
+        else{
+        Swal.fire({
+          title: 'Attention!',
+          text: 'Utilisateur déja inscrit', 
+          icon: 'warning',
+          timer: 50000,
+          confirmButtonText: 'Valider'})
+        return;}
+        
       });
   };
   return (
@@ -129,21 +137,21 @@ Swal.fire({
         <div className={styles.formula}>
           <input
             type="text"
-            value={SignInUsername}
-            onChange={(e) => setSignInUsername(e.target.value)}
+            value={SignUpUsername}
+            onChange={(e) => setSignUpUsername(e.target.value)}
             placeholder="Nom"
           />
           <input
             type="text"
-            value={SignInEmail}
-            onChange={(e) => setSignInEmail(e.target.value)}
+            value={SignUpEmail}
+            onChange={(e) => setSignUpEmail(e.target.value)}
             placeholder="E-mail"
           />
           <div className={styles.passwordContainer}>
             <input
               type={showPassword ? "text" : "password"}
-              value={SignInPassword}
-              onChange={(e) => setSignInPassword(e.target.value)}
+              value={SignUpPassword}
+              onChange={(e) => setSignUpPassword(e.target.value)}
               placeholder="Mot de passe"
             />
             <i

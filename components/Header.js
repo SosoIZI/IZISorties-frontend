@@ -5,16 +5,36 @@ import "boxicons/css/boxicons.min.css"; // import de boxicons pour intégrer les
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
 import {  Button } from 'react-bootstrap';
 import Connexion from "./Connexion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Popover} from 'antd';
+import { logout } from "../reducers/user";
 function Header() {
+
+const dispatch= useDispatch()
+
 
   const [modalVisible, setModalVisible] = useState(false);// import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
 
 
+  const popoverProfil = (
+    <p onClick={() => {
+      dispatch(logout());  // Exécute la déconnexion
+      router.push("/Home"); // Redirige vers la page d'accueil
+    }} className={styles.popover}>
+      
+      Déconnexion
+    </p>
+  );
 
-  const token = false//useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
+
+
+
+
+
+
+  const token = useSelector(state=>state.user.value.token) // le reducer va chercher la valeur du token pour dire si user connected ou non
   const router = useRouter() // pour pouvoir utiliser le hook Router.
 
   const [searchInput, setSearchInput] = useState("");// état pour renseigner l'input
@@ -61,10 +81,18 @@ function Header() {
       </div>
     
       <div className={styles.iconItem} onClick={() => router.push("/Profil")}>
+        
+
+        <Popover className={styles.popoverContent} title="" content={popoverProfil} > 
         <span className={styles.icon}>
           <i className="bx bxs-user-circle" style={{ color: "#f2af77" }}></i>
+          
         </span>
-        <span className={styles.nameicon}>Profil</span>
+          <span className={styles.nameicon}>
+            Profil
+            </span>
+    
+        </Popover>
       </div>
     </div>
       ) : (// si token is false:=userNot Connected affiche ce header   //    

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
+    "antd": "^5.20.0",
     "bootstrap": "^5.3.3",
     "boxicons": "^2.1.4",
     "mongoose": "^8.5.2",
