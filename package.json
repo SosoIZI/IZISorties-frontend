@@ -31,7 +31,7 @@
     "react-select": "^5.8.0",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "storybook": "^8.2.7"
+    "sweetalert2": "^11.12.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

@@ -1,7 +1,9 @@
-import EventCard from '../components/EventCard';
+import EventDetails from '../components/EventDetails';
 
 function eventPage() {
-  return <p>Page des events</p>;
+  return <>
+  <EventDetails />
+  </>
 }
 
 export default eventPage;
