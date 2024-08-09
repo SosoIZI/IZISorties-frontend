@@ -12,7 +12,6 @@ function EventDetails() {
     // 1- je récupère l'id de l'event dans l'URL
     let url = new URL(window.location.href);
     let eventId = url.searchParams.get("hash");
-
     console.log("lid dans lurl est", eventId);
 
     // 2- je fetch pour récupérer les données de mon event
@@ -24,27 +23,36 @@ function EventDetails() {
       });
   }, []);
 
-  return (
+  console.log("eventData", eventData.pictures);
+
+  return eventData.pictures ? (
     <div className={styles.container}>
-      {/* je ne mets qu'une seule image pour le moment mais il faudra charger autant d'image que nécéssaire */}
       <div className={styles.header}>
-        <img
-          src={eventData.pictures}
-          alt={eventData.eventName}
-          className={styles.mainImage}
-        />
-      
-      <div classeName={styles.eventContent}>
-        <h1 className={styles.title}>{eventData.eventName}</h1>
-        <p className={styles.description}>{eventData.description}</p>
-      </div>
+        <div className={styles.picturesContainer}>
+          <button className={styles.roundButton}>
+            <i className="bx bx-left-arrow-alt"></i>
+          </button>
+          <img
+            src={eventData.pictures[0]}
+            alt={eventData.eventName}
+            className={styles.mainImage}
+          />
+          <button className={styles.roundButton}>
+            <i className="bx bx-right-arrow-alt"></i>
+          </button>
+        </div>
+
+        <div className={styles.eventContent}>
+          <h1 className={styles.title}>{eventData.eventName}</h1>
+          <p className={styles.description}>{eventData.description}</p>
+        </div>
       </div>
       <h2>Infos pratiques</h2>
       <div className={styles.secondPartofPage}>
         <div className={styles.mapContainer}>
           {/* mettre la map et pas l'image*/}
           <img
-            src={eventData.pictures}
+            src={eventData.pictures[0]}
             alt={eventData.eventName}
             className={styles.mainImage}
           />
@@ -75,6 +83,8 @@ function EventDetails() {
         </div>
       </div>
     </div>
+  ) : (
+    <div></div>
   );
 }
 

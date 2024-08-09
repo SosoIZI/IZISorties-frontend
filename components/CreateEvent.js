@@ -2,13 +2,14 @@ import styles from "../styles/CreateEvent.module.css";
 import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import { Autocomplete, TextField, Checkbox, Chip } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { useSelector } from "react-redux";
+import uniqid from "uniqid";
 
 function CreateEvent() {
   // en attendant de pouvoir me connecter je crée un faux token pour l'user
-  const token = "66b32b5e5b203b9e0fd46b74";
+  const token = useSelector((state) => state.user.value.token);
 
   // Je crée un état par input
   const [eventName, setEventName] = useState("");
@@ -26,6 +27,9 @@ function CreateEvent() {
   const [idPlace, setIdPlace] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState("/Image-par-defaut.png"); // état pour afficher l'image dans l'eventCard
 
   // Pour l'instant on utilise une variable pour "catégories".
   // Si on fini le projet + tôt on mettra les catégories dans une BDD dans MongoDB
@@ -200,15 +204,104 @@ function CreateEvent() {
     }
   };
 
-  //console.log("placeDataBase", placeDataBase);
+  // concernant les images
   const pictures = ["/IZI_sorties_home.png"];
+
+  const imageAdded = (event) => {
+    // event est l'objet événement généré par le navigateur lorsqu'on utilise l'input file.
+    // Cela équivault à value pour l'autocomplete.
+    // il contient les fichiers sélectionnés par l'utilisateur.
+    const filesArray = []; // pour stocker les fichiers sélectionnés
+    for (let i = 0; i < event.target.files.length; i++) {
+      filesArray.push(event.target.files[i]); // Ajoute chaque fichier au tableau filesArray
+    }
+    // j'ajoute les nouveaux fichiers au tableau existant
+    setImageFiles((prevFiles) => {
+      const newFiles = [...prevFiles, ...filesArray];
+      if (prevFiles.length === 0) {
+        // Vérifiez si c'est la première image ajoutée
+        const previewUrl = URL.createObjectURL(newFiles[0]);
+        console.log("Generated Preview URL:", previewUrl); // Vérifiez l'URL de prévisualisation générée
+        setPreviewUrl(previewUrl);
+      }
+      return newFiles;
+    });
+  };
+
+  const uploadImagesToCloudinary = async () => {
+    const formData = new FormData();
+    for (let i = 0; i < imageFiles.length; i++) {
+      formData.append("images", imageFiles[i]);
+    }
+
+    // Envoie les fichiers au backend
+    const response = await fetch("http://localhost:3000/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+    setImageUrls(data.urls);
+    return data.urls;
+  };
 
   // Pour finir, quand je clique sur "soumettre", la fonction addNewEvent se lance.
   // On verifie que tous les champs sont remplis sinon on met une alerte
   // Si tous les champs sont remplis :
   // Si la place n'est pas dans ma BDD, je commence par la créer pour récupérer son id, sa longitude et sa latitude
   // Puis on lance la route qui crée l'event avec les infos du form, le token de l'user, et l'id de la place
+  const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
+
   const addNewEvent = async () => {
+    if (startDate > endDate) {
+      Swal.fire({
+        title: "Attention!",
+        text: "La date de début de votre évènement est après la date de fin",
+        icon: "warning",
+        timer: 50000,
+        confirmButtonText: "Corriger",
+      });
+      return;
+    }
+
+    if (startTime > endTime) {
+      Swal.fire({
+        title: "Attention!",
+        text: "L'heure de début de votre évènement est après l'heure de début",
+        icon: "warning",
+        timer: 50000,
+        confirmButtonText: "Corriger",
+      });
+      return;
+    }
+
+    const uploadedImageUrls = await uploadImagesToCloudinary(); // je récupère les images de cloudinary
+
+    if (
+      !eventName ||
+      !description ||
+      !startDate ||
+      !endDate ||
+      !startTime ||
+      !endTime ||
+      categories.length == 0 ||
+      !price ||
+      !address ||
+      !cp ||
+      !city ||
+      !namePlace ||
+      !imageFiles
+    ) {
+      Swal.fire({
+        title: "Attention!",
+        text: "Tous les champs n'ont pas été saisis",
+        icon: "warning",
+        timer: 50000,
+        confirmButtonText: "Compléter les champs restants",
+      });
+      return;
+    }
+
     // 1- je commence par créer ma place si elle n'est pas dans ma BDD
     if (
       eventName &&
@@ -233,7 +326,6 @@ function CreateEvent() {
           `https://api-adresse.data.gouv.fr/search/?q=${q}&postcode=${cp}`
         );
         const dataAPI = await responseAPI.json();
-
         setLatitude(dataAPI.features[0].geometry.coordinates[1]);
         setLongitude(dataAPI.features[0].geometry.coordinates[0]);
 
@@ -253,17 +345,16 @@ function CreateEvent() {
 
         const dataPlace = await responseAddPlace.json();
         setIdPlace(dataPlace.result._id);
-        addEvent(dataPlace.result._id);
+        addEvent(dataPlace.result._id, uploadedImageUrls);
       } else {
-        addEvent(idPlace);
+        addEvent(idPlace, uploadedImageUrls);
       }
     } else {
       console.log("on alerte que tous les champs ne sont pas saisis");
     }
   };
 
-  const addEvent = (placeId) => {
-    console.log("la fonction addEvent a demarré");
+  const addEvent = (placeId, imageUrls) => {
     console.log("placeId", placeId);
     // 2- je crée mon event
     if (
@@ -275,9 +366,10 @@ function CreateEvent() {
       endTime &&
       categories &&
       price &&
+      token &&
       placeId
     ) {
-      fetch(`http://localhost:3000/events`, {
+      fetch(`http://localhost:3000/events/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -287,48 +379,86 @@ function CreateEvent() {
           startDate: startDate,
           endDate: endDate,
           placeId: placeId,
-          pictures: ["jai pas de photo pour linstant"],
+          pictures: imageUrls,
           description: description,
           price: price,
           categories: categories,
           nbLike: [],
           nbBooking: [],
-          token: token,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          
+          console.log("data", data);
           // lancer la route pu de places pour MAJ le tableau "event" dans la coll "places"
           fetch(`http://localhost:3000/places/newevent`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               placeId: placeId,
-              eventid: data.result._id,
+              eventId: data.result._id,
             }),
-          });
+          })
+            .then((response) => response.json())
+            .then((dataPut) => {
+              console.log("dataPut", dataPut);
 
-          // remettre à zero tous les etats
-          setEventName("");
-          setDescription("");
-          setStartDate(new Date());
-          setEndDate(new Date());
-          setStartTime("");
-          setEndTime("");
-          setCategories([]);
-          setPrice("");
-          setAddress("");
-          setCp("");
-          setCity("");
-          setNamePlace("");
-          setIdPlace("");
-          setLatitude("");
-          setLongitude("");
+              // remettre à zero tous les etats
+              setEventName("");
+              setDescription("");
+              setStartDate(new Date());
+              setEndDate(new Date());
+              setStartTime("");
+              setEndTime("");
+              setCategories([]);
+              setCategoriesSelected([]);
+              setPrice("");
+              setAddress("");
+              setCp("");
+              setCity("");
+              setNamePlace("");
+              setIdPlace("");
+              setLatitude("");
+              setLongitude("");
+              setPreviewUrl("/Image-par-defaut.png");
+              setImageFiles([]);
+              setImageUrls([]);
+
+              if (data) {
+                Swal.fire({
+                  title: "Félicitations!",
+                  text: "Votre évènement a bien été créé ! ",
+                  icon: "success",
+                  timer: 50000,
+                  showConfirmButton: false,
+                });
+              }
+            });
         });
     }
   };
+
+  const removeImage = (index) => {
+    const newFiles = [...imageFiles];
+    newFiles.splice(index, 1);
+    setImageFiles(newFiles);
+  };
+
+  const imagePreviews = imageFiles.map((file, index) => (
+    <div key={index} className={styles.imagePreviewWrapper}>
+      <img
+        src={URL.createObjectURL(file)}
+        alt={`preview-${index}`}
+        className={styles.imagePreview}
+      />
+      <button
+        onClick={() => removeImage(index)}
+        className={styles.removeImageButton}
+      >
+        X
+      </button>
+    </div>
+  ));
 
   return (
     <div className={styles.pageContainer}>
@@ -460,10 +590,9 @@ function CreateEvent() {
                     //label="Selectionner les catégories correpondantes (3 maximum)"
                     placeholder="3 categories maximum"
                     className={styles.input}
-                    error={categoriesSelected.length === 0}
                   />
                 )}
-                //ici ce sont les tags (chip) des categ selectionnées
+                //ici ce sont les tags des categ selectionnées qui sont rendus sous forme de Chip
                 renderTags={(value, getTagProps) =>
                   value.map((option, index) => (
                     <Chip
@@ -540,10 +669,24 @@ function CreateEvent() {
                   value={city}
                 />
               </div>
-
-              {/* dans les propositions de nom du lieu de l'évent, si aucun choix 
-              ne correspond, alors l'utilisateur clique sur "créer mon lieu" 
-              ce qui valide la place et la crée dans la BDD */}
+            </div>
+            <div className={styles.formGroup}>
+              
+              <div className={styles.uploadImageContainer}>
+              <input
+                type="file"
+                multiple
+                className={styles.fileInput}
+                onChange={imageAdded} // Déclenche la fonction handleImageChange lorsque des fichiers sont sélectionnés
+              />
+              <div className={styles.uploadImageButton}>
+      Télécharger des images
+      <span className={styles.uploadImageButtonIcon}> <i className="bx bxs-download" style={{ color: "#2F4858" }}></i></span>
+    </div>
+              </div>
+              <div className={styles.imagePreviewContainer}>
+                {imagePreviews}
+              </div>
             </div>
             <button
               type="submit"
@@ -556,7 +699,7 @@ function CreateEvent() {
         </div>
         <div className={styles.previewContainer}>
           <EventCard
-            pictures={pictures}
+            pictures={[previewUrl]} // Passez previewUrl dans un tableau ici pour EventCard
             eventName={eventName}
             description={description}
           />
