@@ -17,14 +17,14 @@ body {
 h2 {
   font-family: "Schabo-Condensed", sans-serif;
   color: #2E4656;
-  font-size: 50px;
+  font-size: 50px !important;
   font-weight: lighter;
 }
 
 h1 {
   font-family: "Schabo-Condensed", sans-serif;
   color: #2E4656;
-  font-size: 50px;
+  font-size: 50px!important;
   font-weight: lighter;
 }
 
