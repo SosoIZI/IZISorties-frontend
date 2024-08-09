@@ -1,4 +1,5 @@
 import styles from "../styles/Politiques.module.css";
+import Link from 'next/link';
 
 function Politique() {
   return (
@@ -120,8 +121,9 @@ Article 9 : Contact</h4>
         <p>
 
 Pour toute question relative à cette Politique de Confidentialité ou pour exercer vos droits, vous
-pouvez nous contacter à : contact@izi-sorties.com.
+pouvez nous contacter à : 
 
+<Link  href="/Contact">contact@izi-sorties.com.</Link>
 </p>
 </div>
 </div>

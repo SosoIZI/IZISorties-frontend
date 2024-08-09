@@ -18,6 +18,7 @@ function Footer() {
        
         <Link  href="/MentionsLegales">Mentions Légales</Link>
         <Link  href="/Politique">Politique de confidentialité</Link>
+        <Link  href="/CGV">CGV</Link>
         <Link  href="/Contact">Contact</Link>
       
       </div>
