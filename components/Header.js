@@ -7,7 +7,9 @@ import { Button } from "react-bootstrap";
 import Connexion from "./Connexion";
 import { useDispatch, useSelector } from "react-redux";
 import { Popover, Menu } from "antd";
-import { logout, removeUser } from "../reducers/user";
+import { logout } from "../reducers/user";
+import Swal from 'sweetalert2';
+
 function Header() {
   const dispatch = useDispatch();
   const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
@@ -16,23 +18,45 @@ function Header() {
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
 
-  const handleDelete = () => {                   // on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
+  
+  const handleDelete = async() => {  
+    
+    const proceed= 
+    await Swal.fire({
+     title: 'Êtes-vous sûr ?',
+     text: "Vous ne pourrez pas revenir en arrière !",
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'Oui, supprimer !',
+     cancelButtonText: 'Annuler',
+    timer: 50000,})
+ 
+    console.log(proceed);
+     if (proceed.isConfirmed){// .isConfirmed car lié à swal.)
+    //  on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
     fetch(`http://localhost:3000/users/delete/${token}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        {
-          if(data.result){                           // Si data alors supprime le compte, logout le user et renvoie sur home 
-            dispatch(logout());
-            router.push("/Home")
-
-          }
-        }
-      });
-  };
-
+       method: "DELETE",
+       headers: { "Content-Type": "application/json" },
+     })
+       .then((response) => response.json())
+       .then((data) => {
+        console.log(data);
+         {
+           if(data.result){                           // Si data alors supprime le compte, logout le user et renvoie sur home 
+             dispatch(logout());
+             router.push("/Home")
+ 
+           }
+         }
+       });
+     }
+    
+   };
+ 
+  
+  
   const popoverContent = (
     <Menu>
       <Menu.Item
@@ -195,7 +219,7 @@ function Header() {
                   Connexion
                 </Button>
 
-                <Connexion showModal={modalVisible} handleClose={handleClose} />
+                <Connexion showModal={modalVisible} handleClose={handleClose}/>
               </div>
 
               <div className={styles.buttonContainer}>

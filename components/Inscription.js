@@ -1,12 +1,11 @@
 
 import styles from "../styles/Inscription.module.css";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signUp } from "../reducers/user";
 import React from "react";
 import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/router";
-import {  Button } from 'react-bootstrap';
 import Connexion from "./Connexion";
 
 function Inscription() {

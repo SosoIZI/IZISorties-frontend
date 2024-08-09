@@ -1,18 +1,26 @@
 import EventCard from "../components/EventCard";
 import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import Connexion from "./Connexion";
+import { useSelector } from "react-redux";
+
 
 function Home() {
   //const [currentPosition, setCurrentPosition] = useState(null);
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
-const router=useRouter()
+  const [modalVisible, setModalVisible] = useState(false);
+  const router = useRouter();
+  const handleShow = () => setModalVisible(true);
+  const handleClose = () => setModalVisible(false);
+  const login = useSelector((state) => state.user.value.name) // pour utiliser la modal dans event 
 
+  console.log("modal visible : ", modalVisible);
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
     fetch("http://localhost:3000/events/top/liked")
@@ -47,19 +55,19 @@ const router=useRouter()
         (error) => {
           if (error.code === error.PERMISSION_DENIED) {
             Swal.fire({
-              title: 'Géolocalisation désactivée',
-              text: 'Activez la géolocalisation pour obtenir des recommandations près de chez vous.',
-              icon: 'warning',
-              confirmButtonText: 'OK',
-              confirmButtonColor: 'rgb(46, 70, 86)',
+              title: "Géolocalisation désactivée",
+              text: "Activez la géolocalisation pour obtenir des recommandations près de chez vous.",
+              icon: "warning",
+              confirmButtonText: "OK",
+              confirmButtonColor: "rgb(46, 70, 86)",
             });
           } else {
             Swal.fire({
-              title: 'Erreur de géolocalisation',
-              text: 'Une erreur est survenue lors de la tentative de géolocalisation.',
-              icon: 'error',
-              confirmButtonText: 'OK',
-              confirmButtonColor: 'rgb(46, 70, 86)',
+              title: "Erreur de géolocalisation",
+              text: "Une erreur est survenue lors de la tentative de géolocalisation.",
+              icon: "error",
+              confirmButtonText: "OK",
+              confirmButtonColor: "rgb(46, 70, 86)",
             });
           }
         },
@@ -67,17 +75,18 @@ const router=useRouter()
       );
     } else {
       Swal.fire({
-        title: 'Géolocalisation non disponible',
+        title: "Géolocalisation non disponible",
         text: "Votre navigateur ne prend pas en charge la géolocalisation.",
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: 'rgb(46, 70, 86)',
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "rgb(46, 70, 86)",
       });
     }
   }, []);
 
   const topEventCards = topEvent.slice(0, 5).map((data, i) => {
-    return <EventCard key={i} {...data} />;
+    return <EventCard key={i} {...data} isConnected={login != null}    // if login est rempli=isconnected =pas modale 
+    handleShow={handleShow} />;// props à passer pour utiliser la modal 
   });
 
   // les sorties près de chez toi cette semaine.
@@ -85,7 +94,8 @@ const router=useRouter()
   // sinon, l'inviter à activer sa géoloc pour obtenir de meilleures reco.
 
   const thisWeekEventCards = eventThisWeek.slice(0, 5).map((data, i) => {
-    return <EventCard key={i} {...data} />;
+    return <EventCard key={i} {...data} isConnected={login != null} 
+    handleShow={handleShow}  />;
   });
 
   return (
@@ -94,30 +104,37 @@ const router=useRouter()
       <div className={styles.mostConsultedContainer}>
         {topEventCards}
         <div>
-          <button className={styles.roundButton}>
+          <button className={styles.roundButton} onClick={handleShow}>
             <i className="bx bx-right-arrow-alt"></i>
           </button>
+          <Connexion
+            showModal={modalVisible}
+            handleClose={handleClose}
+            isConnected={false}
+          />
         </div>
       </div>
       {/* j'affiche les suggestions des events près de chez moi cette semaine, si j'ai bien récupéré la géoloc
       et si il y a des events près de chez moi cette semaine */}
       {geoError || thisWeekEventCards.length == 0 ? (
         <p>{geoError}</p>
-      ) :  (
+      ) : (
         <>
+
+
+
+        
           <h2>Les sorties de cette semaine, près de chez toi :</h2>
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
-              <button className={styles.roundButton
-              }
-              >
+              <button className={styles.roundButton}>
                 <i className="bx bx-right-arrow-alt"></i>
               </button>
             </div>
           </div>
         </>
-      ) }
+      )}
       <div className={styles.marketingContainer}>
         <Image
           src="/IZI_sorties_home.png"
@@ -143,6 +160,7 @@ const router=useRouter()
             Avec IZI, trouvez rapidement et simplement des événements qui
             correspondent à vos envies.
           </p>
+
           <button
             onClick={() => router.push("/Inscription")}
             className={styles.inscriptionButton}
