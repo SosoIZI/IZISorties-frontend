@@ -4,7 +4,7 @@ import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import Swal from 'sweetalert2';
 
 function Home() {
   //const [currentPosition, setCurrentPosition] = useState(null);
@@ -12,7 +12,6 @@ function Home() {
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
 const router=useRouter()
-
 
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
@@ -47,18 +46,33 @@ const router=useRouter()
         },
         (error) => {
           if (error.code === error.PERMISSION_DENIED) {
-            setGeoError(
-              "Activez la géolocalisation pour obtenir des recommandations près de chez vous"
-            );
+            Swal.fire({
+              title: 'Géolocalisation désactivée',
+              text: 'Activez la géolocalisation pour obtenir des recommandations près de chez vous.',
+              icon: 'warning',
+              confirmButtonText: 'OK',
+              confirmButtonColor: 'rgb(46, 70, 86)',
+            });
           } else {
-            setGeoError("");
-            // ou setGeoError(error.message);
+            Swal.fire({
+              title: 'Erreur de géolocalisation',
+              text: 'Une erreur est survenue lors de la tentative de géolocalisation.',
+              icon: 'error',
+              confirmButtonText: 'OK',
+              confirmButtonColor: 'rgb(46, 70, 86)',
+            });
           }
         },
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       );
     } else {
-      setGeoError("");
+      Swal.fire({
+        title: 'Géolocalisation non disponible',
+        text: "Votre navigateur ne prend pas en charge la géolocalisation.",
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: 'rgb(46, 70, 86)',
+      });
     }
   }, []);
 
@@ -95,11 +109,11 @@ const router=useRouter()
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
-            <button className={styles.roundButton}>
-      <i className="bx bx-right-arrow-alt"></i>
-    </button>
-
-
+              <button className={styles.roundButton
+              }
+              >
+                <i className="bx bx-right-arrow-alt"></i>
+              </button>
             </div>
           </div>
         </>
