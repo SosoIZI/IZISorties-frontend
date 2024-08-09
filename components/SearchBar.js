@@ -2,31 +2,30 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addLongitude, addLatitude, addStartDate, addEndDate, addCategories } from '../reducers/search';
+import { searchEvents } from '../reducers/event';
 import { Button, Select, DatePicker, ConfigProvider  } from 'antd';
 import "boxicons/css/boxicons.min.css";
 import styles from '../styles/SearchBar.module.css';
 import 'antd/dist/reset.css'
 import frFR from 'antd/locale/fr_FR';// Importer la localisation française
 import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
-
+import fetch from 'node-fetch';
+import dayjs from 'dayjs';
 
 function searchBar() {
 
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
 
-  // const [eventPlace, setEventPlace] = useState([]);
-  // const [searchPlace, setSearchPlace] = useState('');
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
   const [geoError, setGeoError] = useState(null);
-  const [onSelect, setOnselect] = useState(false)
+  const [city, setCity] = useState(null)
 
   const dispatch = useDispatch();
-  const search = useSelector((state) => state.search.value)
+  const router = useRouter()
 
   // à l'affichage du composant, je récupère les villes des events dans la bdd.
 
@@ -50,42 +49,57 @@ function searchBar() {
   // fonctions pour filtrer la recherche et mettre à jour les états
 
   const checkboxName = [{ id: 1, name: 'Cinema' }, { id: 2, name: 'Musique' }] // noms des catégories à cocher
-  const router = useRouter()
 
-  // on sélectionne une ville via le menu déroulant, et on récupère long/lat depuis une API 
+  // on sélectionne une ville via le menu déroulant
 
-  const selectPlace = (e) => {
-    console.log(e)
+  const selectCity = (e) => {
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${e}`)
       .then(response => response.json())
       .then(data => {
-        let cityData = data.features[0];
-        setLong(cityData.geometry.coordinates[0])
-        setLat(cityData.geometry.coordinates[1])
+       setCity(data.features[0].properties.city)
+      //  console.log(data.features[0].properties.city)
+    
       })
+    console.log('selected city', city)
+    }
 
-    console.log('selected place', long, lat)
-  }
-
-  //on récupère la géoloc de l'utilisateur
+  //on récupère la géoloc de l'utilisateur, et sur la base des coordonnées on récupère la ville où se trouve l'utilisateur
 
   const selectGeoloc = () => {
     console.log("selectGeoloc called");
-
+  
     if ("geolocation" in navigator) {
       console.log("Geolocation is available");
-
+  
       navigator.geolocation.getCurrentPosition(
         (position) => {
           console.log("Position acquired:", position.coords.longitude);
-          setLong(position.coords.longitude);
-          setLat(position.coords.latitude);
+          alert('Position acquired')
+  
+          const longitude = position.coords.longitude;
+          const latitude = position.coords.latitude;
+  
+          setLong(longitude);
+          setLat(latitude);
+          dispatch(addGeoloc(true))
+
+  
+          fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.features && data.features.length > 0) {
+                setCity(data.features[0].properties.city);
+                console.log('Selected place:', data.features[0].properties.city);
+              } else {
+                console.log("No place found for the given coordinates.");
+              }
+            })
         },
         (error) => {
           console.log("Geolocation error:", error);
           if (error.code === error.PERMISSION_DENIED) {
             setGeoError(
-              "Activez la géolocalisation pour obtenir des recommandations près de chez vous"
+              "Activez la géolocalisation"
             );
           } else {
             setGeoError(error.message);
@@ -101,55 +115,53 @@ function searchBar() {
   // on sélectionne une date de début et une date de fin via le calendrier
 
   const selectStartDate = (e) => {
+    e = dayjs(e).format('YYYY-MM-DD')
     setStartDate(e)
+    console.log(e)
   }
 
   const selectEndDate = (e) => {
-    setEndDate
-  }
+    e = dayjs(e).format('YYYY-MM-DD')
+    setEndDate(e)
+    console.log(e)
+    }
 
   // on sélectionne une ou plusieurs catégories via la checkbox
-  //quand on décoche une case, la catégorie est supprimée de son état
-
   
   const selectCategories = (e) => {
+    // e = e.join(', ')
     setCategories(e)
     console.log(categories);
 }
 
-const findResults = () => {
-  fetch(`events/${startDate}/${endDate}/${long}/${lat}`)
+// const handleClick = () => {
+
+// }
+
+//fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
+// le résultat est envoyé dans le reducer events pour les récupérer sur les pages de résultats
+
+const findResults = (query) => {
+  fetch(`http://localhost:3000/events/${startDate}/${endDate}/${city}${query}`)
   .then(response => response.json())
   .then(data => {
-      // const results = data.map.slice((data, i) => {
-      //     if (!results) {
-      //         return  <h1>Aucun évènement ne correspond à votre recherche</h1> 
-      //     } else if (results && token) {
-      //     <EventCard key={i} {...data} />;
-      //        }
-      // })
-      console.log(data)
+    console.log("data : ", data);
+    
+    dispatch(searchEvents(data.events))
 })
 }
 
-  
-
-  // // quand on décoche une case, la catégorie est supprimée de son état
-  // const removeCategory = (e) => {
-  //   setCategories(categories.filter((category) => category == !e));
-  //   console.log('removed category')
-  // }
-
-  // au clic sur le bouton 'rerchercher', on envoie les valeurs dans le reducer
   const handleClick = () => {
-    console.log('salut')
-    // dispatch(addLatitude(lat));
-    // dispatch(addLongitude(long))
-    // dispatch(addStartDate(startDate));
-    // dispatch(addEndDate(endDate));
-    // dispatch(addCategories(categories));
-    findResults()
-    // router.push('/Results')
+    let query = ""
+    if(categories.length > 0){
+       query = '?categorie=' + categories.join('&categorie=')
+    }
+    findResults(query)
+    if(!token) {
+      router.push("/Inscription")
+    } else {
+      router.push('/Results')
+    }
   }
 
 
@@ -162,7 +174,7 @@ const findResults = () => {
         <Select
           className={styles.searchBar}
           showSearch
-          onSelect={selectPlace}
+          onSelect={selectCity}
           style={{ width: 200 }}
           suffixIcon={<i class='bx bxs-map bx-sm style=color:#00ff26'></i>}
           placeholder="Lieu"
@@ -179,6 +191,7 @@ const findResults = () => {
                   display: 'flex',
                   flexWrap: 'nowrap',
                   padding: 8,
+                  
                 }}
               >
                 <Button
@@ -201,16 +214,18 @@ const findResults = () => {
       <div>
         <DatePicker className={styles.searchBar}
           suffixIcon={<i class='bx bxs-calendar bx-sm style=color:#00ff26'></i>}
-          format="YYYY-MM-DD"
+          format="DD-MM-YYYY"
           placeholder="Date de début"
           onChange={selectStartDate}
+          style={{ width: 200 }}
 
         />
         <DatePicker className={styles.searchBar}
           suffixIcon={<i class='bx bxs-calendar bx-sm style=color:#00ff26'></i>}
-          format="YYYY-MM-DD"
+          format="DD-MM-YYYY"
           placeholder="Date de fin"
           onChange={selectEndDate}
+          style={{ width: 200 }}
         />
       </div>
 
@@ -227,8 +242,8 @@ const findResults = () => {
           onChange={selectCategories}
           optionLabelProp="label"
         >
-          <Option value="Musique" label="Musique"></Option>
-          <Option value="Cinéma" label="Cinéma"></Option>
+          <Option value="music" label="Musique"></Option>
+          <Option value="cinema" label="Cinéma"></Option>
         </Select>
 
       </div>

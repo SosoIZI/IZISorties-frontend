@@ -1,7 +1,7 @@
 import EventCard from "../components/EventCard";
 import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSelector } from "react";
 import Image from "next/image";
 
 function Home() {
@@ -9,6 +9,8 @@ function Home() {
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
+
+  const geolocApproved = (useSelector((state) => state.search.value.geoloc))
 
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
@@ -57,7 +59,7 @@ function Home() {
     } else {
       setGeoError("");
     }
-  }, []);
+  }, [geolocApproved]);
 
   const topEventCards = topEvent.slice(0, 5).map((data, i) => {
     return <EventCard key={i} {...data} />;

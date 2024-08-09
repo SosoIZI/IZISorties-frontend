@@ -10,9 +10,10 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Script from 'next/script';
+import events from "../reducers/event";
 
 
-const reducers = combineReducers({ user, search });
+const reducers = combineReducers({ user, events,search});
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({
