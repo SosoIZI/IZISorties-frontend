@@ -1,0 +1,48 @@
+.buttonContainer {
+
+    display: flex;
+    /* justify-content: center; */
+    gap: 20px;     /*espace entre les élements enfants   */
+    
+    }
+
+.displayContainer {
+    
+    margin: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    }
+    
+    
+    .button {
+        border: 1px solid #e38d83;
+        border-radius: 20px;
+        width:150px;
+        height:40px;
+        cursor: pointer;
+        color:white;
+        background-color:#e38d83;
+        margin: 15px
+        
+    }
+    
+    
+    .button:hover {
+        background-color: 'white';
+        color: #e38d83;
+        font-weight: bold;
+    }
+
+    .icon {
+    
+        color: 'white';
+        display: flex;
+        align-items: center;
+        gap:10px;
+        position: relative;
+        font-size: 35px;
+        cursor:pointer
+    }
+    
+    

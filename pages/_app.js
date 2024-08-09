@@ -13,7 +13,7 @@ import Script from 'next/script';
 import events from "../reducers/event";
 
 
-const reducers = combineReducers({ user, events,search});
+const reducers = combineReducers({ user, events, search});
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({

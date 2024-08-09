@@ -1,16 +1,19 @@
 import EventCard from "../components/EventCard";
 import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
-import { useEffect, useState, useSelector } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import SearchBar from "./SearchBar";
 
 function Home() {
-  //const [currentPosition, setCurrentPosition] = useState(null);
+ 
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
 
-  const geolocApproved = (useSelector((state) => state.search.value.geoloc))
+  const geolocApproved = useSelector((state) => state.search.value.geoloc)
+  
 
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
@@ -59,7 +62,7 @@ function Home() {
     } else {
       setGeoError("");
     }
-  }, [geolocApproved]);
+  }, []);
 
   const topEventCards = topEvent.slice(0, 5).map((data, i) => {
     return <EventCard key={i} {...data} />;
@@ -74,7 +77,9 @@ function Home() {
   });
 
   return (
+<div>
     <div className={styles.netflixContainer}>
+    < SearchBar />
       <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
         {topEventCards}
@@ -135,6 +140,7 @@ function Home() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 function EventCard(props) {
+  // console.log("props event card : ", props);
+  
   // const dispatch = useDispatch();
   // const token = useSelector((state) => state.user.value.token);
 

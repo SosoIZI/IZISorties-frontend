@@ -6,11 +6,13 @@ import { searchEvents } from '../reducers/event';
 import { Button, Select, DatePicker, ConfigProvider  } from 'antd';
 import "boxicons/css/boxicons.min.css";
 import styles from '../styles/SearchBar.module.css';
-import 'antd/dist/reset.css'
+import 'antd/dist/reset.css';
 import frFR from 'antd/locale/fr_FR';// Importer la localisation française
-import {useRouter} from "next/router"  // import de useRouter pour afficher une navigation en mode SPA 
+import {useRouter} from "next/router";  // import de useRouter pour afficher une navigation en mode SPA 
 import fetch from 'node-fetch';
 import dayjs from 'dayjs';
+import { addGeoloc } from '../reducers/search';
+
 
 function searchBar() {
 
@@ -22,28 +24,11 @@ function searchBar() {
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
   const [geoError, setGeoError] = useState(null);
-  const [city, setCity] = useState(null)
+  const [city, setCity] = useState(null);
 
   const dispatch = useDispatch();
+  const signIn = useSelector((state) => state.user.valuetoken)
   const router = useRouter()
-
-  // à l'affichage du composant, je récupère les villes des events dans la bdd.
-
-  // useEffect(() => {
-  //   fetch('/cities')
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     setEventCity(data.city)
-  //    });
-  // }, []);
-
-
-  // variable pour afficher les villes dans le sélecteur
-  // let eventCities = eventCity.map((data, i) => {
-  //   if (data ==! null) {
-  //      eventCities =  data[i];
-  //   }
-  // })
 
 
   // fonctions pour filtrer la recherche et mettre à jour les états
@@ -78,9 +63,10 @@ function searchBar() {
   
           const longitude = position.coords.longitude;
           const latitude = position.coords.latitude;
-  
+          
           setLong(longitude);
           setLat(latitude);
+          // setGeoloc(true)
           dispatch(addGeoloc(true))
 
   
@@ -134,9 +120,6 @@ function searchBar() {
     console.log(categories);
 }
 
-// const handleClick = () => {
-
-// }
 
 //fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
 // le résultat est envoyé dans le reducer events pour les récupérer sur les pages de résultats
@@ -145,24 +128,29 @@ const findResults = (query) => {
   fetch(`http://localhost:3000/events/${startDate}/${endDate}/${city}${query}`)
   .then(response => response.json())
   .then(data => {
-    console.log("data : ", data);
+    console.log("data : ", data.events);
+
     
     dispatch(searchEvents(data.events))
+    
 })
 }
 
-  const handleClick = () => {
-    let query = ""
-    if(categories.length > 0){
-       query = '?categorie=' + categories.join('&categorie=')
-    }
-    findResults(query)
-    if(!token) {
-      router.push("/Inscription")
-    } else {
-      router.push('/Results')
-    }
+const handleClick = () => {
+  let query = ""
+  if(categories.length > 0){
+     query = '?categorie=' + categories.join('&categorie=')
   }
+  findResults(query)
+  // if(!signIn) {
+  //   router.push("/Inscription")
+  // } else 
+  {
+    router.push('/Results')
+  }
+}
+
+
 
 
   return (
