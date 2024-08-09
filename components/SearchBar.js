@@ -24,6 +24,7 @@ function searchBar() {
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
   const [geoError, setGeoError] = useState(null);
+
   const [city, setCity] = useState(null);
 
   const dispatch = useDispatch();

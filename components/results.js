@@ -56,13 +56,13 @@ function Results() {
 
     const displayVisibleResult = visibleResult.map((data, i) => {
         return <div>
-            <div>
                 <EventCard key={i} {...data} />
+                <div>
+                {/* <button>onClick={() => handleClick()}<i class='bx bx-chevron-down bx-sm style=color:#00ff26'></i>Voir plus</button> */}
+                <button>onClick={() => handleClick()}</button>
+                </div>
             </div>
-            <div>
-            <button onClick={() => handleClick()}>Voir plus</button>
-            </div>
-        </div>
+        
     });
 
     console.log(displayVisibleResult);
@@ -80,6 +80,7 @@ function Results() {
             </div>
             <div className={styles.displayContainer}>
                 {displayVisibleResult}
+
             </div>
         </div>
     )
