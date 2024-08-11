@@ -6,12 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Router, useRouter } from "next/router";
 
-function EventCard(props) {
-  // console.log("props event card : ", props);
-  
+function EventCard(props) { // on peut écrire props ou {le nom de la props}
   // const dispatch = useDispatch();
-  // const token = useSelector((state) => state.user.value.token);
+  const router = useRouter();
 
   let [isliked, setIsLiked] = useState(false);
   let heartStyle = { color: "white" };
@@ -21,21 +20,37 @@ function EventCard(props) {
     heartStyle = { color: "white" };
   }
 
-  // // Quand je clique sur le boutton coeur, je dois rajouter un like à ce tweet dans ma BDD
-   const addNewLike = () => {
-     setIsLiked(!isliked);
-  //   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
-  //   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
+  const addNewLike = () => {
+    setIsLiked(!isliked);
+  };
 
-  //   fetch(`http://localhost:3000/events/like/:token/${props._id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-   };
+
+const handleClick = () => {  // fonction pour activer la modal connexion au clic 
+  //console.log("CLICK", props.isConnected);
+  if (!props.isConnected) {  // props.IsConnected à false= lance la modal sinon lance la route pour rajouter l'event 
+    props.handleShow();
+  } else {
+    router.push(`/event?hash=${props._id}`)
+    addNewLike(); 
+  }
+}
+    // Redirige vers la page de détails de l'événement (ou autre action)
+    // Exemple: router.push(`/event/${id}`);
+
+    // // Quand je clique sur le boutton coeur, je dois rajouter un like à ce tweet dans ma BDD
+
+    //   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
+    //   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like
+
+    //   fetch(`http://localhost:3000/events/like/:token/${props._id}`, {
+    //     method: "PUT",
+    //     headers: { "Content-Type": "application/json" },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       console.log(data);
+    //     });
+ 
 
   return (
     <div className={styles.cardContainer}>
@@ -54,13 +69,18 @@ function EventCard(props) {
         ) : (
           <div></div>
         )}
+        {props._id ? (
         <Link href={`/event?hash=${props._id}`}>
           <div className={styles.cardContent}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
             <button className={styles.knowMoreButton}>En savoir plus</button>
           </div>
-        </Link>
+        </Link>) : (<div className={styles.cardContent}>
+            <p className={styles.title}>{props.eventName}</p>
+            <p className={styles.description}>{props.description}</p>
+            <button className={styles.knowMoreButton}>En savoir plus</button>
+          </div>)}
       </div>
     </div>
   );

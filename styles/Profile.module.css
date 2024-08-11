@@ -1,0 +1,46 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Prend toute la hauteur de la vue */
+    text-align: center; /* Centre le texte à l'intérieur du conteneur */
+    padding: 0 20px; /* Ajoute un peu d'espace horizontal */
+}
+
+
+
+
+
+.buttonContainer {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px
+    }
+    
+    
+    .button {
+        border: 1px solid #F2AF77;
+        border-radius: 15px;
+        width:200px;
+        height:47px;
+        cursor: pointer;
+        color:white;
+        background-color: rgb(242,175,119);
+        
+    }
+    
+    .button:hover {
+        background-color: white;
+        color: rgb(242,175,119);
+        font-weight: bold;
+        border-color: #F2AF77;
+          border: 1px solid;
+    }
+    
+    .img {
+        margin-bottom: 20px;
+    }

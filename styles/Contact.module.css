@@ -1,0 +1,67 @@
+.contactContainer {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 2%;
+    padding: 20px;
+    background-color: rgb(46, 70, 86);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.contactContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.contactContainer form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contactContainer label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.contactContainer input,
+.contactContainer textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.contact-container input:focus,
+.contact-container textarea:focus {
+    outline: none;
+    background-color: #e8e8e8;
+}
+
+.contactContainer textarea {
+    height: 100px;
+    resize: none;
+}
+
+.contactContainer input[type="submit"] {
+    padding: 12px 20px;
+    background-color: rgb(242, 175, 119);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.contactContainer input[type="submit"]:hover {
+ background-color: white;
+    color:  rgb(242, 175, 119);
+    font-weight: 600;
+}
