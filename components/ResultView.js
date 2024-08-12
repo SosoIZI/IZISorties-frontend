@@ -1,7 +1,5 @@
 import styles from '../styles/Results.module.css';
 import "boxicons/css/boxicons.min.css"; 
-import React, { useState } from 'react';
-import SearchBar from "./SearchBar";
 import { useLocation, Link } from 'react-router-dom';
 import {useRouter} from "next/router";  // import de useRouter pour afficher une navigation en mode SPA 
 
@@ -13,6 +11,7 @@ function View() {
 
     return(
        <div className={styles.topContainer}>
+
                 <h1>Résultats de la recherche</h1>
 
             {/* Si  */}  
@@ -39,6 +38,7 @@ function View() {
                 </button>
                 </Link>
             </div>
+
         </div>
     )
 }

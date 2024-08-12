@@ -31,7 +31,6 @@ function searchBar() {
   const signIn = useSelector((state) => state.user.valuetoken)
   const router = useRouter()
 
-
   // fonctions pour filtrer la recherche et mettre à jour les états
 
   // on sélectionne une ville via le menu déroulant
@@ -65,9 +64,7 @@ function searchBar() {
           
           setLong(longitude);
           setLat(latitude);
-          // setGeoloc(true)
           dispatch(addGeoloc(true))
-
   
           fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
             .then((response) => response.json())
@@ -148,9 +145,6 @@ const handleClick = () => {
   }
 }
 }
-
-
-
 
   return (
 
@@ -234,8 +228,6 @@ const handleClick = () => {
         </Select>
 
       </div>
-
-      
 
       <div className={styles.buttonContainer}>
         <Button className={styles.button} onClick={() => handleClick()}>Rechercher</Button>

@@ -20,11 +20,10 @@ function Home() {
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
   const login = useSelector((state) => state.user.value.name) // pour utiliser la modal dans event 
-
-  const geolocApproved = useSelector((state) => state.search.value.geoloc)
-  
+  const geoApproved = useSelector((state) => state.search.value)
 
   console.log("modal visible : ", modalVisible);
+
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
     fetch("http://localhost:3000/events/top/liked")
@@ -87,7 +86,7 @@ function Home() {
         confirmButtonColor: "rgb(46, 70, 86)",
       });
     }
-  }, []);
+  }, [geoApproved]);
 
   const topEventCards = topEvent.slice(0, 5).map((data, i) => {
     return <EventCard key={i} {...data} isConnected={login != null}    // if login est rempli=isconnected =pas modale 
@@ -127,9 +126,6 @@ function Home() {
         <p>{geoError}</p>
       ) : (
         <>
-
-
-
         
           <h2>Les sorties de cette semaine, près de chez toi :</h2>
           <div className={styles.mostConsultedContainer}>
