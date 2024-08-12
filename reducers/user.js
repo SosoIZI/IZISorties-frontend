@@ -26,6 +26,7 @@ export const userSlice = createSlice({
         state.value.username = null;
         state.value.email = null;
       },
+    
     },
   });
   

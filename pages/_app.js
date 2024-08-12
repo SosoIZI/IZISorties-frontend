@@ -29,7 +29,7 @@ function App({ Component, pageProps }) {
         <Head>
           <title></title>
         </Head>
-        <Header />
+        <Header />     {/* on importe composant hader et footer pour qu'ils apparaissent dans la structure de toutes les pages*/}
         <div style={{ minHeight: "100vh" }}>
           <Component {...pageProps} />
         </div>
