@@ -78,3 +78,33 @@
 .pic {
   border-radius: 50px;
 }
+
+.buttonbis {
+  display: flex;
+  align-items: center;
+
+font-size: 16px;
+width:400px;
+height:40px;
+cursor: pointer;
+color:black;
+  margin-top: 20px;
+  background-color:rgb(254,247,241);
+}
+
+
+.buttonbis i {
+
+  color:black;
+  font-size: 32px;
+  margin-right: 5%;
+  }
+  
+  
+  .buttonbis:hover {
+    background-color: white;
+    color: rgb(242,175,119);
+    font-weight: bold;
+  }
+  
+  
