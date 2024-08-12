@@ -8,10 +8,28 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 function EventCard(props) {
-  // const dispatch = useDispatch();
-  // const token = useSelector((state) => state.user.value.token);
-
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.value.token);
   let [isliked, setIsLiked] = useState(false);
+
+
+  useEffect(() => {
+// je vais récupérer l'id du user, si cet id est compris dans le NbLike de cet event
+// alors isLiked est true
+fetch(`http://localhost:3000/users/infos/${token}`)
+.then((response) => response.json())
+.then((data) => {
+  console.log(data.user[0]._id)
+  if(props.nbLike) {
+  for (const e of props.nbLike) {
+    if (e==data.user[0]._id) {
+      setIsLiked(true)
+    }
+  } }
+})
+  }, [])
+
+
   let heartStyle = { color: "white" };
   if (isliked === true) {
     heartStyle = { color: "red" };
@@ -22,17 +40,16 @@ function EventCard(props) {
   // // Quand je clique sur le boutton coeur, je dois rajouter un like à ce tweet dans ma BDD
    const addNewLike = () => {
      setIsLiked(!isliked);
-  //   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
-  //   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
-
-  //   fetch(`http://localhost:3000/events/like/:token/${props._id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
+    // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
+    // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
+    fetch(`http://localhost:3000/events/like/${token}/${props._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
    };
 
   return (

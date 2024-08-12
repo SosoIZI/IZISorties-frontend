@@ -1,0 +1,44 @@
+.CalendrierPageContainer {
+  margin: 30px;
+}
+
+.mySoonEventsContainer {
+  margin: 10px;
+}
+
+.eventsBookedContainer {
+  display: flex;
+}
+
+/* hr c'est le trait */
+.hr {
+  border: 5px;
+  height: 1px;
+  background: #2e4656;
+  margin: 5px 0;
+}
+
+.calendarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 30%;
+  height: 500px;
+  background-color: #2e4656;
+  border-radius: 8px;
+  padding: 10px;
+  color: #2e4656;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  margin-right: 20px;
+}
+
+.bookedEventsSpecificDate {
+  display: flex;
+}
+
+.calendarAndResultContainer {
+  display: flex;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 10px;
+}
