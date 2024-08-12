@@ -13,6 +13,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Script from 'next/script';
 import events from "../reducers/event";
+import { BrowserRouter } from "react-router-dom";
 
 
 const reducers = combineReducers({ user, events, search});
@@ -30,6 +31,7 @@ function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <BrowserRouter>
         <Head>
           <title></title>
         </Head>
@@ -39,6 +41,7 @@ function App({ Component, pageProps }) {
         </div>
 
         <Footer />
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   );

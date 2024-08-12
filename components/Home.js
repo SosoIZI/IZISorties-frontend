@@ -8,7 +8,6 @@ import SearchBar from "./SearchBar";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Connexion from "./Connexion";
-import { useSelector } from "react-redux";
 
 
 function Home() {

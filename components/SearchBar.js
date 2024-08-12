@@ -34,8 +34,6 @@ function searchBar() {
 
   // fonctions pour filtrer la recherche et mettre à jour les états
 
-  const checkboxName = [{ id: 1, name: 'Cinema' }, { id: 2, name: 'Musique' }] // noms des catégories à cocher
-
   // on sélectionne une ville via le menu déroulant
 
   const selectCity = (e) => {
@@ -114,15 +112,15 @@ function searchBar() {
     }
 
   // on sélectionne une ou plusieurs catégories via la checkbox
+  const checkboxName = [{ id: 1, name: 'Cinema' }, { id: 2, name: 'Musique' }] // noms des catégories à cocher
   
   const selectCategories = (e) => {
-    // e = e.join(', ')
     setCategories(e)
     console.log(categories);
 }
 
 
-//fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
+// fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
 // le résultat est envoyé dans le reducer events pour les récupérer sur les pages de résultats
 
 const findResults = (query) => {
@@ -131,24 +129,24 @@ const findResults = (query) => {
   .then(data => {
     console.log("data : ", data.events);
 
-    
     dispatch(searchEvents(data.events))
     
 })
 }
 
+// fonction pour renvoyer sur la page des résultats
 const handleClick = () => {
   let query = ""
   if(categories.length > 0){
-     query = '?categorie=' + categories.join('&categorie=')
-  }
-  findResults(query)
+     query = '?categorie=' + categories.join('&categorie=') // on construit la chaîne de caratère présente de l'url de requête vers le backend&API
+      findResults(query)
   // if(!signIn) {
   //   router.push("/Inscription")
   // } else 
   {
     router.push('/Results')
   }
+}
 }
 
 

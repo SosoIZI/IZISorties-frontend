@@ -13,8 +13,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-left: 30px;
-	margin-right: 30px; 
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 20px
+	
 }
 
 .searchBar i {
@@ -30,6 +32,9 @@
     width: 200px;
     padding: 2px 23px 2px 30px;
     outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 

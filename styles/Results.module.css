@@ -1,8 +1,7 @@
 .buttonContainer {
 
     display: flex;
-    /* justify-content: center; */
-    gap: 20px;     /*espace entre les élements enfants   */
+    gap: 20px;    
     
     }
 
@@ -10,8 +9,9 @@
     
     margin: 30px;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     }
     
     
@@ -44,5 +44,54 @@
         font-size: 35px;
         cursor:pointer
     }
+
+    .navigation-buttons button {
+        background-color: white;
+        color:  #e38d83;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .navigation-buttons button.active {
+        background-color:  #e38d83;
+      }
     
-    
+    .swipeContainer {
+
+        display: flex;
+        flex-direction: column;
+        padding: 3%
+
+    }
+
+    .img {
+
+        display: flex;
+        align-items: center;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        justify-content: space-evenly;
+        object-fit: cover
+      
+    }
+
+    .iconContainer {
+        margin-top: 20px;
+        justify-content: space-evenly;
+    }
+
+    .imgContainer {
+
+        justify-content: space-evenly;
+        display: flex;
+
+    }
+
+    .topContainer {
+
+        margin-left: 10%;
+        margin-top: 20px;
+
+    }
+   
