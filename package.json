@@ -9,20 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-=======
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
-    "@fortawesome/fontawesome-svg-core": "^6.6.0",
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@mui/icons-material": "^5.16.6",
-    "@mui/material": "^5.16.6",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
->>>>>>> f87b45600287bae72dd0ca634505de4f9856bc30
     "@reduxjs/toolkit": "^1.8.2",
     "antd": "^5.20.0",
     "bootstrap": "^5.3.3",
@@ -37,13 +26,7 @@
     "react-redux": "^8.0.2",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-<<<<<<< HEAD
     "sweetalert2": "^11.12.4"
-=======
-    "styled-components": "^6.1.12",
-    "sweetalert2": "^11.12.4",
-    "uniqid": "^5.4.0"
->>>>>>> f87b45600287bae72dd0ca634505de4f9856bc30
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

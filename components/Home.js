@@ -84,6 +84,7 @@ function Home() {
     }
   }, []);
 
+  console.log("lgin != null : ", login != null, login);
   const topEventCards = topEvent.slice(0, 5).map((data, i) => {
     return <EventCard key={i} {...data} isConnected={login != null}    // if login est rempli=isconnected =pas modale 
     handleShow={handleShow} />;// props à passer pour utiliser la modal 
@@ -93,10 +94,11 @@ function Home() {
   // si l'utilisateur a accepté d'être géoloc, alors afficher "les sorties de cette semaine, près de chez toi"
   // sinon, l'inviter à activer sa géoloc pour obtenir de meilleures reco.
 
-  const thisWeekEventCards = eventThisWeek.slice(0, 5).map((data, i) => {
+  console.log("eventThisWeek : ", eventThisWeek);
+  const thisWeekEventCards =  eventThisWeek ? eventThisWeek.slice(0, 5).map((data, i) => {
     return <EventCard key={i} {...data} isConnected={login != null} 
-    handleShow={handleShow}  />;
-  });
+    handleShow={handleShow}  />}) : <p></p>;
+  ;
 
   return (
     <div className={styles.netflixContainer}>
@@ -111,6 +113,7 @@ function Home() {
             showModal={modalVisible}
             handleClose={handleClose}
             isConnected={false}
+          
           />
         </div>
       </div>
@@ -143,7 +146,7 @@ function Home() {
           height={470}
           className={styles.pic}
         />
-        <div className={styles.argumentationContainer}>
+        <div className={styles.argumentationContainer}> 
           <h2>IZI te facilite la vie !</h2>
           <p>
             Votre compagnon idéal pour toutes vos sorties culturelles et de

@@ -54,7 +54,7 @@ const handleClick = () => {  // fonction pour activer la modal connexion au clic
 
   return (
     <div className={styles.cardContainer}>
-      <div className={styles.heartButton} onClick={() => addNewLike()}>
+      <div className={styles.heartButton} onClick={() => handleClick()}>
         <FontAwesomeIcon icon={faHeart} style={heartStyle} />
       </div>
       <div className={styles.cardAllContent}>
@@ -70,13 +70,12 @@ const handleClick = () => {  // fonction pour activer la modal connexion au clic
           <div></div>
         )}
         {props._id ? (
-        <Link href={`/event?hash=${props._id}`}>
-          <div className={styles.cardContent}>
+          <div className={styles.cardContent} onClick={handleClick}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
             <button className={styles.knowMoreButton}>En savoir plus</button>
           </div>
-        </Link>) : (<div className={styles.cardContent}>
+        ) : (<div className={styles.cardContent}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
             <button className={styles.knowMoreButton}>En savoir plus</button>

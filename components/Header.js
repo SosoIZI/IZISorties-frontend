@@ -13,13 +13,24 @@ import Swal from 'sweetalert2';
 function Header() {
   const dispatch = useDispatch();
   const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
+  const token = useSelector((state) => state.user.value.token); // le reducer va chercher la valeur du token pour dire si user connected ou non
+
+  const [searchInput, setSearchInput] = useState(""); // état pour renseigner l'input
 
   const [modalVisible, setModalVisible] = useState(false); // import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
+  const handleChange = (e) => {
+    // e.target.value= valeur de l'input
+    setSearchInput(e.target.value);
+  };
 
+  const handleReset = () => {
+    // Pour réinitialiser le setter vide= Quand on appuye sur la croix, réinitialise la barre de recherche.
+    setSearchInput("");
+  };
   
-  const handleDelete = async() => {  
+  const handleDelete = async() => {  // Async await pour attendre la validation de l'user avant de supprimer ou pas le profil
     
     const proceed= 
     await Swal.fire({
@@ -34,7 +45,7 @@ function Header() {
     timer: 50000,})
  
     console.log(proceed);
-     if (proceed.isConfirmed){// .isConfirmed car lié à swal.)
+     if (proceed.isConfirmed){// proceed.isConfirmed car lié à swal.)
     //  on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
     fetch(`http://localhost:3000/users/delete/${token}`, {
        method: "DELETE",
@@ -55,7 +66,6 @@ function Header() {
     
    };
  
-  
   
   const popoverContent = (
     <Menu>
@@ -100,19 +110,8 @@ function Header() {
     </Menu>
   );
 
-  const token = useSelector((state) => state.user.value.token); // le reducer va chercher la valeur du token pour dire si user connected ou non
-
-  const [searchInput, setSearchInput] = useState(""); // état pour renseigner l'input
-
-  const handleChange = (e) => {
-    // e.target.value= valeur de l'input
-    setSearchInput(e.target.value);
-  };
-
-  const handleReset = () => {
-    // Pour réinitialiser le setter vide= Quand on appuye sur la croix, réinitialise la barre de recherche.
-    setSearchInput("");
-  };
+ 
+  
 
   return (
     // Utilisation de Link et de la balise <a> pour qu'au clic sur l'image on puisse se rediriger vers home //
@@ -186,7 +185,7 @@ function Header() {
           </div>
         </div>
       ) : (
-        // si token is false:=userNot Connected affiche ce header   //
+        // si token is false:=userNot Connected affiche ce header //
         <>
           <div className={styles.header}>
             <div className={styles.logoAndSearchContainer}>
@@ -198,7 +197,7 @@ function Header() {
                 value={searchInput}
               />
               {!searchInput ? (
-                <i // si searchInput est vide afficher la loupe //
+                <i // si searchInput est vide afficher la loupe dans la barre de recherche //
                   className="bx bx-search-alt-2 bx-rotate-90"
                   style={{ color: "rgba(0,0,0,0.38)" }}
                 ></i>
