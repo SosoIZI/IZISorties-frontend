@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "../styles/Inscription.module.css";
 import ForgotPassword from "./ForgotPassword";
 import { signIn } from "../reducers/user";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-function Connexion({ isConnected = true, showModal, handleClose }) {
+function Connexion({ isConnected = true, showModal, handleClose }) {// 3 props
   const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
   const [SignInUsername, setSignInUsername] = useState("");
   const [SignInEmail, setSignInEmail] = useState("");
@@ -21,23 +21,28 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
 
   const toggleShowPassword = () => {
     // montre ou cache le mot de passe lors de la saisie
-
-    setShowPassword(!showPassword);
+    setShowPassword(!showPassword);//L'expression !showPassword est utilisée pour inverser la valeur actuelle de showPassword.
+//Si le mot de passe est actuellement visible (showPassword est true), la fonction le masquera en réglant showPassword à false.
+//Si le mot de passe est actuellement masqué (showPassword est false), la fonction l'affichera en clair en réglant showPassword à true.
   };
-  const handleForgotPasswordClick = () => {
+  const handleForgotPasswordClick = () => {// Ouvre la modale de réinitialisation du mot de passe et ferme la modale de connexion.
+    console.log("salut");
+
     setForgotPasswordModalVisible(true);
-    handleClose(); // ferme la  modal connexion
-  };
+    // handleClose(); // ferme la  modal connexion
+ };
+  
 
-  const handleForgotPasswordClose = () => {
+  const handleForgotPasswordClose = () => {// Ferme la modale de réinitialisation du mot de passe.
+
     setForgotPasswordModalVisible(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => {//Fonction principale pour gérer la soumission du formulaire de connexion 
     e.preventDefault();
     handleClose();
 
-    if (!SignInUsername && !SignInEmail) {
+    if (!SignInUsername && !SignInEmail) {//Vérifie si au moins un des champs SignInUsername ou SignInEmail est rempli.
       Swal.fire({
         title: "Attention!",
         text: "Veuillez renseigner soit votre nom d'utilisateur, soit votre email.",
@@ -49,7 +54,8 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
       return;
     }
 
-    fetch("http://localhost:3000/users/signin", {
+    fetch("http://localhost:3000/users/signin", {//Fait une requête POST au backend pour vérifier les informations de connexion.
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: SignInEmail, password: SignInPassword }),
@@ -57,7 +63,7 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if (data.result) {
+        if (data.result) {  //Si la connexion est réussie (data.result est true), l'utilisateur est connecté, et ses informations sont enregistrées dans Redux (dispatch(signIn)).
           dispatch(
             signIn({
               username: SignInUsername,
@@ -83,6 +89,7 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
       });
   };
 
+  console.log("isConnected : ", isConnected);
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>
@@ -101,7 +108,7 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
 
             <div className={styles.passwordContainer}>
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? "text" : "password"}//Si showPassword est true : Alors, le type de l'input sera défini à "text". Cela signifie que le contenu de l'input sera visible en clair, comme du texte ordinaire.
                 placeholder="Mot de passe"
                 value={SignInPassword}
                 onChange={(e) => setSignInPassword(e.target.value)}
@@ -116,24 +123,24 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
               ></i>
             </div>
 
-            {isConnected ? <span
+            {isConnected && <span /*Si isConnected est vrai, un lien pour réinitialiser le mot de passe est affiché.*/
               onClick={handleForgotPasswordClick}
               style={{ cursor: "pointer" }}
             >
               Mot de Passe Oublié{" "}
-            </span> :  (
-        <ForgotPassword
+            </span> }
+
+            <ForgotPassword
           showModal={forgotPasswordModalVisible}
           handleClose={handleForgotPasswordClose}
         />
-      )}
             
 
             <Button variant="primary" type="submit" className={styles.button}>
               Connexion
             </Button>
 
-            {!isConnected && (
+            {!isConnected && (  //Si isConnected est faux (l'utilisateur n'est pas connecté), un lien pour rediriger vers la page d'inscription est affiché.
              
                 <>
                   <a

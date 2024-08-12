@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import uniqid from "uniqid";
 
 function CreateEvent() {
-  // en attendant de pouvoir me connecter je crée un faux token pour l'user
+
   const token = useSelector((state) => state.user.value.token);
 
   // Je crée un état par input
@@ -136,10 +136,8 @@ function CreateEvent() {
     },
   ];
 
-  console.log(latitude);
-
-  // je paramètre le module material-UI
-  // 1- J'utilise les icones de ce module (les cases de selection et la flèche)
+  // PARAMETRAGE DU MODULE MATERIAL-UI
+  // 1- J'utilise les icones de ce module (les cases à cocher vides et pleines)
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   // 2- Je crée un état qui est un tableau qui va stocker sous forme d'objet
@@ -149,7 +147,7 @@ function CreateEvent() {
   // 3- La fonction handleChange se lance quand je selectionne des categories
   //  value : un tableau des options sélectionnées par l'utilisateur.
   const handleChange = (event, value) => {
-    //  Si le nombre d'éléments sélectionnés est supérieur à 3 la fonction s'arrête
+    //  Si le nombre d'éléments sélectionnés est supérieur à 3 la fonction ne met pas à jour l'état
     if (value.length <= 3) {
       // je mets à jour les values selectionnées dans categoriesSelected
       setCategoriesSelected(value);
@@ -159,21 +157,21 @@ function CreateEvent() {
     }
   };
 
-  const options = categoriesList.flatMap((category) =>
-    category.subcategories.map((subcategory) => ({
-      category: category.category,
-      subcategory,
-      // options contient les options à afficher dans l'Autocomplete.
-      // flatMap transforme `categoriesList` en un tableau plat d'objets.
-      // Pour chaque catégorie, il applique la fonction passée en argument, qui retourne un tableau d'objets.
-      // map parcourt chaque sous-catégorie de la catégorie actuelle.
-      // Pour chaque sous-catégorie, il retourne un objet contenant category et subcategory
-    }))
-  );
+// je crée un tableau "options" qui va contenir les mêmes infos que dans ma BDD catégories 
+// (mais l'autocomplete impose de recréer une constante ainsi pour fonctionner)
+  const options = [];
+  for (const category of categoriesList) {
+    for (const subcategory of category.subcategories) {
+      options.push({
+        category: category.category,
+        subcategory: subcategory,
+      });
+    }
+  }
 
+  // PARAMETRAGE DES INFOS "PLACES"
   const [placeDataBase, setPlaceDataBase] = useState("");
 
-  // je traite l'élément "place"
   useEffect(() => {
     // 1- je fetch pour récupérer les données de la BDD places
     fetch(`http://localhost:3000/places/`)
@@ -183,6 +181,8 @@ function CreateEvent() {
         setPlaceDataBase(data.places);
       });
   }, [idPlace]);
+  //au démarrage du composant, je charge toutes les données présentent dans la BDD "places" et je les stocke dans un état
+  // cette liste se mettra à jour à chaque fois que "idPlace" changera 
 
   const namePlaceChange = (event, newValue) => {
     // newValue : la valeur sélectionnée par l'utilisateur ou saisie manuellement.
@@ -196,6 +196,7 @@ function CreateEvent() {
       setIdPlace(""); // si l'utilisateur saisie lui-même sa place, alors il n'y a pas encore d'id
     } else {
       // if l'utilisateur a sélectionné une suggestion existante
+      // j'ai mis des ou '' à chaque fois au cas où la place selectionnée n'a pas toutes les données pour que ca ne bloque pas le code
       setNamePlace(newValue?.namePlace || "");
       setAddress(newValue?.address || "");
       setCp(newValue?.cp || "");
@@ -204,9 +205,10 @@ function CreateEvent() {
     }
   };
 
-  // concernant les images
-  const pictures = ["/IZI_sorties_home.png"];
+  // PARAMETRAGE DES IMAGES
 
+  // Fonction qui se lance quand l'utilisateur a télécharger une image. 
+  // Je stocke ces images dans un tableau imageFiles
   const imageAdded = (event) => {
     // event est l'objet événement généré par le navigateur lorsqu'on utilise l'input file.
     // Cela équivault à value pour l'autocomplete.
@@ -215,19 +217,19 @@ function CreateEvent() {
     for (let i = 0; i < event.target.files.length; i++) {
       filesArray.push(event.target.files[i]); // Ajoute chaque fichier au tableau filesArray
     }
-    // j'ajoute les nouveaux fichiers au tableau existant
+    // j'ajoute les nouveaux fichiers au tableau existant imageFiles (je nomme prevFiles, mon tableau actuel imageFiles)
     setImageFiles((prevFiles) => {
       const newFiles = [...prevFiles, ...filesArray];
       if (prevFiles.length === 0) {
-        // Vérifiez si c'est la première image ajoutée
-        const previewUrl = URL.createObjectURL(newFiles[0]);
-        console.log("Generated Preview URL:", previewUrl); // Vérifiez l'URL de prévisualisation générée
-        setPreviewUrl(previewUrl);
+        // Si c'est la première image ajoutée, je veux que ce soit elle qui soit affichée dans la preview de l'EventCard
+        const firstPic = URL.createObjectURL(newFiles[0]);
+        setPreviewUrl(firstPic);
       }
       return newFiles;
     });
   };
 
+  // Je créé une fonction qui enverra les fichiers (imageFiles) dans cloudinary via le back au moment d'appuyer sur "soumettre"
   const uploadImagesToCloudinary = async () => {
     const formData = new FormData();
     for (let i = 0; i < imageFiles.length; i++) {
@@ -239,17 +241,41 @@ function CreateEvent() {
       method: "POST",
       body: formData,
     });
-
+    // je récupère les urls des images qui ont été envoyées dans cloudinary
     const data = await response.json();
     setImageUrls(data.urls);
     return data.urls;
   };
 
+
+  // Je crée une fonction qui affiche en miniature les photos qu'il a téléchagé
+  const imagePreviews = imageFiles.map((file, index) => (
+    <div key={index} className={styles.imagePreviewWrapper}>
+      <img
+        src={URL.createObjectURL(file)}
+        alt={`preview-${index}`}
+        className={styles.imagePreview}
+      />
+      <button
+        onClick={() => removeImage(index)}
+        className={styles.removeImageButton}
+      >
+        X
+      </button>
+    </div>
+  ));
+
+  // Je crée une fonction qui permet à l'utilisateur de supprimer une image qu'il a téléchargé
+  const removeImage = (index) => {
+    const newFiles = [...imageFiles];
+    newFiles.splice(index, 1);
+    setImageFiles(newFiles);
+  };
+
+
   // Pour finir, quand je clique sur "soumettre", la fonction addNewEvent se lance.
-  // On verifie que tous les champs sont remplis sinon on met une alerte
-  // Si tous les champs sont remplis :
-  // Si la place n'est pas dans ma BDD, je commence par la créer pour récupérer son id, sa longitude et sa latitude
-  // Puis on lance la route qui crée l'event avec les infos du form, le token de l'user, et l'id de la place
+  // On verifie que tous les champs sont remplis correctement sinon on met une alerte
+
   const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
 
   const addNewEvent = async () => {
@@ -302,7 +328,10 @@ function CreateEvent() {
       return;
     }
 
-    // 1- je commence par créer ma place si elle n'est pas dans ma BDD
+      // Si tous les champs sont remplis :
+      // Si la place n'est pas dans ma BDD, je commence par la créer pour récupérer son id, sa longitude et sa latitude
+      // Puis on lance la route qui crée l'event avec les infos du form, le token de l'user, et l'id de la place
+    // 1- je commence par créer ma place si elle n'est pas dans ma BDD 
     if (
       eventName &&
       description &&
@@ -438,27 +467,7 @@ function CreateEvent() {
     }
   };
 
-  const removeImage = (index) => {
-    const newFiles = [...imageFiles];
-    newFiles.splice(index, 1);
-    setImageFiles(newFiles);
-  };
 
-  const imagePreviews = imageFiles.map((file, index) => (
-    <div key={index} className={styles.imagePreviewWrapper}>
-      <img
-        src={URL.createObjectURL(file)}
-        alt={`preview-${index}`}
-        className={styles.imagePreview}
-      />
-      <button
-        onClick={() => removeImage(index)}
-        className={styles.removeImageButton}
-      >
-        X
-      </button>
-    </div>
-  ));
 
   return (
     <div className={styles.pageContainer}>
@@ -467,6 +476,7 @@ function CreateEvent() {
           <h1>Je créé mon évènement dans IZI</h1>
           <div className={styles.form}>
             <div className={styles.formGroup}>
+              {/* htmlFor permet aux lecteurs d'écran d'annoncer le champ de saisie (pour les utilisateurs malvoyants) */}
               <label htmlFor="eventName" className={styles.label}>
                 Nom de l'évènement
               </label>
@@ -560,10 +570,10 @@ function CreateEvent() {
               </label>
               {/* pour les catégories je crée l'autocomplete avec le module "material-ui" */}
               <Autocomplete
-                multiple
-                options={options}
-                disableCloseOnSelect
-                getOptionLabel={(option) =>
+                multiple // autorise la multiple selection
+                options={options} // affiche les options définies + haut
+                disableCloseOnSelect // empêche le menu de se fermer automatiquement lorsqu'une option est sélectionnée
+                getOptionLabel={(option) => // défini la forme des options
                   `${option.category} - ${option.subcategory}`
                 }
                 onChange={handleChange}
@@ -612,8 +622,7 @@ function CreateEvent() {
                   Nom du lieu de l'évènement
                 </label>
                 <Autocomplete
-                  // freesolo permet à l'utilisateur de renseigner le champ lui-même s'il ne le trouve pas dans les suggestions
-                  freeSolo
+                  freeSolo // permet à l'utilisateur de renseigner le champ lui-même s'il ne le trouve pas dans les suggestions
                   options={placeDataBase}
                   getOptionLabel={(option) =>
                     typeof option === "string"
@@ -671,18 +680,23 @@ function CreateEvent() {
               </div>
             </div>
             <div className={styles.formGroup}>
-              
               <div className={styles.uploadImageContainer}>
-              <input
-                type="file"
-                multiple
-                className={styles.fileInput}
-                onChange={imageAdded} // Déclenche la fonction handleImageChange lorsque des fichiers sont sélectionnés
-              />
-              <div className={styles.uploadImageButton}>
-      Télécharger des images
-      <span className={styles.uploadImageButtonIcon}> <i className="bx bxs-download" style={{ color: "#2F4858" }}></i></span>
-    </div>
+                <input
+                  type="file"
+                  multiple
+                  className={styles.fileInput}
+                  onChange={imageAdded} // Déclenche la fonction handleImageChange lorsque des fichiers sont sélectionnés
+                />
+                <div className={styles.uploadImageButton}>
+                  Télécharger des images
+                  <span className={styles.uploadImageButtonIcon}>
+                    {" "}
+                    <i
+                      className="bx bxs-download"
+                      style={{ color: "#2F4858" }}
+                    ></i>
+                  </span>
+                </div>
               </div>
               <div className={styles.imagePreviewContainer}>
                 {imagePreviews}
@@ -699,7 +713,7 @@ function CreateEvent() {
         </div>
         <div className={styles.previewContainer}>
           <EventCard
-            pictures={[previewUrl]} // Passez previewUrl dans un tableau ici pour EventCard
+            pictures={[previewUrl]} // je ne veux que la 1ère image dans la preview de l'EventCard
             eventName={eventName}
             description={description}
           />

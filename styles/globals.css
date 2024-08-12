@@ -6,6 +6,8 @@
     url("fonts/SCHABO-Condensed.woff2") format("woff2");
 }
 
+@import "leaflet/dist/leaflet.css";
+
 body {
   padding: 0;
   margin: 0;
@@ -37,3 +39,85 @@ a {
   color: inherit;
 }
 /* pour éviter que les liens de redirection ait la couleur du lien par défaut: bleue */
+
+/* react calendar */
+.react-calendar {
+  background-color: #2E4656 !important; 
+  border: none !important;
+  border-radius: 12px;
+  font-family: "Lato", sans-serif;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+  color: #2E4656;
+}
+
+.react-calendar__navigation button {
+  color: #F2AF77;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #F2AF77;
+  border-radius: 4px;
+}
+
+.react-calendar__navigation__label__labelText {
+  color: #F2AF77;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  color: #E38D83;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.react-calendar__tile {
+  background-color: #F2AF77;
+  color: #F2AF77;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #F2AF77;
+}
+
+.react-calendar__tile--active {
+  background-color: #F2AF77 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.react-calendar__tile--now {
+  background-color: #525A7A !important; 
+  color: white;
+}
+
+.highlight {
+  background-color: #F2AF77 !important;
+  color: #F2AF77 !important;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #F2AF77;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: white !important; /* Couleur pour les week-ends */
+}
