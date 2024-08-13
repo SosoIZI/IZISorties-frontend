@@ -9,7 +9,9 @@ import { useDispatch } from "react-redux";
 import { Router, useRouter } from "next/router";
 
 function EventCard(props) { // on peut écrire props ou {le nom de la props}
-  // const dispatch = useDispatch();
+  //const dispatch = useDispatch();
+
+  
   const router = useRouter();
 
   let [isliked, setIsLiked] = useState(false);
