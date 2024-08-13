@@ -165,40 +165,40 @@ function EventDetailsMaquette(props) {
           <div className={styles.headerInfoContainer}>
             <h2>Infos pratiques</h2>
             <div className={styles.iconsContainer}>
-              <button className={styles.iconButton}>
+              <div className={styles.iconButton}>
                 <i className="bx bx-link"></i>
-              </button>
-              <button className={styles.iconButton}>
+              </div>
+              <div className={styles.iconButton}>
                 <i className="bx bx-share"></i>
-              </button>
-              <button className={styles.iconButton}>
+              </div>
+              <div className={styles.iconButton}>
                 <i className="bx bx-heart"></i>
-              </button>
-              <button className={styles.iconButton}>
+              </div>
+              <div className={styles.iconButton}>
                 <i className="bx bx-calendar-plus"></i>
-              </button>
+              </div>
             </div>
           </div>
           <div className={styles.infosData}>
-            <button className={styles.longInfoButton}>
+            <div className={styles.longInfoButton}>
               <i className="bx bx-calendar"></i>{" "}
               {props.startDate === props.endDate
                 ? `Le ${dateDebutGoodFormat}`
                 : `Du ${dateDebutGoodFormat} au ${dateFinGoodFormat}`}
-            </button>
+            </div>
             <div className={styles.smallInfoButtonContainer}>
-              <button className={styles.infoButton}>
+              <div className={styles.infoButton}>
                 <i class="bx bx-time-five"></i> De {props.startTime} à{" "}
                 {props.endTime}
-              </button>
-              <button className={styles.infoButton}>
+              </div>
+              <div className={styles.infoButton}>
                 <i class="bx bx-euro"></i> Prix : {props.price}
-              </button>
+              </div>
             </div>
-            <button className={styles.longInfoButton}>
+            <div className={styles.longInfoButton}>
               {" "}
               <i class="bx bx-map"></i> {adresse}
-            </button>
+            </div>
             <button className={styles.placeButton}>
               <i class="bx bx-building-house"></i> Page de l'établissement
             </button>

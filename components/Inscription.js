@@ -187,6 +187,7 @@ function Inscription() {
               className={styles.button}
               type="submit"
               onClick={handleSubmit}
+              name='Boutton dinscription'
             >
               Inscription
             </button>
@@ -200,6 +201,7 @@ function Inscription() {
             className={styles.buttonbis}
             type="submit"
             onClick={handleSignInGoogle}
+            name='Boutton de connexion via Google'
           >
             <i className="bx bxl-google-plus"></i>Connexion avec Google{" "}
           </button>
@@ -209,6 +211,7 @@ function Inscription() {
             className={styles.buttonbis}
             type="button"
             onClick={() => handleSignIn()}
+            name='Boutton de connexion via Facebook'
           >
             <i className="bx bxl-facebook-circle"></i> Connexion avec Facebook{" "}
           </button>
@@ -218,6 +221,7 @@ function Inscription() {
             className={styles.buttonbis}
             type="button"
             onClick={() => handleSignIn()}
+            name='Boutton de connexion via Apple'
           >
             <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
           </button>

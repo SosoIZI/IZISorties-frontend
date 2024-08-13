@@ -106,7 +106,7 @@ function Home() {
       <div className={styles.mostConsultedContainer}>
         {topEventCards}
         <div>
-          <button className={styles.roundButton} onClick={handleShow}>
+          <button name='defilement des évènements vers la droite' className={styles.roundButton} onClick={handleShow}>
             <i className="bx bx-right-arrow-alt"></i>
           </button>
           <Connexion
@@ -126,7 +126,7 @@ function Home() {
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
-              <button className={styles.roundButton}>
+              <button name='defilement des évènements vers la droite' className={styles.roundButton}>
                 <i className="bx bx-right-arrow-alt"></i>
               </button>
             </div>
@@ -138,7 +138,7 @@ function Home() {
           src="/IZI_sorties_home.png"
           alt="Logo"
           width={600}
-          height={470}
+          height={476}
           className={styles.pic}
         />
         <div className={styles.argumentationContainer}> 
@@ -162,6 +162,7 @@ function Home() {
           <button
             onClick={() => router.push("/Inscription")}
             className={styles.inscriptionButton}
+            name='inscription'
           >
             Je m'inscris !
           </button>

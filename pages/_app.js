@@ -11,6 +11,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+
 const reducers = combineReducers({ user });
 const persistConfig = { key: "applicationName", storage };
 
@@ -26,6 +27,7 @@ function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+     
         <Head>
           <meta
             name="description"
@@ -39,6 +41,7 @@ function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
         <Footer />
+       
       </PersistGate>
     </Provider>
   );
