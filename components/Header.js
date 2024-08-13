@@ -29,7 +29,7 @@ function Header() {
     // e.target.value= valeur de l'input
     setSearchInput(e.target.value);
   
-
+//fetch de la route search, utiliser le reducer et displayEvent pour afficher l'EventCard
   if (e.target.value !== "") {
 
     fetch(`http://localhost:3000/events/search/${e.target.value}`)

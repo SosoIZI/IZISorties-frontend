@@ -23,10 +23,10 @@ function Home() {
 
   const event = useSelector((state) => state.event.value);
   let events = [];
-  if (event) {
-    console.log(event.value);
+  if (event) { //Si event is true alors map les events 
+    
     events = event.map((data, i) => {
-      return <EventCard key={i} {...data} />;
+      return <EventCard key={i} {...data} />;// prend la forme d'Eventcard pour le retourner dans events 
     });
   }
 

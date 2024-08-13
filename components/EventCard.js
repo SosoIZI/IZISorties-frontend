@@ -1,5 +1,5 @@
 import styles from "../styles/EventCard.module.css";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
