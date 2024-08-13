@@ -8,6 +8,41 @@ import Image from "next/image";
 
 function Swipe() {
 
+    const token = useSelector((state) => state.user.value.token);
+    let [isliked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    // je vais récupérer l'id du user, si cet id est compris dans le NbLike de cet event
+    // alors isLiked est true
+    fetch(`http://localhost:3000/users/infos/${token}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.user[0]._id)
+      if(props.nbLike) {
+      for (const e of props.nbLike) {
+        if (e==data.user[0]._id) {
+          setIsLiked(true)
+        }
+      } }
+    })
+      }, [])
+
+    // Quand je clique sur le boutton coeur, je dois rajouter un like à ce tweet dans ma BDD
+   const addNewLike = () => {
+    setIsLiked(!isliked);
+   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
+   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
+   fetch(`http://localhost:3000/events/like/${token}/${props._id}`, {
+     method: "PUT",
+     headers: { "Content-Type": "application/json" },
+   })
+     .then((response) => response.json())
+     .then((data) => {
+       console.log(data);
+     });
+  };
+    
+
     // const results = useSelector((state) => state.events.value);
     const results = [
         {
@@ -28,6 +63,7 @@ function Swipe() {
         // Function to handle "Show More" button click
         const handleSayYes = () => {
             setNumberToShow(prev => prev + 1);
+            addNewLike()
             console.log('yes !')
         };
     
@@ -43,6 +79,7 @@ function Swipe() {
     <div key={i} className={styles.displayContainer}>
 
         <div className={styles.imgContainer}>
+        {/* router.push(`/event/${id}`) */}
         <Link href={`/event?hash=${data._id}`}>
         <Image 
         src='/IZI_sorties_home.png'
