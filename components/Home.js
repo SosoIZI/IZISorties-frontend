@@ -16,9 +16,16 @@ function Home() {
   const [eventThisWeek, setEventThisWeek] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const router = useRouter();
-  const handleShow = () => setModalVisible(true);
+  
   const handleClose = () => setModalVisible(false);
-  const login = useSelector((state) => state.user.value.name) // pour utiliser la modal dans event 
+  const login = useSelector((state) => state.user.value.token) // pour utiliser la modal dans event 
+
+  const handleShow = () => {
+    login?setModalVisible(false):(setModalVisible(true)) }
+
+
+
+
 
   console.log("modal visible : ", modalVisible);
   useEffect(() => {

@@ -6,6 +6,7 @@ import React from "react";
 import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/router";
 import Connexion from "./Connexion";
+import Google from "./Google.js";
 
 function Inscription() {
   const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
@@ -24,6 +25,7 @@ function Inscription() {
     // Pour afficher où non le mot de passe
     setShowPassword(!showPassword);
   };
+ 
 
   const toggleShowConfirmPassword = () => {
     // Pour afficher ou non la confirmation de  mot de passe
@@ -125,11 +127,7 @@ function Inscription() {
         }
       });
   };
-
-  const handleSignInGoogle = () => {
-    window.location.href = "https://accounts.google.com/o/oauth2/auth";
-  };
-
+ 
   return (
     <div>
       <div className={styles.container}>
@@ -195,15 +193,11 @@ function Inscription() {
         <span className={styles.stroke}></span>
       </div>
       <div className={styles.connectionWay}>
-        <span>
-          <button
-            className={styles.buttonbis}
-            type="submit"
-            onClick={handleSignInGoogle}
-          >
-            <i className="bx bxl-google-plus"></i>Connexion avec Google{" "}
-          </button>
-        </span>
+        <div className={styles.Google}>
+       
+      <Google />
+   </div>
+         
         <span>
           <button
             className={styles.buttonbis}
