@@ -8,6 +8,7 @@
 
 .eventsBookedContainer {
   display: flex;
+  width: 75%;
 }
 
 /* hr c'est le trait */
@@ -25,7 +26,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 10px;
-  width: 70%;
+  width: 75%;
 }
 
 .calendarContainer {
@@ -45,7 +46,8 @@
 .bookedEventsSpecificDate {
   position: relative;
   width: 65%;
-  height: 300px; /* ou une hauteur spécifique appropriée */
+  height: 300px;
+  align-content: center;
 }
 
 .buttonStyle {
@@ -63,4 +65,14 @@
   border: none;
   cursor: pointer; 
   transition: background-color 0.3s ease; /* Animation de la couleur de fond */
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: #F2AF77;
+  border-radius: 50%;
+  margin-top: 2px;
+  margin-left: auto;
+  margin-right: auto;
 }
