@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import { addGeoloc } from '../reducers/search';
 
 
+
 function searchBar() {
 
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
@@ -36,13 +37,13 @@ function searchBar() {
   // on sélectionne une ville via le menu déroulant
 
   const selectCity = (e) => {
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${e}`)
-      .then(response => response.json())
-      .then(data => {
-       setCity(data.features[0].properties.city)
-      //  console.log(data.features[0].properties.city)
-    
-      })
+    setCity(e);
+
+    // fetch(`https://api-adresse.data.gouv.fr/search/?q=${e}`)
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     console.log('data : ' , data)
+    //   })
     console.log('selected city', city)
     }
 
@@ -116,18 +117,29 @@ function searchBar() {
     console.log(categories);
 }
 
-
 // fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
 // le résultat est envoyé dans le reducer events pour les récupérer sur les pages de résultats
 
 const findResults = (query) => {
+
   fetch(`http://localhost:3000/events/${startDate}/${endDate}/${city}${query}`)
   .then(response => response.json())
   .then(data => {
-    console.log("data : ", data.events);
+    console.log("data : ", data);
+    console.log(data.events)
 
-    dispatch(searchEvents(data.events))
-    
+    // dispatch(searchEvents(data.events))
+
+  // trouver la longitude et la latitude de l'évènement
+  //   fetch(`http://localhost:3000/${data.place}`)
+  //   .then(response => response.json())
+  //   .then(place => {
+  //     console.log("data : ", place);
+  //     let longitude = place.longitude
+  //     let latitude = place.latitude
+
+  //     dispatch(searchEvents({longitude, latitude}))
+  // })
 })
 }
 
@@ -137,6 +149,7 @@ const handleClick = () => {
   if(categories.length > 0){
      query = '?categorie=' + categories.join('&categorie=') // on construit la chaîne de caratère présente de l'url de requête vers le backend&API
       findResults(query)
+      console.log(query)
   // if(!signIn) {
   //   router.push("/Inscription")
   // } else 
@@ -186,7 +199,7 @@ const handleClick = () => {
             </div>
           )}
         >
-              <Option value='Rennes'>Paris</Option>
+              <Option value='Paris'>Paris</Option>
               <Option value="Rennes">Rennes</Option>
         </Select>
       </div>
