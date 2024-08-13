@@ -7,6 +7,7 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useSelector } from "react-redux";
 import uniqid from "uniqid";
+import Image from "next/image";
 
 function CreateEvent() {
 
@@ -257,10 +258,12 @@ function CreateEvent() {
   // Je crée une fonction qui affiche en miniature les photos qu'il a téléchagé
   const imagePreviews = imageFiles.map((file, index) => (
     <div key={index} className={styles.imagePreviewWrapper}>
-      <img
+      <Image
         src={URL.createObjectURL(file)}
-        alt={`preview-${index}`}
+        alt={`IZI-preview-${index}`}
         className={styles.imagePreview}
+        width={100}
+        height={100}
       />
       <button
         onClick={() => removeImage(index)}

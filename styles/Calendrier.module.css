@@ -61,10 +61,10 @@
   display: flex; 
   align-items: center; 
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   border: none;
   cursor: pointer; 
-  transition: background-color 0.3s ease; /* Animation de la couleur de fond */
+  transition: background-color 0.3s ease; /* Animation du background */
 }
 
 .dot {

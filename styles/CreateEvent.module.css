@@ -157,9 +157,9 @@
 }
 
 .imagePreview {
-  width: 100px; /* Ajustez la taille selon vos besoins */
-  height: 100px; /* Ajustez la taille selon vos besoins */
-  object-fit: cover; /* S'assure que l'image remplit le cadre sans déformer l'image */
+  width: 100px; 
+  height: 100px; 
+  object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -185,8 +185,8 @@
 
 .imagePreviewContainer {
   display: flex;
-  flex-wrap: wrap; /* Permet de placer plusieurs images sur la même ligne */
-  gap: 10px; /* Espacement entre les images */
+  flex-wrap: wrap; 
+  gap: 10px; 
 }
 
 .CardPreviewContainer {

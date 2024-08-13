@@ -39,7 +39,7 @@
 }
 
 .heartButton:hover {
-    background-color: rgb(248, 75, 75); /* Couleur de fond au survol */
+    background-color: rgb(248, 75, 75); 
     color: #F2AF77;
     border-color: #F2AF77;
     border: 1px solid;
@@ -101,7 +101,7 @@
 }
 
 .knowMoreButton:hover {
-    background-color: white; /* Couleur de fond au survol */
+    background-color: white;
     color: #F2AF77;
     border-color: #F2AF77;
     border: 1px solid;
