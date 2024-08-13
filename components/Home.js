@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import Connexion from "./Connexion";
 import { useSelector } from "react-redux";
 
-
 function Home() {
   //const [currentPosition, setCurrentPosition] = useState(null);
   const [geoError, setGeoError] = useState(null);
@@ -21,6 +20,7 @@ function Home() {
   const login = useSelector((state) => state.user.value.name) // pour utiliser la modal dans event 
 
   console.log("modal visible : ", modalVisible);
+  
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
     fetch("http://localhost:3000/events/top/liked")
@@ -113,7 +113,6 @@ function Home() {
             showModal={modalVisible}
             handleClose={handleClose}
             isConnected={false}
-          
           />
         </div>
       </div>
@@ -123,10 +122,6 @@ function Home() {
         <p>{geoError}</p>
       ) : (
         <>
-
-
-
-        
           <h2>Les sorties de cette semaine, près de chez toi :</h2>
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
