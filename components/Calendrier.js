@@ -1,15 +1,21 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
-// https://www.npmjs.com/package/react-calendar
+// https://www.npmjs.com/package/react-calendar (pour le calendrier)
 import styles from "../styles/Calendrier.module.css";
 import "boxicons/css/boxicons.min.css";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "boxicons/css/boxicons.min.css";
+//https://swiperjs.com/react (pour faire défiler les images)
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 
 function Calendrier() {
-  console.log("calendar");
-
+  
   const token = useSelector((state) => state.user.value.token);
   const [eventsBookedList, setEventsBookedList] = useState([]);
   const [date, setDate] = useState(new Date());
@@ -22,11 +28,11 @@ function Calendrier() {
         console.log("data.eventsBooked", data.eventsBooked);
         // c'est un tableau d'objet avec les events likés
         setEventsBookedList(data.eventsBooked);
+        
       });
   }, []);
 
   let bookingStyle = { color: "#F2AF77" };
-  console.log("hello");
 
   // PARAMETRAGE DU CALENDRIER
   const dateClick = (value) => {
@@ -50,17 +56,19 @@ function Calendrier() {
     const eventsStartDate = new Date(data.startDate);
 
     if (date <= eventsEndDate && date >= eventsStartDate) {
-      return <EventCard key={i} {...data} />;
+      return  <SwiperSlide key={i}>
+        <EventCard key={i} {...data} /><br></br>
+        </SwiperSlide>
     }
   });
 
   const dateToday = new Date();
-  // AFFICHAGE DES PROCHAINS EVENTS trié par ordre de date de début (la route le fait)
+  // AFFICHAGE DES 5 PROCHAINS EVENTS trié par ordre de date de début (la route le fait)
   const bookedEvents = eventsBookedList.slice(0, 5).map((data, i) => {
     const eventEndDate = new Date(data.endDate);
     // je n'affiche que les events que j'ai rajouté à mon agenda et dont la date de fin est aujourd'hui ou après
     if (eventEndDate >= dateToday) {
-      return <EventCard key={i} {...data} />;
+      return <EventCard key={i} {...data} />
     }
   });
 
@@ -91,7 +99,16 @@ function Calendrier() {
           />
         </div>
         <div className={styles.bookedEventsSpecificDate}>
-          {bookedEventsSpecificDate}
+        <Swiper
+            spaceBetween={10}
+            slidesPerView={3}
+            navigation
+            pagination={{ clickable: true }}
+            modules={[Navigation, Pagination]}
+            
+          >
+            {bookedEventsSpecificDate}
+          </Swiper>
         </div>
       </div>
       <hr className={styles.hr} />
