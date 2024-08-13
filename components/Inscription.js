@@ -195,10 +195,12 @@ function Inscription() {
       <div className={styles.connectionWay}>
         <div className={styles.Google}>
        
-      <Google />
+        <Google 
+                
+                handleClose={handleClose}/> 
    </div>
          
-        <span>
+        {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
@@ -206,8 +208,8 @@ function Inscription() {
           >
             <i className="bx bxl-facebook-circle"></i> Connexion avec Facebook{" "}
           </button>
-        </span>
-        <span>
+        </span> */}
+        {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
@@ -215,7 +217,7 @@ function Inscription() {
           >
             <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
           </button>
-        </span>
+        </span> */}
         <span className={styles.sentence} onClick={handleShow}>
           J’ai déja un compte. Se connecter.
         </span>

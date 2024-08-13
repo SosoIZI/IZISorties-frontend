@@ -16,14 +16,33 @@ function Header() {
   const token = useSelector((state) => state.user.value.token); // le reducer va chercher la valeur du token pour dire si user connected ou non
 
   const [searchInput, setSearchInput] = useState(""); // état pour renseigner l'input
+  const [searchResults, setSearchResults] = useState([]);// est utilisé pour stocker les résultats de la recherche.
 
   const [modalVisible, setModalVisible] = useState(false); // import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
-  const handleChange = (e) => {
+  const handleChange = (e) => {  //handleChange envoie une requête au serveur chaque fois que la valeur de la barre de recherche change et met à jour searchResults avec les données retournées.
     // e.target.value= valeur de l'input
     setSearchInput(e.target.value);
-  };
+  
+
+  if (e.target.value !== "") {
+    fetch(`/search:search/${e.target.value}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(data.events || []); // Mettre à jour l'état avec les résultats de la recherche
+      })
+      .catch((error) => console.error('Erreur lors de la recherche:', error));
+  } else {
+    setSearchResults([]); // Réinitialiser les résultats si la barre de recherche est vide
+  }}
+
+
+
+
+
+
+
 
   const handleReset = () => {
     // Pour réinitialiser le setter vide= Quand on appuye sur la croix, réinitialise la barre de recherche.

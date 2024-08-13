@@ -1,4 +1,7 @@
 import EventCard from "../components/EventCard";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
 import { useEffect, useState, } from "react";
@@ -7,6 +10,9 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Connexion from "./Connexion";
 import { useSelector } from "react-redux";
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+
 
 
 function Home() {
@@ -19,11 +25,10 @@ function Home() {
   
   const handleClose = () => setModalVisible(false);
   const login = useSelector((state) => state.user.value.token) // pour utiliser la modal dans event 
+  
 
   const handleShow = () => {
     login?setModalVisible(false):(setModalVisible(true)) }
-
-
 
 
 
@@ -90,12 +95,29 @@ function Home() {
       });
     }
   }, []);
+ let topEventCards=" "
+ let isConnected=login
+if (!isConnected){
+   topEventCards = topEvent.slice(0, 5).map((data, i) => {
+    return( 
+    <SwiperSlide>
+      <EventCard key={i} {...data}   
+    handleShow={handleShow}/> 
+    {/* // props à passer pour utiliser la modal  */}
+    </SwiperSlide>
+  )});
+}
+  else{topEventCards = topEvent.map((data, i) => {
+    return( 
+      <SwiperSlide>
 
-  console.log("lgin != null : ", login != null, login);
-  const topEventCards = topEvent.slice(0, 5).map((data, i) => {
-    return <EventCard key={i} {...data} isConnected={login != null}    // if login est rempli=isconnected =pas modale 
-    handleShow={handleShow} />;// props à passer pour utiliser la modal 
-  });
+    <EventCard key={i} {...data}     // if login est rempli=isconnected =pas modale 
+    handleShow={handleShow} /> 
+    {/* // props à passer pour utiliser la modal  */}
+    </SwiperSlide>
+    )}
+    
+    )}
 
   // les sorties près de chez toi cette semaine.
   // si l'utilisateur a accepté d'être géoloc, alors afficher "les sorties de cette semaine, près de chez toi"
@@ -111,11 +133,33 @@ function Home() {
     <div className={styles.netflixContainer}>
       <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
-        {topEventCards}
+      
+      <Swiper
+     modules={[Navigation]}
+     spaceBetween={50}
+     slidesPerView={5}
+     navigation
+    //  onSwiper={(swiper) => console.log(swiper)}
+    //  onSlideChange={() => console.log('slide change')}
+    >
+      {/* <SwiperSlide>Slide 1</SwiperSlide>
+      <SwiperSlide>Slide 2</SwiperSlide>
+      <SwiperSlide>Slide 3</SwiperSlide>
+      <SwiperSlide>Slide 4</SwiperSlide> */}
+                  {topEventCards}
+
+    </Swiper>
+
         <div>
-          <button className={styles.roundButton} onClick={handleShow}>
-            <i className="bx bx-right-arrow-alt"></i>
-          </button>
+        {!login && (//affiche le button si pas connecté
+              <div>
+                <button className={styles.roundButton}>
+                  <i className="bx bx-right-arrow-alt"></i>
+                </button>
+              </div>
+            )}
+
+
           <Connexion
             showModal={modalVisible}
             handleClose={handleClose}
@@ -138,6 +182,8 @@ function Home() {
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
             <div>
+              
+              
               <button className={styles.roundButton}>
                 <i className="bx bx-right-arrow-alt"></i>
               </button>
