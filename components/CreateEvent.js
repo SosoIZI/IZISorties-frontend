@@ -1,7 +1,7 @@
 import styles from "../styles/CreateEvent.module.css";
 import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
-import EventDetails from "../components/EventDetails";
+import EventDetailsMaquette from "../components/EventDetailsMaquette";
 import { Autocomplete, TextField, Checkbox, Chip } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
@@ -31,8 +31,6 @@ function CreateEvent() {
   const [imageFiles, setImageFiles] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("/Image-par-defaut.png"); // état pour afficher l'image dans l'eventCard
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBooked, setIsBooked] = useState(false);
 
   // Pour l'instant on utilise une variable pour "catégories".
   // Si on fini le projet + tôt on mettra les catégories dans une BDD dans MongoDB
@@ -223,6 +221,11 @@ function CreateEvent() {
     // j'ajoute les nouveaux fichiers au tableau existant imageFiles (je nomme prevFiles, mon tableau actuel imageFiles)
     setImageFiles((prevFiles) => {
       const newFiles = [...prevFiles, ...filesArray];
+
+       // Génération des URLs pour les images ajoutées pour les afficher dans le component EventDetailMaquette
+    const newImageUrls = newFiles.map((file) => URL.createObjectURL(file));
+    setImageUrls(newImageUrls); 
+
       if (prevFiles.length === 0) {
         // Si c'est la première image ajoutée, je veux que ce soit elle qui soit affichée dans la preview de l'EventCard
         const firstPic = URL.createObjectURL(newFiles[0]);
@@ -273,6 +276,8 @@ function CreateEvent() {
     const newFiles = [...imageFiles];
     newFiles.splice(index, 1);
     setImageFiles(newFiles);
+    const newImageUrls = newFiles.map((file) => URL.createObjectURL(file));
+    setImageUrls(newImageUrls); 
   };
 
 
@@ -739,18 +744,30 @@ const eventData = {
     
   </div>
   <div className={styles.previewContainer}>
+    <div className={styles.CardPreviewContainer}>
+      <h3>Aperçu de votre evènement dans les résultats de recherche</h3>
       <EventCard
         pictures={[previewUrl]}
         eventName={eventName}
         description={description}
       />
-   {/* <EventDetails
-          eventData={eventData}
-          placeLatitude={latitude}
-          placeLongitude={longitude}
-          isLiked={isLiked}
-          isBooked={isBooked}
-        /> */}
+      </div>
+      <div className={styles.CardPreviewContainer}>
+      <h3>Aperçu de la page de votre evènement</h3>
+   <EventDetailsMaquette
+          imagePreviews={imageUrls}
+          eventName={eventName}
+          description={description}
+          startDate={startDate}
+          endDate={endDate}
+          startTime={startTime}
+          endTime={endTime}
+          price={price}
+          address={address}
+          cp={cp}
+          city={city}
+        />
+        </div>
     </div>
 </div>
   );
