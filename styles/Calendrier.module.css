@@ -8,6 +8,7 @@
 
 .eventsBookedContainer {
   display: flex;
+  width: 75%;
 }
 
 /* hr c'est le trait */
@@ -15,15 +16,25 @@
   border: 5px;
   height: 1px;
   background: #2e4656;
-  margin: 5px 0;
+  margin: 40px 40px 0px 40px;
+  width: 70%;
+}
+
+.calendarAndResultContainer {
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 10px;
+  width: 75%;
 }
 
 .calendarContainer {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 30%;
-  height: 500px;
+  width: 40%;
+  height: 540px;
   background-color: #2e4656;
   border-radius: 8px;
   padding: 10px;
@@ -33,12 +44,35 @@
 }
 
 .bookedEventsSpecificDate {
-  display: flex;
+  position: relative;
+  width: 65%;
+  height: 300px;
+  align-content: center;
 }
 
-.calendarAndResultContainer {
-  display: flex;
+.buttonStyle {
+  margin-left: 30px;
+  font-size: 35px; /* taille de la flèche */
+  color: white;
+  background-color: #2e4656;
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  padding: 10px;
+  border: none;
+  cursor: pointer; 
+  transition: background-color 0.3s ease; /* Animation du background */
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: #F2AF77;
+  border-radius: 50%;
+  margin-top: 2px;
+  margin-left: auto;
+  margin-right: auto;
 }

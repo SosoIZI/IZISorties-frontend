@@ -49,6 +49,9 @@
   width: 460px;
   height: 350px;
   border-radius: 8px;
+  object-fit: contain;
+  border-radius: 25px;
+ 
 }
 
 .eventContent {
@@ -112,6 +115,7 @@
 
 .iconsContainer {
   display: flex;
+  align-items: center;
   justify-content: space-around;
   margin-bottom: 16px;
   width: 50%

@@ -30,6 +30,13 @@ h1 {
   font-weight: lighter;
 }
 
+h3 {
+  font-family: "Schabo-Condensed", sans-serif;
+  color: #2E4656;
+  font-size: 30px !important;
+  font-weight: lighter;
+}
+
 * {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
