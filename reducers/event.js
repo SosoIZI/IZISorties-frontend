@@ -10,11 +10,7 @@ export const eventSlice = createSlice({
     reducers: {
          searchEvents: (state, action) => {
             state.value = action.payload
-         },
-         addCoords: (state, action) => {
-          state.value.place = {longitude: action.payload.longitude, latitude: action.payload.latitude}
-         }
-         
+         }, 
       },
     });
 

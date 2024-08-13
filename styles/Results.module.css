@@ -9,9 +9,10 @@
     
     margin: 30px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     flex-direction: row;
-    justify-content: space-evenly;
+
     }
     
     
@@ -89,9 +90,12 @@
     }
 
     .topContainer {
-
         margin-left: 10%;
         margin-top: 20px;
 
     }
-   
+
+   .link {
+    display: flex;
+    
+   }

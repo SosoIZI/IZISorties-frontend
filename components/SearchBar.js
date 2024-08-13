@@ -19,8 +19,8 @@ function searchBar() {
 
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
 
-  const [long, setLong] = useState(null);
-  const [lat, setLat] = useState(null);
+  // const [long, setLong] = useState(null);
+  // const [lat, setLat] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
@@ -38,13 +38,7 @@ function searchBar() {
 
   const selectCity = (e) => {
     setCity(e);
-
-    // fetch(`https://api-adresse.data.gouv.fr/search/?q=${e}`)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log('data : ' , data)
-    //   })
-    console.log('selected city', city)
+    console.log(e)
     }
 
   //on récupère la géoloc de l'utilisateur, et sur la base des coordonnées on récupère la ville où se trouve l'utilisateur
@@ -63,8 +57,6 @@ function searchBar() {
           const longitude = position.coords.longitude;
           const latitude = position.coords.latitude;
           
-          setLong(longitude);
-          setLat(latitude);
           dispatch(addGeoloc(true))
   
           fetch(`https://api-adresse.data.gouv.fr/reverse/?lon=${longitude}&lat=${latitude}`)
@@ -125,21 +117,10 @@ const findResults = (query) => {
   fetch(`http://localhost:3000/events/${startDate}/${endDate}/${city}${query}`)
   .then(response => response.json())
   .then(data => {
-    console.log("data : ", data);
+    // console.log("data : ", data);
     console.log(data.events)
 
-    // dispatch(searchEvents(data.events))
-
-  // trouver la longitude et la latitude de l'évènement
-  //   fetch(`http://localhost:3000/${data.place}`)
-  //   .then(response => response.json())
-  //   .then(place => {
-  //     console.log("data : ", place);
-  //     let longitude = place.longitude
-  //     let latitude = place.latitude
-
-  //     dispatch(searchEvents({longitude, latitude}))
-  // })
+    dispatch(searchEvents(data.events))
 })
 }
 

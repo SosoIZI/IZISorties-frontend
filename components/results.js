@@ -41,7 +41,11 @@ function Results() {
 
             {/* Afficher le bouton 'Voir plus'*/}
             {numberToShow < sortedResults.length && (
-                <button onClick={handleShowMore}>Voir plus</button>
+                <i onClick={handleShowMore} 
+                className={styles.link}
+                class='bx bx-chevron-down bx-md' 
+                >Voir plus de Résultats 
+                </i>
             )}
             
             </div>
