@@ -1,58 +1,117 @@
-import React from "react";
+
+
+import React, { useState, useEffect } from "react";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+
 import styles from "../styles/Home.module.css";
-import { useGoogleLogin } from '@react-oauth/google';
-import { useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { signIn } from "../reducers/user";
+import { useRouter } from "next/router";
 
-function Google() {
-  const [mail, setMail] = useState("");
-  const [name, setName] = useState("");
 
-  const handleLoginSuccess = (credentialResponse) => {
-    console.log(credentialResponse);
-
-    const token = credentialResponse.credential;
-    const decoded = jwtDecode(token);
-    console.log(decoded);
-    setMail(decoded.email);
-    setName(decoded.name);
-  };
-
-  const handleLoginFailure = () => {
-    console.log("Login Failed");
-  };
+function Google(props) {
+  
+  const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([]);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => handleLoginSuccess(tokenResponse),
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
   });
 
   let googleDiv = "";
   if (name != "") {
-     googleDiv = <p>{mail}</p>;
+    googleDiv = <p>{mail}</p>;
   } else {
     googleDiv = (
-      
       <div>
         <h2></h2>
         <div className={styles.divider}></div>
 
-<button className={styles.buttonbis}
-onClick={() => login()}> 
-      <i className="bx bxl-google-plus"></i>Connexion avec Google{" "}
-      </button>
+        <button className={styles.buttonbis} onClick={() => login()}>
+          <i className="bx bxl-google-plus"></i>Connexion avec Google{" "}
+        </button>
       </div>
     );
   }
 
-  return (
+  useEffect(() => {
+    if (user) {
+      user == [] ? console.log(user) : console.log("Empty user");
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          // setProfile(res.data);
+          console.log("res assigned : ", res);
+          console.log("res.data assigned : ", res.data);
 
+          if (!res.data.verified_email) {
+            return;
+          }
+
+          fetch("http://localhost:3000/users/google-auth", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: res.data.email,
+              name: res.data.name,
+              // googleToken: token,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("dataaa googlllle : ", data);
+              if (data.result) {
+                console.log("Connexion réussie:", data);
+                dispatch(
+                  signIn({
+                    username: res.data.name,
+                    email: res.data.email,
+                    token: data.token,
+                  })
+                );
+              props.handleClose() // on passe une props handleclose pour pouvoir l'intégrer au composant Google dans connexion
+                router.push("/Home");
+                
+                // Traiter la connexion réussie (par exemple, stocker le token, rediriger l'utilisateur, etc.)
+              } else {
+                console.log("Échec de la connexion:", data);
+                // Traiter l'échec de la connexion
+              }
+            })
+            .catch((error) => {
+              console.error("Erreur lors de la connexion:", error);
+            });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);
+
+  const logOut = () => {
+    googleLogout();
+    setProfile([]);
+  };
+
+  return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <h1> {name}</h1>
+        <h1></h1>
         {googleDiv}
       </div>
     </div>
   );
 }
-
 export default Google;

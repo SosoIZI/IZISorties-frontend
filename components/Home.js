@@ -1,12 +1,17 @@
 import EventCard from "../components/EventCard";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
-import { useEffect, useState, } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Connexion from "./Connexion";
 import { useSelector } from "react-redux";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 
 function Home() {
   //const [currentPosition, setCurrentPosition] = useState(null);
@@ -15,16 +20,22 @@ function Home() {
   const [eventThisWeek, setEventThisWeek] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const router = useRouter();
-  
+
+  const event = useSelector((state) => state.event.value);
+  let events = [];
+  if (event) { //Si event is true alors map les events 
+    
+    events = event.map((data, i) => {
+      return <EventCard key={i} {...data} />;// prend la forme d'Eventcard pour le retourner dans events 
+    });
+  }
+
   const handleClose = () => setModalVisible(false);
-  const login = useSelector((state) => state.user.value.token) // pour utiliser la modal dans event 
+  const login = useSelector((state) => state.user.value.token); // pour utiliser la modal dans event
 
   const handleShow = () => {
-    login?setModalVisible(false):(setModalVisible(true)) }
-
-
-
-
+    login ? setModalVisible(false) : setModalVisible(true);
+  };
 
   console.log("modal visible : ", modalVisible);
   
@@ -90,45 +101,91 @@ function Home() {
       });
     }
   }, []);
-
-  console.log("lgin != null : ", login != null, login);
-  const topEventCards = topEvent.slice(0, 5).map((data, i) => {
-    return <EventCard key={i} {...data} isConnected={login != null}    // if login est rempli=isconnected =pas modale 
-    handleShow={handleShow} />;// props à passer pour utiliser la modal 
-  });
+  let topEventCards = " ";
+  let isConnected = login;
+  if (!isConnected) {
+    topEventCards = topEvent.slice(0, 5).map((data, i) => {
+      return (
+        <SwiperSlide>
+          <EventCard key={i} {...data} handleShow={handleShow} />
+          {/* // props à passer pour utiliser la modal  */}
+        </SwiperSlide>
+      );
+    });
+  } else {
+    topEventCards = topEvent.map((data, i) => {
+      return (
+        <SwiperSlide>
+          <EventCard
+            key={i}
+            {...data} // if login est rempli=isconnected =pas modale
+            handleShow={handleShow}
+          />
+          {/* // props à passer pour utiliser la modal  */}
+        </SwiperSlide>
+      );
+    });
+  }
 
   // les sorties près de chez toi cette semaine.
   // si l'utilisateur a accepté d'être géoloc, alors afficher "les sorties de cette semaine, près de chez toi"
   // sinon, l'inviter à activer sa géoloc pour obtenir de meilleures reco.
 
   console.log("eventThisWeek : ", eventThisWeek);
-  const thisWeekEventCards =  eventThisWeek ? eventThisWeek.slice(0, 5).map((data, i) => {
-    return <EventCard key={i} {...data} isConnected={login != null} 
-    handleShow={handleShow}  />}) : <p></p>;
-  ;
-
+  const thisWeekEventCards = eventThisWeek ? (
+    eventThisWeek.slice(0, 5).map((data, i) => {
+      return (
+        <EventCard
+          key={i}
+          {...data}
+          isConnected={login != null}
+          handleShow={handleShow}
+        />
+      );
+    })
+  ) : (
+    <p>   </p>
+  );
   return (
     <div className={styles.netflixContainer}>
+      {events}
       <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
-        {topEventCards}
-        <div>
-          <button className={styles.roundButton} onClick={handleShow}>
-            <i className="bx bx-right-arrow-alt"></i>
-          </button>
-          <Connexion
-            showModal={modalVisible}
-            handleClose={handleClose}
-            isConnected={false}
-          />
-        </div>
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={50}
+          slidesPerView={5}
+          navigation
+        >
+          {topEventCards}
+        </Swiper>
+
+        {!login && (
+          <div>
+            <button className={styles.roundButton} onClick={handleShow}>
+              <i className="bx bx-right-arrow-alt"></i>
+            </button>
+          </div>
+        )}
+
+        <Connexion
+          showModal={modalVisible}
+          handleClose={handleClose}
+          isConnected={login != null}
+        />
       </div>
+      {/* Au clic sur le bouton fait apparaitre la modal de connection si pas connecte, sinon fait disparaitre le bouton */}
+  
+
+       
       {/* j'affiche les suggestions des events près de chez moi cette semaine, si j'ai bien récupéré la géoloc
       et si il y a des events près de chez moi cette semaine */}
       {geoError || thisWeekEventCards.length == 0 ? (
         <p>{geoError}</p>
       ) : (
         <>
+        
+
           <h2>Les sorties de cette semaine, près de chez toi :</h2>
           <div className={styles.mostConsultedContainer}>
             {thisWeekEventCards}
@@ -148,7 +205,7 @@ function Home() {
           height={470}
           className={styles.pic}
         />
-        <div className={styles.argumentationContainer}> 
+        <div className={styles.argumentationContainer}>
           <h2>IZI te facilite la vie !</h2>
           <p>
             Votre compagnon idéal pour toutes vos sorties culturelles et de

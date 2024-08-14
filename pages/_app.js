@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import Head from "next/head";
 import user from "../reducers/user";
+import event from "../reducers/event";
 import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
@@ -17,7 +18,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const reducers = combineReducers({ user });
+const reducers = combineReducers({ user,event });
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({
