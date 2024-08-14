@@ -6,13 +6,9 @@ import { Provider } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
-<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-=======
-import "bootstrap/dist/css/bootstrap.min.css";
->>>>>>> c9ab8f0a9c0c18ae6333b6719a718ea35c288c7b
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
@@ -46,12 +42,10 @@ function App({ Component, pageProps }) {
         <div style={{ minHeight: "100vh" }}>
           <Component {...pageProps} />
         </div>
-<<<<<<< HEAD
           </GoogleOAuthProvider>
 
-=======
->>>>>>> c9ab8f0a9c0c18ae6333b6719a718ea35c288c7b
         <Footer />
+       
       </PersistGate>
     </Provider>
   );

@@ -103,12 +103,12 @@ const handleClick = () => {  // fonction pour activer la modal connexion au clic
           <div className={styles.cardContent} onClick={handleClick}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
-            <button className={styles.knowMoreButton}>En savoir plus</button>
+            <button name='En savoir plus' className={styles.knowMoreButton}>En savoir plus</button>
           </div>
         ) : (<div className={styles.cardContent}>
             <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
-            <button className={styles.knowMoreButton}>En savoir plus</button>
+            <button name='En savoir plus' className={styles.knowMoreButton}>En savoir plus</button>
           </div>)}
       </div>
     </div>
