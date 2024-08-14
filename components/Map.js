@@ -29,41 +29,56 @@ function MapView() {
   // Etat pour mettre à jour le nombre de cartes d'évènements à afficher
 const [numberToShow, setNumberToShow] = useState(0);
 const [isClient, setIsClient] = useState(false);
-const [latitude, setLatitude] = useState(null)
-const [longitude, setLongitude] = useState(null)
 const [markers, setMarkers] = useState([])
+const [view, setView] = useState([])
 const token = useSelector((state) => state.user.value.token);
 const results = useSelector((state) => state.events.value);
-// console.log(results)
 
 useEffect(() => {
 
   // isClient est une variable pour leaflet (doit être à true)
     setIsClient(true);
 
-  // je récupère l'id de "place" des évènements(résultats de la recherche) dans "events" + description/nom/photo pour les pop-up
-  // je récupère la longitude/latitude dans "places"
+  // // je récupère l'id de "place" des évènements(résultats de la recherche) dans "events" + description/nom/photo pour les pop-up
+  // // je récupère la longitude/latitude dans "places"
 
     const fetchPlaces = async () => {
       const markersData = await Promise.all(results.map(async (data) => {
-        const response = await fetch(`http://localhost:3000/places/${data.place}`);
-        const place = await response.json();
 
-        for(data in place) {
-          setLatitude =  data.latitude;
-          setLongitude = data.longitude;
-        }
+        const id = data._id;
+        const description = data.description;
+        const eventName = data.eventName;
+        const pictures = data.pictures;
+        const longitude = ''
+        const latitude = ''
+
+        const response = await fetch(`http://localhost:3000/places/${data.place}`);
+        const info = await response.json();
+
+
+        for(let place of info.place) {
+
+        latitude = place.latitude;
+        longitude = place.longitude
+
+        // console.log(latitude, longitude)
+
+       }
 
         return {
-          id: data._id,
-          description: data.description,
-          eventName: data.eventName,
-          latitude: latitude,
+          id: id,
+          description: description,
+          eventName: eventName,
+          latitude:  latitude,
           longitude: longitude,
-          pictures: data.pictures,
+          pictures: pictures,
         };
+    
       }));
+
       setMarkers(markersData);
+      // console.log(markersData, markers)
+
     };
 
     fetchPlaces();
@@ -71,7 +86,8 @@ useEffect(() => {
   }, [results]);
 
 
-// PARAMETRAGE DE LA MAP
+//// PARAMETRAGE DE LA MAP ////
+
 // Charger Leaflet seulement côté client (sinon ca ne marche pas)
 
 if (!isClient) {
@@ -84,33 +100,46 @@ const L = require("leaflet");
 // Importation des styles Leaflet
 require("leaflet/dist/leaflet.css");
 
+
 // Création de l'icône personnalisée IZI
 const customIcon = new L.Icon({
   iconUrl: "/pointeur_izi.png",
   iconSize: [70, 70],
   iconAnchor: [19, 38], // Point d'ancrage de l'icône (base du marqueur)
   popupAnchor: [0, -38], // Point d'ancrage du popup par rapport à l'icône
-});
+})
+
+
+// création du marker 
+// const customMarker = new L.Marker([48.1119800, -1.6742900], {icon: customIcon});
+
+// je défini la position à rappeler dans la structure jsx de la Map
+let position = []
+
+// création des markers qui correspondent aux résultats de recherche()
+console.log(markers)
 
 const visibleMarkers = markers.map((marker, i) => {
 
-  <Marker 
-  position={[latitude, longitude]}
+  console.log(marker)
+
+  position = [marker.latitude, marker.longitude]
+  
+  return <Marker 
+  key={i}
+  position={position}
   icon={customIcon}
   >
     <Popup>
       <div>
-      <Image 
+      {marker.eventName}<br />{marker.description}
+      {/* < img 
       src={marker.pictures}
       alt={marker.eventName}
       width={235}
-      height={300}
-      className={styles.img}
-      // onClick={() => router.push(`/event/${data._id}`)}
-      />
-      </div>
-      <div>
-      {marker.eventName}<br />{marker.description}
+      height={300} */}
+      {/* // onClick={() => router.push(`/event/${data._id}`)} */} 
+      {/* /> */}
       </div>
     </Popup>
   </Marker> 
@@ -124,9 +153,9 @@ return (
     <SearchBar />
     <ResultView />
 
-
+<div className={styles.mapContainer}>
 <MapContainer 
-center={[48.1119800,  -1.6742900]}
+center={position}
 zoom={13}
 style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
 
@@ -137,8 +166,10 @@ style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
 
 {visibleMarkers}
 
+
   </MapContainer>
 
+</div>
 </div>
 
   )

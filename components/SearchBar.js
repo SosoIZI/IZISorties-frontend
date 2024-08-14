@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchEvents } from '../reducers/event';
@@ -25,6 +25,7 @@ function searchBar() {
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
   const [geoError, setGeoError] = useState(null);
+  const [eventCity, setEventCity] = useState(null)
 
   const [city, setCity] = useState(null);
 
@@ -32,7 +33,29 @@ function searchBar() {
   const signIn = useSelector((state) => state.user.valuetoken)
   const router = useRouter()
 
-  // fonctions pour filtrer la recherche et mettre à jour les états
+  // à l'affichage du composant, je récupère les villes des events dans la bdd 
+  // à l'affichage du composant, je récupère les catégories dans la bdd 
+
+  useEffect(() => {
+    fetch('http://localhost:3000/places')
+    .then(response => response.json())
+    .then(data => {
+      for (let objects of data.places ) {
+        setEventCity(objects.city) 
+        }
+     });
+  }, []);
+
+  // variable pour afficher les villes dans le sélecteur
+  let eventCities = eventCity.map((data, i) => {
+    if (data ==! null) {
+       return {...data};
+    }
+
+   
+  })
+
+  //// Filtrer la recherche et mettre à jour les états ////
 
   // on sélectionne une ville via le menu déroulant
 
@@ -182,6 +205,7 @@ const handleClick = () => {
         >
               <Option value='Paris'>Paris</Option>
               <Option value="Rennes">Rennes</Option>
+
         </Select>
       </div>
 
