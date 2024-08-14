@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Router, useRouter } from "next/router";
 
+
 function EventCard(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.value.token);
@@ -60,7 +61,7 @@ function EventCard(props) {
     // fonction pour activer la modal connexion au clic
     //console.log("CLICK", props.isConnected);
     if (!token) {
-      props.handleShow();
+      props.handleShow();// Si pas connecté --> affiche la modal sinon affiche les détails de l'even t
     } else {
       router.push(`/event?hash=${props._id}`);
     }

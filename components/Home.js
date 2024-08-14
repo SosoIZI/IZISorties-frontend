@@ -134,7 +134,7 @@ function Home() {
   // AFFICHAGE DES EVENTS LES + LIKES
   const handleClose = () => setModalVisible(false);
   const handleShow = () => {
-    token ? setModalVisible(false) : setModalVisible(true);
+    token ? setModalVisible(false) : setModalVisible(true);// affiche la modal si token is true ou false
   };
 
   let topEventCards = " ";
@@ -178,7 +178,8 @@ function Home() {
 
   return (
     <div className={styles.netflixContainer}>
-      <h2>Evènements les plus consultés en France :</h2>
+     
+      <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
         <Swiper
           modules={[Navigation]}
@@ -188,7 +189,7 @@ function Home() {
         >
           {topEventCards}
         </Swiper>
-        {!token && (
+        {!token && ( //si pas connecté: affiche la modal de connexion/inscription)
           <div>
             <button className={styles.roundButton} onClick={handleShow}>
               <i className="bx bx-right-arrow-alt"></i>

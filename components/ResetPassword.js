@@ -6,8 +6,7 @@ import Swal from 'sweetalert2';
 function ResetPassword() {
   const router = useRouter();
   const { token } = router.query; // Obtenir le token à partir des paramètres d'URL
-  //La ligne const { token } = router.query; extrait token de cet objet, donc token serait égal au token '.
-  //
+  //La ligne const { token } = router.query; extraitle  token de cet objet
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -28,6 +27,8 @@ function ResetPassword() {
       });
       return;
     }
+// Si signInPassword=confirmPassword alors fetch la route resetPassword
+
 
     fetch(`http://localhost:3000/users/reset-password/${token}`, {
       method: 'POST',

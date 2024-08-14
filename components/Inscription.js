@@ -32,7 +32,7 @@ function Inscription() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // éviter le comportement par défaut de js au niveau du formulaire.
+    e.preventDefault(); // éviter le comportement par défaut de JS  au niveau du formulaire.
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // regex pour valider le mail
 
@@ -87,7 +87,7 @@ function Inscription() {
       });
       return;
     }
-
+// si les conditions sont remplies--> fetch vers signup pour inscrire l'utilisateur 
     fetch("http://localhost:3000/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
