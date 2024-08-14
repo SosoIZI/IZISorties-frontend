@@ -6,6 +6,7 @@ import React from "react";
 import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/router";
 import Connexion from "./Connexion";
+import Google from "./Google.js";
 
 function Inscription() {
   const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
@@ -24,6 +25,7 @@ function Inscription() {
     // Pour afficher où non le mot de passe
     setShowPassword(!showPassword);
   };
+ 
 
   const toggleShowConfirmPassword = () => {
     // Pour afficher ou non la confirmation de  mot de passe
@@ -125,11 +127,7 @@ function Inscription() {
         }
       });
   };
-
-  const handleSignInGoogle = () => {
-    window.location.href = "https://accounts.google.com/o/oauth2/auth";
-  };
-
+ 
   return (
     <div>
       <div className={styles.container}>
@@ -187,6 +185,7 @@ function Inscription() {
               className={styles.button}
               type="submit"
               onClick={handleSubmit}
+              name='Boutton dinscription'
             >
               Inscription
             </button>
@@ -195,33 +194,33 @@ function Inscription() {
         <span className={styles.stroke}></span>
       </div>
       <div className={styles.connectionWay}>
-        <span>
-          <button
-            className={styles.buttonbis}
-            type="submit"
-            onClick={handleSignInGoogle}
-          >
-            <i className="bx bxl-google-plus"></i>Connexion avec Google{" "}
-          </button>
-        </span>
-        <span>
+        <div className={styles.Google}>
+       
+        <Google 
+                
+                handleClose={handleClose}/> 
+   </div>
+         
+        {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
             onClick={() => handleSignIn()}
+            name='Boutton de connexion via Facebook'
           >
             <i className="bx bxl-facebook-circle"></i> Connexion avec Facebook{" "}
           </button>
-        </span>
-        <span>
+        </span> */}
+        {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
             onClick={() => handleSignIn()}
+            name='Boutton de connexion via Apple'
           >
             <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
           </button>
-        </span>
+        </span> */}
         <span className={styles.sentence} onClick={handleShow}>
           J’ai déja un compte. Se connecter.
         </span>

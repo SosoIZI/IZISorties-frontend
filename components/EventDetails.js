@@ -237,6 +237,7 @@ function EventDetails() {
             <h2>Infos pratiques</h2>
             <div className={styles.iconsContainer}>
               <button
+              name='icone pour copier le lien de la page'
                 className={styles.iconButton}
                 onClick={() => {
                   const pageUrl = window.location.href; // Récupère l'URL actuelle de la page
@@ -251,37 +252,38 @@ function EventDetails() {
               </button>
               <ShareButton url={url} title={title} />
               <button
+              name='liker ou déliker l evenement'
                 className={styles.iconButton}
                 onClick={() => addNewLike()}
               >
                 <i className="bx bx-heart" style={heartStyle}></i>
               </button>
-              <button className={styles.iconButton} onClick={() => addAgenda()}>
+              <button name='ajouter cet évènement à mon agenda'
+              className={styles.iconButton} onClick={() => addAgenda()}>
                 <i className="bx bx-calendar-plus" style={bookingStyle}></i>
               </button>
             </div>
           </div>
           <div className={styles.infosData}>
-            <button className={styles.longInfoButton}>
+            <div className={styles.longInfoButton}>
               <i className="bx bx-calendar"></i>{" "}
               {eventData.startDate === eventData.endDate
                 ? `Le ${dateDebutGoodFormat}`
                 : `Du ${dateDebutGoodFormat} au ${dateFinGoodFormat}`}
-            </button>
+            </div>
             <div className={styles.smallInfoButtonContainer}>
-              <button className={styles.infoButton}>
+              <div className={styles.infoButton}>
                 <i class="bx bx-time-five"></i> De {eventData.startTime} à{" "}
                 {eventData.endTime}
-              </button>
-              <button className={styles.infoButton}>
+              </div>
+              <div className={styles.infoButton}>
                 <i class="bx bx-euro"></i> Prix : {eventData.price}
-              </button>
+              </div>
             </div>
-            <button className={styles.longInfoButton}>
-              {" "}
+            <div className={styles.longInfoButton}>
               <i class="bx bx-map"></i> {adresse}
-            </button>
-            <button className={styles.placeButton}>
+            </div>
+            <button name='Accéder à la page de létablissement' className={styles.placeButton}>
               <i class="bx bx-building-house"></i> Page de l'établissement
             </button>
           </div>

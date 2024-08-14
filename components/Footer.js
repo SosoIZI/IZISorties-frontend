@@ -1,7 +1,6 @@
 import styles from '../styles/Footer.module.css';
 import Link from 'next/link';
 
-
 function Footer() {
   return (
     <footer className={styles.footer}>

@@ -2,7 +2,7 @@
     margin : 30px;
 }
 
-
 .eventsLikedContainer {
     display: flex;
+    width: 90%;
 }

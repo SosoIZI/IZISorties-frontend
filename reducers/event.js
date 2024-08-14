@@ -8,11 +8,12 @@ export const eventSlice = createSlice({
     name: 'events',
     initialState,
     reducers: {
-         searchEvents: (state, action) => {
-            state.value = action.payload
-         }, 
+         displayEvent: (state, action) => {
+          state.value=action.payload // pour ecraser la derniere recherche
+      },
       },
     });
 
-  export const { searchEvents } = eventSlice.actions;
+  
+  export const { displayEvent } = eventSlice.actions;
   export default eventSlice.reducer;

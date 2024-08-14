@@ -1,14 +1,15 @@
 import styles from "../styles/CreateEvent.module.css";
 import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
+import EventDetailsMaquette from "../components/EventDetailsMaquette";
 import { Autocomplete, TextField, Checkbox, Chip } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useSelector } from "react-redux";
 import uniqid from "uniqid";
+import Image from "next/image";
 
 function CreateEvent() {
-
   const token = useSelector((state) => state.user.value.token);
 
   // Je crée un état par input
@@ -30,111 +31,8 @@ function CreateEvent() {
   const [imageFiles, setImageFiles] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("/Image-par-defaut.png"); // état pour afficher l'image dans l'eventCard
+  const [categoriesList, setCategoriesList] = useState([]);
 
-  // Pour l'instant on utilise une variable pour "catégories".
-  // Si on fini le projet + tôt on mettra les catégories dans une BDD dans MongoDB
-  const categoriesList = [
-    {
-      category: "Nature et plein air",
-      subcategories: [
-        "Randonnée",
-        "Camping",
-        "Balades à vélo",
-        "Sports nautiques (kayak, canoë, etc.)",
-        "Jardinage et botanique",
-      ],
-    },
-    {
-      category: "Culture et patrimoine",
-      subcategories: [
-        "Musées",
-        "Visites de monuments historiques",
-        "Galeries d'art",
-        "Spectacles et théâtres",
-        "Visites guidées",
-      ],
-    },
-    {
-      category: "Divertissement",
-      subcategories: [
-        "Cinéma",
-        "Parcs d'attractions",
-        "Zoos et aquariums",
-        "Salles de jeux (bowling, billard, etc.)",
-        "Concerts et festivals",
-      ],
-    },
-    {
-      category: "Sports et activités physiques",
-      subcategories: [
-        "Gymnases et centres de fitness",
-        "Sports d'équipe (football, basketball, etc.)",
-        "Sports individuels (tennis, golf, etc.)",
-        "Yoga et pilates",
-        "Escalade et sports d'aventure",
-      ],
-    },
-    {
-      category: "Cuisine et gastronomie",
-      subcategories: [
-        "Restaurants et cafés",
-        "Cours de cuisine",
-        "Dégustations de vin et de fromage",
-        "Marchés locaux",
-        "Food trucks et stands de rue",
-      ],
-    },
-    {
-      category: "Détente et bien-être",
-      subcategories: [
-        "Spas et centres de bien-être",
-        "Massages et soins du corps",
-        "Méditation et yoga",
-        "Thermalisme et bains",
-        "Salles de relaxation et de méditation",
-      ],
-    },
-    {
-      category: "Événements et festivals",
-      subcategories: [
-        "Carnavals et fêtes populaires",
-        "Salons et foires",
-        "Événements sportifs",
-        "Fêtes traditionnelles et célébrations",
-        "Marchés de Noël et événements saisonniers",
-      ],
-    },
-    {
-      category: "Éducation et apprentissage",
-      subcategories: [
-        "Ateliers et cours",
-        "Conférences et débats",
-        "Visites éducatives",
-        "Clubs et groupes d'intérêt",
-        "Cours en ligne et webinaires",
-      ],
-    },
-    {
-      category: "Famille et enfants",
-      subcategories: [
-        "Parcs pour enfants",
-        "Ateliers créatifs",
-        "Spectacles pour enfants",
-        "Activités éducatives en famille",
-        "Zoos et aquariums",
-      ],
-    },
-    {
-      category: "Voyages et excursions",
-      subcategories: [
-        "Visites guidées",
-        "Croisières et excursions en bateau",
-        "Escapades week-end",
-        "Voyages culturels",
-        "Aventures en plein air",
-      ],
-    },
-  ];
 
   // PARAMETRAGE DU MODULE MATERIAL-UI
   // 1- J'utilise les icones de ce module (les cases à cocher vides et pleines)
@@ -157,8 +55,8 @@ function CreateEvent() {
     }
   };
 
-// je crée un tableau "options" qui va contenir les mêmes infos que dans ma BDD catégories 
-// (mais l'autocomplete impose de recréer une constante ainsi pour fonctionner)
+  // je crée un tableau "options" qui va contenir les mêmes infos que dans ma BDD catégories
+  // (mais l'autocomplete impose de recréer une constante ainsi pour fonctionner)
   const options = [];
   for (const category of categoriesList) {
     for (const subcategory of category.subcategories) {
@@ -180,9 +78,18 @@ function CreateEvent() {
         //console.log('data' ,data)
         setPlaceDataBase(data.places);
       });
+
+      // 2- je fetch pour récupérer la liste des categories
+      fetch(`http://localhost:3000/categories/`)
+      .then((response) => response.json())
+      .then((datacateg) => {
+        //console.log('data' ,data)
+        setCategoriesList(datacateg.categories);
+      });
+
   }, [idPlace]);
   //au démarrage du composant, je charge toutes les données présentent dans la BDD "places" et je les stocke dans un état
-  // cette liste se mettra à jour à chaque fois que "idPlace" changera 
+  // cette liste se mettra à jour à chaque fois que "idPlace" changera
 
   const namePlaceChange = (event, newValue) => {
     // newValue : la valeur sélectionnée par l'utilisateur ou saisie manuellement.
@@ -207,7 +114,7 @@ function CreateEvent() {
 
   // PARAMETRAGE DES IMAGES
 
-  // Fonction qui se lance quand l'utilisateur a télécharger une image. 
+  // Fonction qui se lance quand l'utilisateur a télécharger une image.
   // Je stocke ces images dans un tableau imageFiles
   const imageAdded = (event) => {
     // event est l'objet événement généré par le navigateur lorsqu'on utilise l'input file.
@@ -220,6 +127,11 @@ function CreateEvent() {
     // j'ajoute les nouveaux fichiers au tableau existant imageFiles (je nomme prevFiles, mon tableau actuel imageFiles)
     setImageFiles((prevFiles) => {
       const newFiles = [...prevFiles, ...filesArray];
+
+      // Génération des URLs pour les images ajoutées pour les afficher dans le component EventDetailMaquette
+      const newImageUrls = newFiles.map((file) => URL.createObjectURL(file));
+      setImageUrls(newImageUrls);
+
       if (prevFiles.length === 0) {
         // Si c'est la première image ajoutée, je veux que ce soit elle qui soit affichée dans la preview de l'EventCard
         const firstPic = URL.createObjectURL(newFiles[0]);
@@ -247,16 +159,18 @@ function CreateEvent() {
     return data.urls;
   };
 
-
   // Je crée une fonction qui affiche en miniature les photos qu'il a téléchagé
   const imagePreviews = imageFiles.map((file, index) => (
     <div key={index} className={styles.imagePreviewWrapper}>
-      <img
+      <Image
         src={URL.createObjectURL(file)}
-        alt={`preview-${index}`}
+        alt={`IZI-preview-${index}`}
         className={styles.imagePreview}
+        width={100}
+        height={100}
       />
       <button
+        name="supprimer limage téléchargée"
         onClick={() => removeImage(index)}
         className={styles.removeImageButton}
       >
@@ -270,8 +184,9 @@ function CreateEvent() {
     const newFiles = [...imageFiles];
     newFiles.splice(index, 1);
     setImageFiles(newFiles);
+    const newImageUrls = newFiles.map((file) => URL.createObjectURL(file));
+    setImageUrls(newImageUrls);
   };
-
 
   // Pour finir, quand je clique sur "soumettre", la fonction addNewEvent se lance.
   // On verifie que tous les champs sont remplis correctement sinon on met une alerte
@@ -328,10 +243,10 @@ function CreateEvent() {
       return;
     }
 
-      // Si tous les champs sont remplis :
-      // Si la place n'est pas dans ma BDD, je commence par la créer pour récupérer son id, sa longitude et sa latitude
-      // Puis on lance la route qui crée l'event avec les infos du form, le token de l'user, et l'id de la place
-    // 1- je commence par créer ma place si elle n'est pas dans ma BDD 
+    // Si tous les champs sont remplis :
+    // Si la place n'est pas dans ma BDD, je commence par la créer pour récupérer son id, sa longitude et sa latitude
+    // Puis on lance la route qui crée l'event avec les infos du form, le token de l'user, et l'id de la place
+    // 1- je commence par créer ma place si elle n'est pas dans ma BDD
     if (
       eventName &&
       description &&
@@ -467,7 +382,24 @@ function CreateEvent() {
     }
   };
 
-
+  // Création d'eventData pour passer les données à EventDetails
+  const eventData = {
+    eventName,
+    description,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    pictures: imageUrls,
+    price,
+    place: {
+      address,
+      cp,
+      city,
+      latitude,
+      longitude,
+    },
+  };
 
   return (
     <div className={styles.pageContainer}>
@@ -475,247 +407,269 @@ function CreateEvent() {
         <div className={styles.formContainer}>
           <h1>Je créé mon évènement dans IZI</h1>
           <div className={styles.form}>
-            <div className={styles.formGroup}>
-              {/* htmlFor permet aux lecteurs d'écran d'annoncer le champ de saisie (pour les utilisateurs malvoyants) */}
-              <label htmlFor="eventName" className={styles.label}>
-                Nom de l'évènement
-              </label>
-              <input
-                required
-                placeholder="Concert Mc Solaar au Vélodrome"
-                className={styles.input}
-                onChange={(e) => setEventName(e.target.value)}
-                value={eventName}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="description" className={styles.label}>
-                Description
-              </label>
-              <input
-                required
-                placeholder="Ne manquez pas lévénement musical de lannée ! Le légendaire MC Solaar revient sur scène pour un concert exceptionnel au Vélodrome. Préparez-vous à vibrer au rythme des classiques du rap français et des nouveaux titres de cet artiste emblématique. Avec sa poésie urbaine et ses mélodies envoûtantes, MC Solaar vous promet une soirée inoubliable."
-                className={styles.input}
-                onChange={(e) => setDescription(e.target.value)}
-                value={description}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="startDate" className={styles.label}>
-                Date de début de l'évènement
-              </label>
-              <input
-                required
-                type="date"
-                placeholder="30/08/2024"
-                className={styles.input}
-                onChange={(e) => setStartDate(e.target.value)}
-                value={startDate}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="endDate" className={styles.label}>
-                Date de fin de l'évènement
-              </label>
-              <input
-                required
-                type="date"
-                placeholder="30/08/2024"
-                className={styles.input}
-                onChange={(e) => setEndDate(e.target.value)}
-                value={endDate}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="startTime" className={styles.label}>
-                Heure de début de l'évènement
-              </label>
-              <input
-                required
-                type="time"
-                placeholder="30/08/2024"
-                className={styles.input}
-                onChange={(e) => setStartTime(e.target.value)}
-                value={startTime}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="endTime" className={styles.label}>
-                Heure de fin de l'évènement
-              </label>
-              <input
-                required
-                type="time"
-                placeholder="30/08/2024"
-                className={styles.input}
-                onChange={(e) => setEndTime(e.target.value)}
-                value={endTime}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="price" className={styles.label}>
-                Prix
-              </label>
-              <input
-                required
-                placeholder="15€ par personne"
-                className={styles.input}
-                onChange={(e) => setPrice(e.target.value)}
-                value={price}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label htmlFor="categories" className={styles.label}>
-                Categories
-              </label>
-              {/* pour les catégories je crée l'autocomplete avec le module "material-ui" */}
-              <Autocomplete
-                multiple // autorise la multiple selection
-                options={options} // affiche les options définies + haut
-                disableCloseOnSelect // empêche le menu de se fermer automatiquement lorsqu'une option est sélectionnée
-                getOptionLabel={(option) => // défini la forme des options
-                  `${option.category} - ${option.subcategory}`
-                }
-                onChange={handleChange}
-                value={categoriesSelected}
-                // je définie l'input comme étant un choix multiple d'options "category-subcategory"
-                // à chaque selection ou changement, la fonction handleChange se lance
-                renderOption={(props, option, { selected }) => (
-                  <li {...props}>
-                    {/* je créé la liste qui sera dans la checkbox */}
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {`${option.category} - ${option.subcategory}`}
-                  </li>
-                )}
-                style={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    //label="Selectionner les catégories correpondantes (3 maximum)"
-                    placeholder="3 categories maximum"
+            <div className={styles.formSection}>
+              {/* Première partie du formulaire */}
+              <div className={styles.firstPart}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="eventName" className={styles.label}>
+                    Nom de l'évènement
+                  </label>
+                  <input
+                    required
+                    placeholder="Concert Mc Solaar au Vélodrome"
                     className={styles.input}
+                    onChange={(e) => setEventName(e.target.value)}
+                    value={eventName}
                   />
-                )}
-                //ici ce sont les tags des categ selectionnées qui sont rendus sous forme de Chip
-                renderTags={(value, getTagProps) =>
-                  value.map((option, index) => (
-                    <Chip
-                      key={option.subcategory}
-                      label={option.subcategory}
-                      {...getTagProps({ index })}
-                      style={{ backgroundColor: "#2E4656", color: "white" }}
-                    />
-                  ))
-                }
-              />
-            </div>
-            <hr className={styles.hr} />
-            <div className={styles.placeForm}>
-              <div className={styles.formGroup}>
-                <label htmlFor="namePlace" className={styles.label}>
-                  Nom du lieu de l'évènement
-                </label>
-                <Autocomplete
-                  freeSolo // permet à l'utilisateur de renseigner le champ lui-même s'il ne le trouve pas dans les suggestions
-                  options={placeDataBase}
-                  getOptionLabel={(option) =>
-                    typeof option === "string"
-                      ? option
-                      : `${option.namePlace} - ${option.city}`
-                  }
-                  onChange={namePlaceChange}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      placeholder="L'UBU"
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="description" className={styles.label}>
+                    Description
+                  </label>
+                  <input
+                    required
+                    placeholder="Ne manquez pas l'événement musical de l'année!"
+                    className={styles.input}
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
+                  />
+                </div>
+                <div className={styles.inlineGroup}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="startDate" className={styles.label}>
+                      Date de début de l'évènement
+                    </label>
+                    <input
+                      required
+                      type="date"
                       className={styles.input}
-                      value={namePlace}
-                      onChange={(e) => setNamePlace(e.target.value)}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      value={startDate}
                     />
-                  )}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="address" className={styles.label}>
-                  Adresse du lieu de l'évènement
-                </label>
-                <input
-                  required
-                  placeholder="4 avenue de la république"
-                  className={styles.input}
-                  onChange={(e) => setAddress(e.target.value)}
-                  value={address}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="cp" className={styles.label}>
-                  Code postal du lieu de l'évènement
-                </label>
-                <input
-                  required
-                  placeholder="35000"
-                  className={styles.input}
-                  onChange={(e) => setCp(e.target.value)}
-                  value={cp}
-                />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="city" className={styles.label}>
-                  Ville du lieu de l'évènement
-                </label>
-                <input
-                  required
-                  placeholder="Rennes"
-                  className={styles.input}
-                  onChange={(e) => setCity(e.target.value)}
-                  value={city}
-                />
-              </div>
-            </div>
-            <div className={styles.formGroup}>
-              <div className={styles.uploadImageContainer}>
-                <input
-                  type="file"
-                  multiple
-                  className={styles.fileInput}
-                  onChange={imageAdded} // Déclenche la fonction handleImageChange lorsque des fichiers sont sélectionnés
-                />
-                <div className={styles.uploadImageButton}>
-                  Télécharger des images
-                  <span className={styles.uploadImageButtonIcon}>
-                    {" "}
-                    <i
-                      className="bx bxs-download"
-                      style={{ color: "#2F4858" }}
-                    ></i>
-                  </span>
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="endDate" className={styles.label}>
+                      Date de fin de l'évènement
+                    </label>
+                    <input
+                      required
+                      type="date"
+                      className={styles.input}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      value={endDate}
+                    />
+                  </div>
+                </div>
+                <div className={styles.inlineGroup}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="startTime" className={styles.label}>
+                      Heure de début de l'évènement
+                    </label>
+                    <input
+                      required
+                      type="time"
+                      className={styles.input}
+                      onChange={(e) => setStartTime(e.target.value)}
+                      value={startTime}
+                    />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="endTime" className={styles.label}>
+                      Heure de fin de l'évènement
+                    </label>
+                    <input
+                      required
+                      type="time"
+                      className={styles.input}
+                      onChange={(e) => setEndTime(e.target.value)}
+                      value={endTime}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className={styles.imagePreviewContainer}>
-                {imagePreviews}
+
+              {/* Seconde partie du formulaire */}
+              <div className={styles.secondPart}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="categories" className={styles.label}>
+                    Catégories
+                  </label>
+                  <Autocomplete
+                    multiple
+                    options={options}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) =>
+                      `${option.category} - ${option.subcategory}`
+                    }
+                    onChange={handleChange}
+                    value={categoriesSelected}
+                    renderOption={(props, option, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          style={{ marginRight: 8 }}
+                          checked={selected}
+                        />
+                        {`${option.category} - ${option.subcategory}`}
+                      </li>
+                    )}
+                    style={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="3 catégories maximum"
+                        className={styles.input}
+                      />
+                    )}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          key={option.subcategory}
+                          label={option.subcategory}
+                          {...getTagProps({ index })}
+                          style={{ backgroundColor: "#2E4656", color: "white" }}
+                        />
+                      ))
+                    }
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="price" className={styles.label}>
+                    Prix
+                  </label>
+                  <input
+                    required
+                    placeholder="15€ par personne"
+                    className={styles.input}
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <div className={styles.uploadImageContainer}>
+                    <input
+                      type="file"
+                      multiple
+                      className={styles.fileInput}
+                      onChange={imageAdded}
+                    />
+                    <div className={styles.uploadImageButton}>
+                      Télécharger des images
+                      <span className={styles.uploadImageButtonIcon}>
+                        <i
+                          className="bx bxs-download"
+                          style={{ color: "#2F4858" }}
+                        ></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div className={styles.imagePreviewContainer}>
+                    {imagePreviews}
+                  </div>
+                </div>
+              </div>
+
+              {/* Troisième partie du formulaire */}
+              <div className={styles.thirdPart}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="namePlace" className={styles.label}>
+                    Nom du lieu de l'évènement
+                  </label>
+                  <Autocomplete
+                    freeSolo
+                    options={placeDataBase}
+                    getOptionLabel={(option) =>
+                      typeof option === "string"
+                        ? option
+                        : `${option.namePlace} - ${option.city}`
+                    }
+                    onChange={namePlaceChange}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="L'UBU"
+                        className={styles.input}
+                        value={namePlace}
+                        onChange={(e) => setNamePlace(e.target.value)}
+                      />
+                    )}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="address" className={styles.label}>
+                    Adresse du lieu de l'évènement
+                  </label>
+                  <input
+                    required
+                    placeholder="4 avenue de la république"
+                    className={styles.input}
+                    onChange={(e) => setAddress(e.target.value)}
+                    value={address}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="cp" className={styles.label}>
+                    Code postal du lieu de l'évènement
+                  </label>
+                  <input
+                    required
+                    placeholder="35000"
+                    className={styles.input}
+                    onChange={(e) => setCp(e.target.value)}
+                    value={cp}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="city" className={styles.label}>
+                    Ville du lieu de l'évènement
+                  </label>
+                  <input
+                    required
+                    placeholder="Rennes"
+                    className={styles.input}
+                    onChange={(e) => setCity(e.target.value)}
+                    value={city}
+                  />
+                </div>
+                <button
+                  name="soumettre le formulaire de création"
+                  type="submit"
+                  onClick={() => addNewEvent()}
+                  className={styles.submitButton}
+                >
+                  Soumettre
+                </button>
               </div>
             </div>
-            <button
-              type="submit"
-              onClick={() => addNewEvent()}
-              className={styles.submitButton}
-            >
-              Soumettre
-            </button>
           </div>
         </div>
-        <div className={styles.previewContainer}>
+      </div>
+      <div className={styles.previewContainer}>
+        <div className={styles.CardPreviewContainer}>
+          <h3>Aperçu de votre evènement dans les résultats de recherche</h3>
           <EventCard
-            pictures={[previewUrl]} // je ne veux que la 1ère image dans la preview de l'EventCard
+            pictures={[previewUrl]}
             eventName={eventName}
             description={description}
+          />
+        </div>
+        <div className={styles.CardPreviewContainer}>
+          <h3>Aperçu de la page de votre evènement</h3>
+          <EventDetailsMaquette
+            imagePreviews={imageUrls}
+            eventName={eventName}
+            description={description}
+            startDate={startDate}
+            endDate={endDate}
+            startTime={startTime}
+            endTime={endTime}
+            price={price}
+            address={address}
+            cp={cp}
+            city={city}
           />
         </div>
       </div>

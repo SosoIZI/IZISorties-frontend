@@ -9,21 +9,42 @@ import { useDispatch, useSelector } from "react-redux";
 import { Popover, Menu } from "antd";
 import { logout } from "../reducers/user";
 import Swal from 'sweetalert2';
+import { displayEvent } from "../reducers/event";
+
 
 function Header() {
-  const dispatch = useDispatch();
+  const event = useSelector((state) => state.event.value);
+  const dispatch=useDispatch()
+
   const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
   const token = useSelector((state) => state.user.value.token); // le reducer va chercher la valeur du token pour dire si user connected ou non
 
   const [searchInput, setSearchInput] = useState(""); // état pour renseigner l'input
+  const [searchResults, setSearchResults] = useState([]);// est utilisé pour stocker les résultats de la recherche.
 
   const [modalVisible, setModalVisible] = useState(false); // import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
-  const handleChange = (e) => {
+  const handleChange = (e) => {  //handleChange envoie une requête au serveur chaque fois que la valeur de la barre de recherche change et met à jour searchResults avec les données retournées.
     // e.target.value= valeur de l'input
     setSearchInput(e.target.value);
-  };
+  
+//fetch de la route search, utiliser le reducer et displayEvent pour afficher l'EventCard
+  if (e.target.value !== "") {
+
+    fetch(`http://localhost:3000/events/search/${e.target.value}`)
+      .then((response) => response.json())
+      .then((data) => {
+      setSearchResults(data.events); // Mettre à jour l'état avec les résultats de la recherche
+        //console.log(searchResults);
+       dispatch(displayEvent(data.events))  // On utilise dispatch pour utiliser displayEvent dans la searchBar une fois que le fetch est fait)
+
+
+      })
+      .catch((error) => console.error('Erreur lors de la recherche:', error));
+  } else {
+    setSearchResults([]); // Réinitialiser les résultats si la barre de recherche est vide
+  }}
 
   const handleReset = () => {
     // Pour réinitialiser le setter vide= Quand on appuye sur la croix, réinitialise la barre de recherche.
@@ -195,6 +216,7 @@ function Header() {
                 placeholder="Rechercher une sortie"
                 onChange={handleChange}
                 value={searchInput}
+               
               />
               {!searchInput ? (
                 <i // si searchInput est vide afficher la loupe dans la barre de recherche //
