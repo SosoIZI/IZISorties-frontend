@@ -181,13 +181,28 @@ function Home() {
       <h2>Evènements les plus consultés en France :</h2>
       <div className={styles.mostConsultedContainer}>
         <Swiper
-          modules={[Navigation]}
+          style={{
+            paddingBottom: "30px",
+            "--swiper-pagination-color": "#2F4858",
+          }}
+          pagination={{ clickable: true }}
+          modules={[Navigation, Pagination]}
           spaceBetween={1}
           slidesPerView={5}
-          navigation
+          navigation={{
+            nextEl: ".customnext",
+            prevEl: ".customprev",
+          }}
         >
           {topEventCards}
         </Swiper>
+        
+        <div className={`${styles.customnext} customnext`}>
+          <i className="bx bx-right-arrow-alt"></i>
+        </div>
+        <div className={`${styles.customprev} customprev`}>
+          <i className="bx bx-left-arrow-alt"></i>
+        </div>
         {!token && (
           <div>
             <button className={styles.roundButton} onClick={handleShow}>
@@ -230,14 +245,27 @@ function Home() {
           {eventsBookedList.length > 5 ? (
             <div className={styles.eventsBookedContainer}>
               <Swiper
+                style={{
+                  paddingBottom: "10px",
+                  "--swiper-pagination-color": "#2F4858",
+                }}
                 spaceBetween={1}
                 slidesPerView={5}
-                navigation
+                navigation={{
+                  nextEl: ".customnextBooked",
+                  prevEl: ".customprevBooked",
+                }}
                 pagination={{ clickable: true }}
                 modules={[Navigation, Pagination]}
               >
                 {bookedEvents}
-              </Swiper>{" "}
+              </Swiper>
+              <div className={`${styles.customnext} customnextBooked`}>
+                <i className="bx bx-right-arrow-alt"></i>
+              </div>
+              <div className={`${styles.customprev} customprevBooked`}>
+                <i className="bx bx-left-arrow-alt"></i>
+              </div>
             </div>
           ) : (
             <div className={styles.eventsBookedContainer}>{bookedEvents}</div>
