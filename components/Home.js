@@ -148,7 +148,7 @@ function Home() {
   );
   return (
     <div className={styles.netflixContainer}>
-      {events}
+     
       <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
         <Swiper

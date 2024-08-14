@@ -8,106 +8,150 @@ import Connexion from "./Connexion";
 import { useDispatch, useSelector } from "react-redux";
 import { Popover, Menu } from "antd";
 import { logout } from "../reducers/user";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { displayEvent } from "../reducers/event";
-
 
 function Header() {
   const event = useSelector((state) => state.event.value);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   const router = useRouter(); // pour pouvoir utiliser le hook Router( navigation entre les pages)
   const token = useSelector((state) => state.user.value.token); // le reducer va chercher la valeur du token pour dire si user connected ou non
 
   const [searchInput, setSearchInput] = useState(""); // état pour renseigner l'input
-  const [searchResults, setSearchResults] = useState([]);// est utilisé pour stocker les résultats de la recherche.
+  const [searchResults, setSearchResults] = useState([]); // est utilisé pour stocker les résultats de la recherche.
 
+  const [userCreate, setUserCreate] = useState(true);
   const [modalVisible, setModalVisible] = useState(false); // import de la modal pour l'utiliser au clic sur le bouton connexion du header
   const handleShow = () => setModalVisible(true);
   const handleClose = () => setModalVisible(false);
-  const handleChange = (e) => {  //handleChange envoie une requête au serveur chaque fois que la valeur de la barre de recherche change et met à jour searchResults avec les données retournées.
-    // e.target.value= valeur de l'input
-    setSearchInput(e.target.value);
   
-//fetch de la route search, utiliser le reducer et displayEvent pour afficher l'EventCard
-  if (e.target.value !== "") {
+  const handleChange = (e) => {
+    //handleChange envoie une requête au serveur chaque fois que la valeur de la barre de recherche change et met à jour searchResults avec les données retournées.
+    // e.target.value= valeur de l'input
 
-    fetch(`http://localhost:3000/events/search/${e.target.value}`)
-      .then((response) => response.json())
-      .then((data) => {
-      setSearchResults(data.events); // Mettre à jour l'état avec les résultats de la recherche
-        //console.log(searchResults);
-       dispatch(displayEvent(data.events))  // On utilise dispatch pour utiliser displayEvent dans la searchBar une fois que le fetch est fait)
+    if (!token) {
+      // si pas connecté on lance la modal et on réinitialise l'input pour que rien ne s'affiche
 
+      router.push("/Inscription");
+      setSearchInput("");
 
-      })
-      .catch((error) => console.error('Erreur lors de la recherche:', error));
-  } else {
-    setSearchResults([]); // Réinitialiser les résultats si la barre de recherche est vide
-  }}
+      return;
+    }
+    setSearchInput(e.target.value);
+
+    //fetch de la route search, utiliser le reducer et displayEvent pour afficher l'EventCard
+    // if (e.target.value !== "") {
+    //   fetch(`http://localhost:3000/events/search/${e.target.value}`)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       if (data.events && data.events.length > 0) {
+    //         console.log(e);
+    //         if (e.key === "Enter") {
+    //           setSearchResults(data.events); // Mettre à jour l'état avec les résultats de la recherche
+
+    //           //console.log(searchResults);
+    //           dispatch(displayEvent(data.events)); // On utilise dispatch pour utiliser displayEvent dans la searchBar une fois que le fetch est fait)
+    //           router.push("/Search");
+    //         }
+    //       } else {
+    //         Swal.fire({
+    //           title: "Aucun évenement trouvé",
+    //           text: "Veuillez modifier votre recherche",
+    //           icon: "warning",
+    //           confirmButtonText: "OK",
+    //           confirmButtonColor: "rgb(46, 70, 86)",
+    //         });
+
+    //         setSearchResults([]); // Réinitialiser les résultats si la barre de recherche est vide
+    //       }
+    //     })
+
+    //     .catch((error) => console.error("Erreur lors de la recherche:", error));
+    // }
+  };
+
+  const handleKeyDown = (e) => {
+    if(e.key === "Enter"){
+      fetch(`http://localhost:3000/events/search/${searchInput}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.events && data.events.length > 0) {
+            console.log(e);
+            if (e.key === "Enter") {
+              setSearchResults(data.events); // Mettre à jour l'état avec les résultats de la recherche
+
+              //console.log(searchResults);
+              dispatch(displayEvent(data.events)); // On utilise dispatch pour utiliser displayEvent dans la searchBar une fois que le fetch est fait)
+              router.push("/Search");
+            }
+          } else {
+            Swal.fire({
+              title: "Aucun évenement trouvé",
+              text: "Veuillez modifier votre recherche",
+              icon: "warning",
+              confirmButtonText: "OK",
+              confirmButtonColor: "rgb(46, 70, 86)",
+            });
+
+            setSearchResults([]); // Réinitialiser les résultats si la barre de recherche est vide
+          }
+        })
+    }
+  }
 
   const handleReset = () => {
     // Pour réinitialiser le setter vide= Quand on appuye sur la croix, réinitialise la barre de recherche.
     setSearchInput("");
+    //dispatch(removeAllEvent())
+    //router.push("/Home")
   };
-  
-  const handleDelete = async() => {  // Async await pour attendre la validation de l'user avant de supprimer ou pas le profil
-    
-    const proceed= 
-    await Swal.fire({
-     title: 'Êtes-vous sûr ?',
-     text: "Vous ne pourrez pas revenir en arrière !",
-     icon: 'warning',
-     showCancelButton: true,
-     confirmButtonColor: '#3085d6',
-     cancelButtonColor: '#d33',
-     confirmButtonText: 'Oui, supprimer !',
-     cancelButtonText: 'Annuler',
-    timer: 50000,})
- 
+
+  const handleDelete = async () => {
+    // Async await pour attendre la validation de l'user avant de supprimer ou pas le profil
+
+    const proceed = await Swal.fire({
+      title: "Êtes-vous sûr ?",
+      text: "Vous ne pourrez pas revenir en arrière !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Oui, supprimer !",
+      cancelButtonText: "Annuler",
+      timer: 50000,
+    });
+
     console.log(proceed);
-     if (proceed.isConfirmed){// proceed.isConfirmed car lié à swal.)
-    //  on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
-    fetch(`http://localhost:3000/users/delete/${token}`, {
-       method: "DELETE",
-       headers: { "Content-Type": "application/json" },
-     })
-       .then((response) => response.json())
-       .then((data) => {
-        console.log(data);
-         {
-           if(data.result){                           // Si data alors supprime le compte, logout le user et renvoie sur home 
-             dispatch(logout());
-             router.push("/Home")
- 
-           }
-         }
-       });
-     }
-    
-   };
- 
-  
+    if (proceed.isConfirmed) {
+      // proceed.isConfirmed car lié à swal.)
+      //  on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
+      fetch(`http://localhost:3000/users/delete/${token}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          {
+            if (data.result) {
+              // Si data alors supprime le compte, logout le user et renvoie sur home
+              dispatch(logout());
+              router.push("/Home");
+            }
+          }
+        });
+    }
+  };
+
   const popoverContent = (
     <Menu>
       <Menu.Item
         key="1"
         className={styles.popoverItem}
-        onClick={() => router.push("/Profil")}
+        onClick={() => router.push("/Home")}
       >
         Profil
-      </Menu.Item>
-
-      <Menu.Item key="2" className={styles.popoverItem}>
-        Langue
-        <Menu.SubMenu title="Langue">
-          <Menu.Item key="3.1" className={styles.popoverItem}>
-            Français
-          </Menu.Item>
-          <Menu.Item key="3.2" className={styles.popoverItem}>
-            English
-          </Menu.Item>
-        </Menu.SubMenu>
       </Menu.Item>
       <Menu.Item
         key="3"
@@ -131,11 +175,7 @@ function Header() {
     </Menu>
   );
 
- 
-  
-
   return (
-    // Utilisation de Link et de la balise <a> pour qu'au clic sur l'image on puisse se rediriger vers home //
     <header className={styles.header}>
       <div className={styles.logoAndSearchContainer}>
         <Link href="/Home">
@@ -143,9 +183,26 @@ function Header() {
             <img className={styles.logo} src="logo.png" alt="Logo" />
           </a>
         </Link>
+
+        <input
+          className={styles.searchbar}
+          type="text"
+          placeholder="Rechercher une sortie"
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          value={searchInput}
+        />
+        {!searchInput ? (
+          <i
+            className="bx bx-search-alt-2 bx-rotate-90"
+            style={{ color: "rgba(0,0,0,0.38)" }}
+          ></i>
+        ) : (
+          <i className="bx bx-x" onClick={handleReset}></i>
+        )}
       </div>
 
-      {token ? ( // si token is true:=userconnected affiche ce header   //
+      {token ? (
         <div className={styles.iconContainer}>
           <div
             className={styles.iconItem}
@@ -186,10 +243,7 @@ function Header() {
             <span className={styles.nameicon}>Favoris</span>
           </div>
 
-          <div
-            className={styles.iconItem}
-            onClick={() => router.push("/Profil")}
-          >
+          <div className={styles.iconItem}>
             <Popover
               className={styles.popoverContent}
               title=""
@@ -206,54 +260,27 @@ function Header() {
           </div>
         </div>
       ) : (
-        // si token is false:=userNot Connected affiche ce header //
-        <>
-          <div className={styles.header}>
-            <div className={styles.logoAndSearchContainer}>
-              <input
-                className={styles.searchbar}
-                type="text"
-                placeholder="Rechercher une sortie"
-                onChange={handleChange}
-                value={searchInput}
-               
-              />
-              {!searchInput ? (
-                <i // si searchInput est vide afficher la loupe dans la barre de recherche //
-                  className="bx bx-search-alt-2 bx-rotate-90"
-                  style={{ color: "rgba(0,0,0,0.38)" }}
-                ></i>
-              ) : (
-                // si searchInput est renseigné afficher la croix qui au clic,réinitialise la barre de setter //
-                <i className="bx bx-x" onClick={handleReset}></i>
-              )}
-            </div>
-            <div className={styles.logoAndSearchContainer}>
-              <div className={styles.buttonContainer}>
-                <Button
-                  variant="primary"
-                  className={styles.button}
-                  onClick={handleShow}
-                >
-                  {" "}
-                  {/*au clic ouvrre/ferme la modal   */}
-                  Connexion
-                </Button>
-
-                <Connexion showModal={modalVisible} handleClose={handleClose}/>
-              </div>
-
-              <div className={styles.buttonContainer}>
-                <button
-                  onClick={() => router.push("/Inscription")}
-                  className={styles.button}
-                >
-                  Inscription
-                </button>
-              </div>
-            </div>
+        <div className={styles.logoAndSearchContainer}>
+          <div className={styles.buttonContainer}>
+            <Button
+              variant="primary"
+              className={styles.button}
+              onClick={handleShow}
+            >
+              Connexion
+            </Button>
+            <Connexion showModal={modalVisible} handleClose={handleClose} />
           </div>
-        </>
+
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={() => router.push("/Inscription")}
+              className={styles.button}
+            >
+              Inscription
+            </button>
+          </div>
+        </div>
       )}
     </header>
   );

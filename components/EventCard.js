@@ -1,5 +1,6 @@
 import styles from "../styles/EventCard.module.css";
 import {useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,27 +9,31 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Router, useRouter } from "next/router";
 
+
 function EventCard(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.value.token);
   let [isliked, setIsLiked] = useState(false);
   const router = useRouter();
+ 
 
 
   useEffect(() => {
 // je vais récupérer l'id du user, si cet id est compris dans le NbLike de cet event
 // alors isLiked est true
+
+if(token){
 fetch(`http://localhost:3000/users/infos/${token}`)
 .then((response) => response.json())
 .then((data) => {
-  console.log(data.user[0]._id)
+  
   if(props.nbLike) {
   for (const e of props.nbLike) {
     if (e==data.user[0]._id) {
       setIsLiked(true)
     }
   } }
-})
+})}
   }, [])
 
 
@@ -101,7 +106,8 @@ const handleClick = () => {  // fonction pour activer la modal connexion au clic
         )}
         {props._id ? (
           <div className={styles.cardContent} onClick={handleClick}>
-            <p className={styles.title}>{props.eventName}</p>
+  
+           <p className={styles.title}>{props.eventName}</p>
             <p className={styles.description}>{props.description}</p>
             <button name='En savoir plus' className={styles.knowMoreButton}>En savoir plus</button>
           </div>

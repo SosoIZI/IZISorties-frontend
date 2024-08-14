@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Google from "./Google.js"; // import du composant Google pour l'afficher dans le formulaire connexion
 
-function Connexion({ isConnected = true, showModal, handleClose }) { // inverse data flow de google pour passer la props à connexion
+function Connexion({ isConnected = true, showModal, handleClose }) { 
   // 3 props
   const Swal = require("sweetalert2"); //pour donner du style aux messages d'Alert
   const [SignInUsername, setSignInUsername] = useState("");
@@ -21,10 +21,9 @@ function Connexion({ isConnected = true, showModal, handleClose }) { // inverse 
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // const isConnected=true
 
   const toggleShowPassword = () => {
-    // montre ou cache le mot de passe lors de la saisie
+    // montre ou cache le mot de passe lors de la saisie.
     setShowPassword(!showPassword); //L'expression !showPassword est utilisée pour inverser la valeur actuelle de showPassword.
     //Si le mot de passe est actuellement visible (showPassword est true), la fonction le masquera en réglant showPassword à false.
     //Si le mot de passe est actuellement masqué (showPassword est false), la fonction l'affichera en clair en réglant showPassword à true.
@@ -98,7 +97,7 @@ function Connexion({ isConnected = true, showModal, handleClose }) { // inverse 
       });
   };
 
-  console.log("isConnected : ", isConnected);
+  //console.log("isConnected : ", isConnected);
   return (
     <>
       <Modal show={showModal} onHide={handleClose}>

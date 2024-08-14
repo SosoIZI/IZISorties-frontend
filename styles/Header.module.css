@@ -139,9 +139,13 @@ justify-content: center;
 }
 
 .popoverItem:hover {
-	background-color: white;
-	color: rgb(46,70,86) !important;
-	border: none;
-	border: 1px solid grey;
+	
+		background-color: white !important;
+		color: rgb(242,175,119)!important;
+		font-weight: bold !important;
+		border-color: #F2AF77 !important;
+		  border: 1px solid !important;
+	
+
 }
 
