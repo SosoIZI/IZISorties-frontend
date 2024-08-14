@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css';
 import { useSelector } from 'react-redux';
 import dynamic from "next/dynamic";
 import styles from '../styles/Results.module.css';
+import { useRouter } from "next/router";
+import "boxicons/css/boxicons.min.css";
 
 
   // Importation des composants Leaflet
@@ -26,13 +28,17 @@ import styles from '../styles/Results.module.css';
 
 function MapView() {
 
-  // Etat pour mettre à jour le nombre de cartes d'évènements à afficher
+const token = useSelector((state) => state.user.value.token);
+const results = useSelector((state) => state.event.value);
+const router = useRouter();
+  
+
+// Etat pour mettre à jour le nombre de cartes d'évènements à afficher
 const [numberToShow, setNumberToShow] = useState(0);
 const [isClient, setIsClient] = useState(false);
 const [markers, setMarkers] = useState([])
 const [view, setView] = useState([])
-const token = useSelector((state) => state.user.value.token);
-const results = useSelector((state) => state.events.value);
+
 
 useEffect(() => {
 
@@ -55,14 +61,10 @@ useEffect(() => {
         const response = await fetch(`http://localhost:3000/places/${data.place}`);
         const info = await response.json();
 
-
         for(let place of info.place) {
 
         latitude = place.latitude;
         longitude = place.longitude
-
-        // console.log(latitude, longitude)
-
        }
 
         return {
@@ -78,11 +80,8 @@ useEffect(() => {
 
       setMarkers(markersData);
       // console.log(markersData, markers)
-
     };
-
     fetchPlaces();
-
   }, [results]);
 
 
@@ -116,34 +115,32 @@ const customIcon = new L.Icon({
 // je défini la position à rappeler dans la structure jsx de la Map
 let position = []
 
+
 // création des markers qui correspondent aux résultats de recherche()
-console.log(markers)
 
 const visibleMarkers = markers.map((marker, i) => {
 
-  console.log(marker)
-
   position = [marker.latitude, marker.longitude]
   
-  return <Marker 
-  key={i}
-  position={position}
-  icon={customIcon}
-  >
-    <Popup>
-      <div>
-      {marker.eventName}<br />{marker.description}
-      {/* < img 
-      src={marker.pictures}
-      alt={marker.eventName}
-      width={235}
-      height={300} */}
-      {/* // onClick={() => router.push(`/event/${data._id}`)} */} 
-      {/* /> */}
-      </div>
-    </Popup>
-  </Marker> 
+  
+  // return <Marker 
+  // key={i}
+  // position={position}
+  // icon={customIcon}
+  // >
+  //   <Popup>
+  //     {marker.eventName}<br />{marker.description}
+  //     < img 
+  //     src={marker.pictures}
+  //     alt={marker.eventName}
+  //     width={100}
+  //     height={150} 
+  //     />
+  //      <i onClick={() => router.push(`/event?hash=${marker.id}`)} className={styles.link} class='bx bx-plus bx_xs' />
+  //   </Popup>
+  // </Marker> 
 
+  return null;
 })
 
 
@@ -154,20 +151,22 @@ return (
     <ResultView />
 
 <div className={styles.mapContainer}>
+
 <MapContainer 
-center={position}
-zoom={13}
-style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
+  center={position}
+  zoom={13}
+  style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
+  
+  <TileLayer
+    url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  />
+  
+  {visibleMarkers}
+  
+  
+</MapContainer>
 
-<TileLayer
-  url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-/>
-
-{visibleMarkers}
-
-
-  </MapContainer>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 import styles from '../styles/Results.module.css';
 import "boxicons/css/boxicons.min.css"; 
+
 import { useLocation, Link } from 'react-router-dom';
 import {useRouter} from "next/router";  // import de useRouter pour afficher une navigation en mode SPA 
 
@@ -18,21 +19,21 @@ function View() {
             <div className={styles.buttonContainer}>
                 <Link to="/Results">
                 <button className={location.pathname === '/Results' ? 'active' : ''}
-                handleClick={() => router.push('/Results')}>
+                onClick={() => router.push('/Results')}>
                 
                     Vue Liste
                 </button>
                 </Link>
                 <Link to="/Map">
                 <button className={location.pathname === '/Map' ? 'active' : ''}
-                handleClick={() => router.push('/Map')}>
+                onClick={() => router.push('/Map')}>
                 
                     Vue Carte
                 </button>
                 </Link>
                 <Link to="/Swipe">
                 <button className={location.pathname === '/Swipe' ? 'active' : ''}
-                handleClick={() => router.push('/Swipe')}>
+                onClick={() => router.push('/Swipe')}>
                 
                     Vue Swipe
                 </button>

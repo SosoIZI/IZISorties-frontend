@@ -17,7 +17,7 @@ import Script from 'next/script';
 import events from "../reducers/event";
 import { BrowserRouter } from "react-router-dom";
 
-const reducers = combineReducers({ user,event });
+const reducers = combineReducers({ user, event });
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({

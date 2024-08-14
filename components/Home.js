@@ -6,7 +6,6 @@ import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
@@ -39,7 +38,7 @@ function Home() {
     login ? setModalVisible(false) : setModalVisible(true);
   };
 
-  console.log("modal visible : ", modalVisible);
+  // console.log("modal visible : ", modalVisible);
   
   useEffect(() => {
     // d'abord je charge les 5 events les + likés
@@ -53,7 +52,7 @@ function Home() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log(position)
+          // console.log(position)
           // 1- je récupère la géoloc de l'utilisateur
           const { latitude, longitude } = position.coords;
           //setCurrentPosition(position.coords);
@@ -104,6 +103,8 @@ function Home() {
       });
     }
   }, []);
+
+
   let topEventCards = " ";
   let isConnected = login;
   if (!isConnected) {
@@ -134,7 +135,7 @@ function Home() {
   // si l'utilisateur a accepté d'être géoloc, alors afficher "les sorties de cette semaine, près de chez toi"
   // sinon, l'inviter à activer sa géoloc pour obtenir de meilleures reco.
 
-  console.log("eventThisWeek : ", eventThisWeek);
+  // console.log("eventThisWeek : ", eventThisWeek);
   const thisWeekEventCards = eventThisWeek ? (
     eventThisWeek.slice(0, 5).map((data, i) => {
       return (
@@ -151,6 +152,8 @@ function Home() {
   );
   return (
 <div>
+
+  < SearchBar />
     <div className={styles.netflixContainer}>
       {events}
       <h2>Evènements les plus consultés en France:</h2>

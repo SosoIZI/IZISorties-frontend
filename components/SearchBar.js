@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchEvents } from '../reducers/event';
+import { displayEvent } from '../reducers/event';
 import { Button, Select, DatePicker, ConfigProvider  } from 'antd';
 import "boxicons/css/boxicons.min.css";
 import styles from '../styles/SearchBar.module.css';
@@ -13,20 +13,16 @@ import fetch from 'node-fetch';
 import dayjs from 'dayjs';
 import { addGeoloc } from '../reducers/search';
 
-
-
 function searchBar() {
 
   // hooks d'états pour mettre à jour le choix des filtres de recherche 
 
-  // const [long, setLong] = useState(null);
-  // const [lat, setLat] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [categories, setCategories] = useState([]) 
+  const [displayCategories, setDisplayCategories] = useState([])
   const [geoError, setGeoError] = useState(null);
-  const [eventCity, setEventCity] = useState(null)
-
+  const [eventCity, setEventCity] = useState([])
   const [city, setCity] = useState(null);
 
   const dispatch = useDispatch();
@@ -37,23 +33,36 @@ function searchBar() {
   // à l'affichage du composant, je récupère les catégories dans la bdd 
 
   useEffect(() => {
+
     fetch('http://localhost:3000/places')
     .then(response => response.json())
     .then(data => {
+      const array = []
       for (let objects of data.places ) {
-        setEventCity(objects.city) 
+        if(array.includes(objects.city)) {
+        } else {
+          array.push(objects.city)
+      }}
+
+        console.log(array)
+        setEventCity(array)
+     });
+
+    fetch('http://localhost:3000/categories')
+    .then(response => response.json())
+    .then(data => {
+      const array = [];
+      // console.log(data)
+      for (let objects of data.categories ) {
+        if(array.includes(objects.category)) {
+        } else {
+          array.push(objects.category)
         }
+        }
+          setDisplayCategories(array)
      });
   }, []);
-
-  // variable pour afficher les villes dans le sélecteur
-  let eventCities = eventCity.map((data, i) => {
-    if (data ==! null) {
-       return {...data};
-    }
-
    
-  })
 
   //// Filtrer la recherche et mettre à jour les états ////
 
@@ -64,7 +73,7 @@ function searchBar() {
     console.log(e)
     }
 
-  //on récupère la géoloc de l'utilisateur, et sur la base des coordonnées on récupère la ville où se trouve l'utilisateur
+  // on récupère la géoloc de l'utilisateur, et sur la base des coordonnées on récupère la ville où se trouve l'utilisateur
 
   const selectGeoloc = () => {
     console.log("selectGeoloc called");
@@ -129,7 +138,10 @@ function searchBar() {
   
   const selectCategories = (e) => {
     setCategories(e)
-    console.log(categories);
+    // console.log(e)
+    // const array = []
+    // array.push(e)
+    // console.log(categories)
 }
 
 // fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
@@ -141,19 +153,22 @@ const findResults = (query) => {
   .then(response => response.json())
   .then(data => {
     // console.log("data : ", data);
-    console.log(data.events)
-
-    dispatch(searchEvents(data.events))
+    // console.log(data.events)
+    dispatch(displayEvent(data.events))
 })
 }
 
 // fonction pour renvoyer sur la page des résultats
+
 const handleClick = () => {
   let query = ""
   if(categories.length > 0){
+    // let selectedCategories = categories.map((data, i) => [...data])
+    // console.log(selectedCategories)
      query = '?categorie=' + categories.join('&categorie=') // on construit la chaîne de caratère présente de l'url de requête vers le backend&API
       findResults(query)
       console.log(query)
+
   // if(!signIn) {
   //   router.push("/Inscription")
   // } else 
@@ -162,6 +177,15 @@ const handleClick = () => {
   }
 }
 }
+
+// const visibleCategories = displayCategories.map((category, i) => (
+//   <Option key={i}  value={category} label={category}></Option> )
+
+
+const visibleCities = eventCity.map((city, i) => (
+  <Option key={i} value={city}></Option> )
+)
+  
 
   return (
 
@@ -203,13 +227,12 @@ const handleClick = () => {
             </div>
           )}
         >
-              <Option value='Paris'>Paris</Option>
-              <Option value="Rennes">Rennes</Option>
+              {/* <Option value="Rennes">Rennes</Option> */}
+              {visibleCities}
 
         </Select>
       </div>
 
-      
       <div>
         <DatePicker className={styles.searchBar}
           suffixIcon={<i class='bx bxs-calendar bx-sm style=color:#00ff26'></i>}
@@ -229,21 +252,23 @@ const handleClick = () => {
       </div>
 
       <div >
-        <Select
-          className={styles.searchBar}
-          mode="multiple"
-          allowClear
-          style={{
-            width: '200px',
-          }}
-          suffixIcon={<i class='bx bxs-balloon bx-sm style=color:#00ff26'/>}
-          placeholder="Catégories"
-          onChange={selectCategories}
-          optionLabelProp="label"
-        >
-          <Option value="music" label="Musique"></Option>
-          <Option value="cinema" label="Cinéma"></Option>
-        </Select>
+    
+      <Select
+                    className={styles.searchBar}
+                    mode="multiple"
+                    allowClear
+                    style={{
+                      width: '200px',
+                    }}
+                    suffixIcon={<i class='bx bxs-balloon bx-sm style=color:#00ff26'/>}
+                    placeholder="Catégories"
+                    onChange={selectCategories}
+                    optionLabelProp="label"
+                  >
+                    <Option value="music" label="Musique"></Option>
+                    <Option value="cinema" label="Cinéma"></Option>
+
+      </Select>
 
       </div>
 

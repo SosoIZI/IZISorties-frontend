@@ -8,8 +8,8 @@ import ResultView from "./ResultView";
 
 function Results() {
 
-    const results = useSelector((state) => state.events.value);
-    console.log("results : ",results);
+    const results = useSelector((state) => state.event.value);
+    console.log("results : ", results);
     
     // l'état défini le nombre de cartes à afficher
     const [numberToShow, setNumberToShow] = useState(15);
