@@ -25,7 +25,6 @@ function Inscription() {
     // Pour afficher où non le mot de passe
     setShowPassword(!showPassword);
   };
- 
 
   const toggleShowConfirmPassword = () => {
     // Pour afficher ou non la confirmation de  mot de passe
@@ -61,8 +60,7 @@ function Inscription() {
         icon: "error",
         timer: 50000,
         confirmButtonText: "Valider",
-      }); // ett
-
+      });
       return;
     }
 
@@ -75,7 +73,6 @@ function Inscription() {
         timer: 50000,
         confirmButtonText: "Valider",
       });
-
       return;
     }
 
@@ -127,81 +124,77 @@ function Inscription() {
         }
       });
   };
- 
+
   return (
-    <div>
-      <div className={styles.container}>
-        <div className={styles.top}>
-          <span className={styles.texte}>
-            <h1>Inscription </h1>
-            <h3>Inscris-toi en 3 clics !</h3>
-          </span>
-        </div>
-
-        <form>
-          <div className={styles.formula}>
-            <input
-              type="text"
-              value={SignUpUsername}
-              onChange={(e) => setSignUpUsername(e.target.value)}
-              placeholder="Nom"
-            />
-            <input
-              type="text"
-              value={SignUpEmail}
-              onChange={(e) => setSignUpEmail(e.target.value)}
-              placeholder="E-mail"
-            />
-            <div className={styles.passwordContainer}>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={SignUpPassword}
-                onChange={(e) => setSignUpPassword(e.target.value)}
-                placeholder="Mot de passe"
-              />
-              <i
-                className={`bx ${showPassword ? "bx-hide" : "bx-show"} ${
-                  styles.eyeIcon
-                }`}
-                onClick={toggleShowPassword} // au clicl toggle l'icone.
-              ></i>
-            </div>
-            <div className={styles.passwordContainer}>
-              <input
-                type={showConfirmPassword ? "text" : "password"} // Si showConfirmPassword est true, alors type={showConfirmPassword ? "text" : "password"} se résout à type="text".
-                value={ConfirmPassword} // Si showConfirmPassword est false, l'expression se résout à type="password"
-                onChange={(e) => setConfirmPassword(e.target.value)} // text va nous permettre de voir le password/// password va le cacher.
-                placeholder="Confirmation du mot de passe"
-              />
-              <i
-                className={`bx ${showConfirmPassword ? "bx-hide" : "bx-show"} ${
-                  styles.eyeIcon
-                }`} // l'icone change en fonction du click user)
-                onClick={toggleShowConfirmPassword}
-              ></i>
-            </div>
-
-            <button
-              className={styles.button}
-              type="submit"
-              onClick={handleSubmit}
-              name='Boutton dinscription'
-            >
-              Inscription
-            </button>
+    <div className={styles.mainContainer}>
+      <div className={styles.totalContainer}>
+        <div className={styles.container}>
+          <div className={styles.top}>
+            <span className={styles.texte}>
+              <h1>Inscription </h1>
+              <h3>Inscris-toi en 3 clics !</h3>
+            </span>
           </div>
-        </form>
-        <span className={styles.stroke}></span>
-      </div>
-      <div className={styles.connectionWay}>
-        <div className={styles.Google}>
-       
-        <Google 
-                
-                handleClose={handleClose}/> 
-   </div>
-         
-        {/* <span>
+          <form>
+            <div className={styles.formula}>
+              <input
+                type="text"
+                value={SignUpUsername}
+                onChange={(e) => setSignUpUsername(e.target.value)}
+                placeholder="Nom"
+              />
+              <input
+                type="text"
+                value={SignUpEmail}
+                onChange={(e) => setSignUpEmail(e.target.value)}
+                placeholder="E-mail"
+              />
+              <div className={styles.passwordContainer}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={SignUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  placeholder="Mot de passe"
+                />
+                <i
+                  className={`bx ${showPassword ? "bx-hide" : "bx-show"} ${
+                    styles.eyeIcon
+                  }`}
+                  onClick={toggleShowPassword} // au clicl toggle l'icone.
+                ></i>
+              </div>
+              <div className={styles.passwordContainer}>
+                <input
+                  type={showConfirmPassword ? "text" : "password"} // Si showConfirmPassword est true, alors type={showConfirmPassword ? "text" : "password"} se résout à type="text".
+                  value={ConfirmPassword} // Si showConfirmPassword est false, l'expression se résout à type="password"
+                  onChange={(e) => setConfirmPassword(e.target.value)} // text va nous permettre de voir le password/// password va le cacher.
+                  placeholder="Confirmation du mot de passe"
+                />
+                <i
+                  className={`bx ${
+                    showConfirmPassword ? "bx-hide" : "bx-show"
+                  } ${styles.eyeIcon}`} // l'icone change en fonction du click user)
+                  onClick={toggleShowConfirmPassword}
+                ></i>
+              </div>
+
+              <button
+                className={styles.button}
+                type="submit"
+                onClick={handleSubmit}
+                name="Boutton dinscription"
+              >
+                Inscription
+              </button>
+            </div>
+          </form>
+          <span className={styles.stroke}></span>
+        </div>
+        <div className={styles.connectionWay}>
+          <div className={styles.Google}>
+            <Google handleClose={handleClose} />
+          </div>
+          {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
@@ -211,7 +204,7 @@ function Inscription() {
             <i className="bx bxl-facebook-circle"></i> Connexion avec Facebook{" "}
           </button>
         </span> */}
-        {/* <span>
+          {/* <span>
           <button
             className={styles.buttonbis}
             type="button"
@@ -221,11 +214,12 @@ function Inscription() {
             <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
           </button>
         </span> */}
-        <span className={styles.sentence} onClick={handleShow}>
-          J’ai déja un compte. Se connecter.
-        </span>
-        <Connexion showModal={modalVisible} handleClose={handleClose} />{" "}
-        {/* utilisation de la modal pourpouvoir accèder à,la page de connexion directement sur le lien     */}
+          <span className={styles.sentence} onClick={handleShow}>
+            J’ai déja un compte. Se connecter.
+          </span>
+          <Connexion showModal={modalVisible} handleClose={handleClose} />{" "}
+          {/* utilisation de la modal pourpouvoir accèder à,la page de connexion directement sur le lien     */}
+        </div>
       </div>
     </div>
   );

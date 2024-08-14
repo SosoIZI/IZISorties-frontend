@@ -1,37 +1,37 @@
 .netflixContainer {
   margin-left: 30px;
+  padding-top: 30px;
 }
 
 .mostConsultedContainer {
   margin-left: 30px;
   margin-bottom: 60px;
   display: flex;
-
-;
   align-items: center;
+  width: 75%;
 }
 
 .roundButton {
   margin-left: 30px;
   font-size: 35px; /* taille de la flèche */
   color: white;
-  background-color: #F2AF77;
-  width: 50px; 
+  background-color: #f2af77;
+  width: 50px;
   height: 50px;
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   border: none;
-  cursor: pointer; 
+  cursor: pointer;
   transition: background-color 0.3s ease; /* Animation du background */
 }
 
 .roundButton:hover {
-  background-color: white; 
-  color: #F2AF77;
-  border-color: #F2AF77;
+  background-color: white;
+  color: #f2af77;
+  border-color: #f2af77;
   border: 1px solid;
 }
 
@@ -41,40 +41,40 @@
 
 .marketingContainer {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   margin: 60px;
   font-size: 20px;
 }
 
 .argumentationContainer {
-  margin-Left: 60px;
+  margin-left: 60px;
   width: 700px;
-  color: #2E4656;
+  color: #2e4656;
   display: block;
   justify-content: center;
   text-align: justify;
 }
 
 .inscriptionButton {
-  border: 1px solid #F2AF77;
-	border-radius: 15px;
-	width:280px;
-	height:40px;
-	cursor: pointer;
-	color:white;
-	background-color: rgb(242,175,119);
+  border: 1px solid #f2af77;
+  border-radius: 15px;
+  width: 280px;
+  height: 40px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(242, 175, 119);
   font-weight: bold;
   margin-top: 30px;
 }
 
 .inscriptionButton:hover {
-	background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
-  border-color: #F2AF77;
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+  border-color: #f2af77;
   border: 1px solid;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .pic {
@@ -85,27 +85,33 @@
   display: flex;
   align-items: center;
 
-font-size: 16px;
-width:400px;
-height:40px;
-cursor: pointer;
-color:black;
+  font-size: 16px;
+  width: 400px;
+  height: 40px;
+  cursor: pointer;
+  color: black;
   margin-top: 20px;
-  background-color:rgb(254,247,241);
+  background-color: rgb(254, 247, 241);
 }
 
-
 .buttonbis i {
-
-  color:black;
+  color: black;
   font-size: 32px;
   margin-right: 5%;
-  }
-  
-  
-  .buttonbis:hover {
-    background-color: white;
-    color: rgb(242,175,119);
-    font-weight: bold;
-  }
+}
 
+.buttonbis:hover {
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+}
+
+.mySoonEventsContainer {
+  margin: 10px;
+}
+
+.eventsBookedContainer {
+  display: flex;
+  width: 75%;
+  margin-left: 30px;
+}

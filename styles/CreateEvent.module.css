@@ -74,8 +74,6 @@
   color: #ccc;
 }
 
-
-
 .submitButton {
   background-color: #F2AF77;
   color: white;
@@ -189,7 +187,17 @@
   gap: 10px; 
 }
 
-.CardPreviewContainer {
+.cardPreviewContainer {
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  padding: 20px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagePreviewContainer {
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
   padding: 20px;

@@ -648,7 +648,7 @@ function CreateEvent() {
         </div>
       </div>
       <div className={styles.previewContainer}>
-        <div className={styles.CardPreviewContainer}>
+        <div className={styles.cardPreviewContainer}>
           <h3>Aperçu de votre evènement dans les résultats de recherche</h3>
           <EventCard
             pictures={[previewUrl]}
@@ -656,8 +656,8 @@ function CreateEvent() {
             description={description}
           />
         </div>
-        <div className={styles.CardPreviewContainer}>
-          <h3>Aperçu de la page de votre evènement</h3>
+        <div className={styles.pagePreviewContainer}>
+          <h3>Aperçu de la page de votre évènement</h3>
           <EventDetailsMaquette
             imagePreviews={imageUrls}
             eventName={eventName}

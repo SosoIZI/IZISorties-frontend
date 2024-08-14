@@ -1,147 +1,122 @@
-
-
-
 .header {
-	display: flex;
-	justify-content: space-between;
-	width: 100vw;
-	height: 100px;
-	background-color: rgb(46,70,86);
-	padding: 0px 20px 0px 20px;
-
-  
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  background-color: rgb(46, 70, 86);
+  padding: 0px 40px 0px 20px;
 }
 .logoAndSearchContainer {
-	display: flex;
-	align-items: center;
-	gap:10px;
-	position: relative;
-	
-  }
-
-  .logoAndSearchContainer i {
-	position: absolute;
-	right: 10px;
-  }
-.logo {
-	margin-left: 20px;
-	width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
 }
 
+.logoAndSearchContainer i {
+  position: absolute;
+  right: 10px;
+}
+.logo {
+  margin-left: 20px;
+  width: 140px;
+}
 
-.searchbar{
-	border: 1px solid grey;
-    border-radius: 5px;
-    height: 35px;
-    width: 100%;
-    padding: 2px 23px 2px 30px;
-outline: none;
-  }
-
+.searchbar {
+  border: 1px solid grey;
+  border-radius: 5px;
+  height: 35px;
+  width: 100%;
+  padding: 2px 23px 2px 30px;
+  outline: none;
+}
 
 .buttonContainer {
-
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 20px;     /*espace entre les élements enfants   */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /*espace entre les élements enfants*/
 }
 
-
 .button {
-	border: 1px solid #F2AF77;
-	border-radius: 15px;
-	width:150px;
-	height:40px;
-	cursor: pointer;
-	color:white;
-	background-color: rgb(242,175,119);
-	
+  border: 1px solid #f2af77;
+  border-radius: 15px;
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(242, 175, 119);
 }
 
 .button:hover {
-	background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
-	border-color: #F2AF77;
-  	border: 1px solid;
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+  border-color: #f2af77;
+  border: 1px solid;
 }
 
+.iconContainer {
+  /*gère l'alignement général des éléments dans la barre d'icônes.  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px; /*espace entre les élements enfants   */
+}
 
-.iconContainer {  /*gère l'alignement général des éléments dans la barre d'icônes.  */
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 40px;     /*espace entre les élements enfants   */
-	}
-
-	
 .iconItem {
-	display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
-	align-items: center;
-	gap: 10px;  /* Espace entre l'icône et le texte */
-  }
-  
-  
-	.icon{
-font-size: 35px;;  /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */ 
+  display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
+  align-items: center;
+  gap: 10px; /* Espace entre l'icône et le texte */
+}
 
-	cursor: pointer;
-	
-	}
-	
+.icon {
+  font-size: 35px; /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */
 
-	.nameicon {
-color:white;
-align-items: center;
-	justify-content: center;
-margin-left: 5px;
-transition: 0.2s;/*pour que la couleur apparaisse avec un léger décalage */
-	}
+  cursor: pointer;
+}
 
+.nameicon {
+  color: white;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  transition: 0.2s; /*pour que la couleur apparaisse avec un léger décalage */
+}
 
-	.nameicon:hover {
-		color: rgb(242,175,119);
-		align-items: center;
-			justify-content: center;
-		margin-left: 5px;
-font-weight: bold;
-	
+.nameicon:hover {
+  color: rgb(242, 175, 119);
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-weight: bold;
 
-	cursor: pointer;
-	
-	}
+  cursor: pointer;
+}
 
-	.popoverContent{
+.popoverContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-display:flex;
-align-items: center;
-justify-content: center;
-	}
-
-
-
-
-.popoverItem{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 30px;
-	width: 100px;
-	background-color:rgb(46,70,86);
-	color:white !important;
-	border: 1px white solid;
-	border-radius: 4px;
-	transition-duration: 0.5s;
-	cursor: pointer;
-	font-weight:bold;
-	
+.popoverItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 100px;
+  background-color: rgb(46, 70, 86);
+  color: white !important;
+  border: 1px white solid;
+  border-radius: 4px;
+  transition-duration: 0.5s;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .popoverItem:hover {
-	background-color: white;
-	color: rgb(46,70,86) !important;
-	border: none;
-	border: 1px solid grey;
+  background-color: white;
+  color: rgb(46, 70, 86) !important;
+  border: none;
+  border: 1px solid grey;
 }
-
