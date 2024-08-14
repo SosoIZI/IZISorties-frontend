@@ -31,111 +31,8 @@ function CreateEvent() {
   const [imageFiles, setImageFiles] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("/Image-par-defaut.png"); // état pour afficher l'image dans l'eventCard
+  const [categoriesList, setCategoriesList] = useState([]);
 
-  // Pour l'instant on utilise une variable pour "catégories".
-  // Si on fini le projet + tôt on mettra les catégories dans une BDD dans MongoDB
-  const categoriesList = [
-    {
-      category: "Nature et plein air",
-      subcategories: [
-        "Randonnée",
-        "Camping",
-        "Balades à vélo",
-        "Sports nautiques (kayak, canoë, etc.)",
-        "Jardinage et botanique",
-      ],
-    },
-    {
-      category: "Culture et patrimoine",
-      subcategories: [
-        "Musées",
-        "Visites de monuments historiques",
-        "Galeries d'art",
-        "Spectacles et théâtres",
-        "Visites guidées",
-      ],
-    },
-    {
-      category: "Divertissement",
-      subcategories: [
-        "Cinéma",
-        "Parcs d'attractions",
-        "Zoos et aquariums",
-        "Salles de jeux (bowling, billard, etc.)",
-        "Concerts et festivals",
-      ],
-    },
-    {
-      category: "Sports et activités physiques",
-      subcategories: [
-        "Gymnases et centres de fitness",
-        "Sports d'équipe (football, basketball, etc.)",
-        "Sports individuels (tennis, golf, etc.)",
-        "Yoga et pilates",
-        "Escalade et sports d'aventure",
-      ],
-    },
-    {
-      category: "Cuisine et gastronomie",
-      subcategories: [
-        "Restaurants et cafés",
-        "Cours de cuisine",
-        "Dégustations de vin et de fromage",
-        "Marchés locaux",
-        "Food trucks et stands de rue",
-      ],
-    },
-    {
-      category: "Détente et bien-être",
-      subcategories: [
-        "Spas et centres de bien-être",
-        "Massages et soins du corps",
-        "Méditation et yoga",
-        "Thermalisme et bains",
-        "Salles de relaxation et de méditation",
-      ],
-    },
-    {
-      category: "Événements et festivals",
-      subcategories: [
-        "Carnavals et fêtes populaires",
-        "Salons et foires",
-        "Événements sportifs",
-        "Fêtes traditionnelles et célébrations",
-        "Marchés de Noël et événements saisonniers",
-      ],
-    },
-    {
-      category: "Éducation et apprentissage",
-      subcategories: [
-        "Ateliers et cours",
-        "Conférences et débats",
-        "Visites éducatives",
-        "Clubs et groupes d'intérêt",
-        "Cours en ligne et webinaires",
-      ],
-    },
-    {
-      category: "Famille et enfants",
-      subcategories: [
-        "Parcs pour enfants",
-        "Ateliers créatifs",
-        "Spectacles pour enfants",
-        "Activités éducatives en famille",
-        "Zoos et aquariums",
-      ],
-    },
-    {
-      category: "Voyages et excursions",
-      subcategories: [
-        "Visites guidées",
-        "Croisières et excursions en bateau",
-        "Escapades week-end",
-        "Voyages culturels",
-        "Aventures en plein air",
-      ],
-    },
-  ];
 
   // PARAMETRAGE DU MODULE MATERIAL-UI
   // 1- J'utilise les icones de ce module (les cases à cocher vides et pleines)
@@ -181,6 +78,15 @@ function CreateEvent() {
         //console.log('data' ,data)
         setPlaceDataBase(data.places);
       });
+
+      // 2- je fetch pour récupérer la liste des categories
+      fetch(`http://localhost:3000/categories/`)
+      .then((response) => response.json())
+      .then((datacateg) => {
+        //console.log('data' ,data)
+        setCategoriesList(datacateg.categories);
+      });
+
   }, [idPlace]);
   //au démarrage du composant, je charge toutes les données présentent dans la BDD "places" et je les stocke dans un état
   // cette liste se mettra à jour à chaque fois que "idPlace" changera
