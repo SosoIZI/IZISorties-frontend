@@ -1,44 +1,41 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from "./SearchBar";
 import ResultView from "./ResultView";
+import dynamic from "next/dynamic";
 import { useSelector } from 'react-redux';
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import styles from '../styles/Results.module.css';
 import 'leaflet/dist/leaflet.css';
 import "boxicons/css/boxicons.min.css";
 
-  // Importation des composants Leaflet
-  const MapContainer = dynamic(
-    () => import("react-leaflet").then((mod) => mod.MapContainer),
-    { ssr: false }
-  );
-  const TileLayer = dynamic(
-    () => import("react-leaflet").then((mod) => mod.TileLayer),
-    { ssr: false }
-  );
-  const Marker = dynamic(
-    () => import("react-leaflet").then((mod) => mod.Marker),
-    { ssr: false }
-  );
-  const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
-    ssr: false,
-  });
+
+// Importation des composants Leaflet
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
+  ssr: false,
+});
 
 function MapView() {
-
   const token = useSelector((state) => state.user.value.token);
   const results = useSelector((state) => state.event.value);
   const router = useRouter();
 
-  
   const [isClient, setIsClient] = useState(false);
   const [positions, setPositions] = useState([]);
-  const [center, setCenter] = useState([46, 2])
-
+  const [bounds, setBounds] = useState(null); // met à jour la délimitation de la vue de la map (zoom et coordonnées) en fonction de la position des markeurs
 
   useEffect(() => {
-
     setIsClient(true);
 
     const fetchPlaces = async () => {
@@ -59,9 +56,11 @@ function MapView() {
         const newPositions = await Promise.all(promises);
         setPositions(newPositions);
 
-        // Définir le centre de la carte sur la première position, si disponible
         if (newPositions.length > 0) {
-          setCenter([newPositions[0].latitude, newPositions[0].longitude]);
+          const latLngBounds = new L.LatLngBounds(
+            newPositions.map((position) => [position.latitude, position.longitude])
+          );
+          setBounds(latLngBounds);
         }
       } catch (error) {
         console.error('Error fetching places:', error);
@@ -71,8 +70,8 @@ function MapView() {
     fetchPlaces();
   }, [results]);
 
+  // PARAMETRAGE DE LA MAP //
 
-  // PARAMETRAGE DE LA MAP
   // Charger Leaflet seulement côté client (sinon ca ne marche pas)
   if (!isClient) {
     return null;
@@ -84,16 +83,15 @@ function MapView() {
   // Importation des styles Leaflet
   require("leaflet/dist/leaflet.css");
 
-  // Création de l'icône personnalisée IZI
   const customIcon = new L.Icon({
     iconUrl: "/pointeur_izi.png",
     iconSize: [70, 70],
-    iconAnchor: [19, 38], // Point d'ancrage de l'icône (base du marqueur)
-    popupAnchor: [0, -38], // Point d'ancrage du popup par rapport à l'icône
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38],
   });
 
   const handleMarkerClick = (latitude, longitude) => {
-    setCenter([latitude, longitude]);
+    setBounds(new L.LatLngBounds([latitude, longitude], [latitude, longitude])); // à l'évènement du click à un endroit sur la map, le cadre qui délimite la vue se déplace en même temps
   };
 
   const visibleMarkers = positions.map((marker, i) => (
@@ -122,36 +120,27 @@ function MapView() {
     </Marker>
   ));
 
+  return (
+    <div>
+      <SearchBar />
+      <ResultView />
 
-
-return (
-
-<div>
-    <SearchBar />
-    <ResultView />
-
-<div className={styles.mapContainer}>
-
-<MapContainer 
-  
-  center={center}
-  zoom={13}
-  style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
-    
-  
-  <TileLayer
-    url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  />
-  
-  {visibleMarkers}
-  
-</MapContainer>
-
-</div>
-</div>
-
-  )
+      <div className={styles.mapContainer}>
+        <div className={styles.map}>
+        <MapContainer 
+          bounds={bounds}
+          style={{ height: "400px", width: "460px", borderRadius: "8px" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {visibleMarkers}
+        </MapContainer>
+      </div>
+    </div>
+  </div>
+  );
 }
 
-export default MapView
+export default MapView;

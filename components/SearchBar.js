@@ -30,33 +30,44 @@ function searchBar() {
   // à l'affichage du composant, je récupère les catégories dans la bdd
 
   useEffect(() => {
-    fetch("http://localhost:3000/places")
-      .then((response) => response.json())
-      .then((data) => {
-        const array = [];
-        for (let objects of data.places) {
-          if (array.includes(objects.city)) {
-          } else {
-            array.push(objects.city);
-          }
-        }
-        setEventCity(array);
-      });
 
-    fetch("http://localhost:3000/categories")
-      .then((response) => response.json())
-      .then((data) => {
-        const array = [];
-        // console.log(data)
-        for (let objects of data.categories) {
-          console.log("data.categories", data.categories);
-          for (const sub of objects.subcategories) array.push(sub);
-        }
-        setDisplayCategories(array);
-      });
-  }, []);
+    fetch('http://localhost:3000/places')
+    .then(response => response.json())
+    .then(data => {
+      const array = []
+      for (let objects of data.places ) {
+        setEventCity(objects.city) 
+        if(array.includes(objects.city)) {
+        } else {
+          array.push(objects.city)
+      }}
 
-  console.log("displayCategories", displayCategories);
+        console.log(array)
+        setEventCity(array)
+     });
+
+     fetch("http://localhost:3000/categories")
+     .then((response) => response.json())
+     .then((data) => {
+       const array = [];
+       // console.log(data)
+       for (let objects of data.categories) {
+         console.log("data.categories", data.categories);
+         for (const sub of objects.subcategories) array.push(sub);
+       }
+       setDisplayCategories(array);
+     });
+ }, []);
+
+  // variable pour afficher les villes dans le sélecteur
+  let eventCities = eventCity.map((data, i) => {
+    if (data ==! null) {
+       return {...data};
+    }
+
+
+  })
+
   //// Filtrer la recherche et mettre à jour les états ////
   // on sélectionne une ville via le menu déroulant
   const selectCity = (e) => {
