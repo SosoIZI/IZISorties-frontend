@@ -66,22 +66,6 @@ function EventCard(props) {
       router.push(`/event?hash=${props._id}`);
     }
   };
-  // Redirige vers la page de détails de l'événement (ou autre action)
-  // Exemple: router.push(`/event/${id}`);
-
-  // // Quand je clique sur le boutton coeur, je dois rajouter un like à ce tweet dans ma BDD
-
-  //   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
-  //   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like
-
-  //   fetch(`http://localhost:3000/events/like/:token/${props._id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
 
   return (
     <div className={styles.cardContainer}>
