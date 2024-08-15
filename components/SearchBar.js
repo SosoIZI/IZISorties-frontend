@@ -34,7 +34,7 @@ function searchBar() {
 
   useEffect(() => {
 
-    fetch('http://localhost:3000/places')
+    fetch('http://localhost:3000/cities')
     .then(response => response.json())
     .then(data => {
       const array = []
