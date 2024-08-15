@@ -194,26 +194,7 @@ function Inscription() {
           <div className={styles.Google}>
             <Google handleClose={handleClose} />
           </div>
-          {/* <span>
-          <button
-            className={styles.buttonbis}
-            type="button"
-            onClick={() => handleSignIn()}
-            name='Boutton de connexion via Facebook'
-          >
-            <i className="bx bxl-facebook-circle"></i> Connexion avec Facebook{" "}
-          </button>
-        </span> */}
-          {/* <span>
-          <button
-            className={styles.buttonbis}
-            type="button"
-            onClick={() => handleSignIn()}
-            name='Boutton de connexion via Apple'
-          >
-            <i className="bx bxl-apple"></i> Connexion avec Apple{" "}
-          </button>
-        </span> */}
+       
           <span className={styles.sentence} onClick={handleShow}>
             J’ai déjà un compte. Me connecter izi.
           </span>

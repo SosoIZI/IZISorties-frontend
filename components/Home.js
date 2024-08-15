@@ -42,7 +42,7 @@ function Home() {
 
     // CHARGEMENT DES EVENTS BOOKES
     if (token) {
-      fetch(`http://localhost:3000/events/bookinglist/user/${token}`)
+      fetch(`http://localhost:3000/events/bookinglist/booking/user/${token}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("data.eventsBooked", data.eventsBooked);

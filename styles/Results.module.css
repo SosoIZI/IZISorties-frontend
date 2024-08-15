@@ -1,113 +1,124 @@
 .buttonContainer {
-
-    display: flex;
-    gap: 20px;    
-    
-    }
+  display: flex;
+  gap: 20px;
+}
 
 .displayContainer {
-    
-    margin: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    flex-direction: row;
+  margin: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+}
 
-    }
     
-    
-    .button {
+    .button   {
         border: 1px solid #e38d83;
         border-radius: 20px;
-        width:150px;
-        height:40px;
+        width: 150px;
+        height: 40px;
         cursor: pointer;
-        color:white;
-        background-color:#e38d83;
-        margin: 15px
-        
-    }
-    
-    
-    .button:hover {
-        background-color: 'white';
-        color: #e38d83;
+        color: white;
+        background-color: #e38d83;
+        margin: 15px;
+      }
+      
+      .button:hover {
+        background-color:black;
+        background-color: rgb(46, 70, 86);
         font-weight: bold;
     }
 
-    .icon {
-    
-        color: 'white';
-        display: flex;
-        align-items: center;
-        gap:10px;
-        position: relative;
-        font-size: 35px;
-        cursor:pointer
-    }
+      .inactive {
+        color: gray;
+        background-color: lightgray;
+        border-color: lightgray;
+      }
 
-    .navigation-buttons button {
-        background-color: white;
-        color:  #e38d83;
-        padding: 10px;
-        border: none;
+.active{
+    border: 1px solid #e38d83;
+        border-radius: 20px;
+        width: 150px;
+        height: 40px;
         cursor: pointer;
-      }
-      
-      .navigation-buttons button.active {
-        background-color:  #e38d83;
-      }
-    
-    .swipeContainer {
+        color: white;
+        background-color: #e38d83;
+        margin: 15px;
+}
 
-        display: flex;
-        flex-direction: column;
-        padding: 3%
 
-    }
+.icon {
+  color: "white";
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  font-size: 35px;
+  cursor: pointer;
+}
 
-    .img {
+.navigation-buttons button {
+  background-color: white;
+  color: #e38d83;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
 
-        display: flex;
-        align-items: center;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        justify-content: space-evenly;
-        object-fit: cover
-      
-    }
+.navigation-buttons button.active {
+  background-color: #e38d83;
+}
 
-    .iconContainer {
-        margin-top: 20px;
-        justify-content: space-evenly;
-    }
+.swipeContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+}
 
-    .imgContainer {
+.img {
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  justify-content: space-evenly;
+  object-fit: cover;
+}
 
-        justify-content: space-evenly;
-        display: flex;
+.iconContainer {
+  margin-top: 20px;
+  justify-content: space-evenly;
+}
 
-    }
+.imgContainer {
+  justify-content: space-evenly;
+  display: flex;
+}
 
-    .topContainer {
-        margin-left: 10%;
-        margin-top: 20px;
+.topContainer {
+  margin-left: 10%;
+  margin-top: 20px;
+}
 
-    }
+.link {
+  display: flex;
+}
 
-   .link {
-    display: flex;
-    
-   }
-
-   /* .popUp {
+/* .popUp {
     display: flex;
     width: 20px;
     height: 10px;
    } */
 
-   /* .popUpImg {
+/* .popUpImg {
     display: flex;
     align-items: center;
     object-fit: cover
    } */
+
+.map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+

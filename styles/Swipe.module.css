@@ -1,0 +1,112 @@
+.totalContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.displayContainer {
+    margin: 30px;
+    padding-left:30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+  }
+  
+  .button {
+    border: 1px solid #e38d83;
+    border-radius: 20px;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    background-color: #e38d83;
+    margin: 15px;
+  }
+
+  .buttonContainer {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .button:hover {
+    background-color: "white";
+    color: #e38d83;
+    font-weight: bold;
+  }
+  
+  .icon {
+    color: "white";
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    font-size: 35px;
+    cursor: pointer;
+  }
+  
+  .navigation-buttons button {
+    background-color: white;
+    color: #e38d83;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .navigation-buttons button.active {
+    background-color: #e38d83;
+  }
+  
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+    width: 700px;
+  }
+
+  .description {
+    max-height: 300px;
+    overflow-y: auto; /* permet de scroller si la description dépasse la div */
+    padding: 10px;
+  }
+  
+  .img {
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    justify-content: space-evenly;
+    object-fit: cover;
+  }
+  
+  .iconContainer {
+    justify-content: space-evenly;
+  }
+  
+  .topContainer {
+    margin-left: 10%;
+    margin-top: 20px;
+  }
+  
+  .link {
+    display: flex;
+  }
+
+  .custom-icon {
+    width: 40px; /* Ajustez la taille à votre convenance */
+  }
+
+  .longInfoButton {align-items: center;
+    display: flex;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #2e4656;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: -20px
+  }

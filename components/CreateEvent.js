@@ -640,7 +640,7 @@ function CreateEvent() {
                   onClick={() => addNewEvent()}
                   className={styles.submitButton}
                 >
-                  Soumettre
+                  Créer cet évènement
                 </button>
               </div>
             </div>
