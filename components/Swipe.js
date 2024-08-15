@@ -36,51 +36,51 @@ useEffect(() => {
 
   // Quand je clique sur le boutton vert, je dois rajouter un like à cet évènement dans la bdd
 
-   const addNewLike = () => {
-     setIsLiked(!isliked);
-    // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
-    // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
-    fetch(`http://localhost:3000/events/like/${token}/${props._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        console.log(data.user[0]._id)
-      });
-   };
+  //  const addNewLike = () => {
+  //    setIsLiked(!isliked);
+  //   // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
+  //   // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
+  //   fetch(`http://localhost:3000/events/like/${token}/${props._id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       console.log(data.user[0]._id)
+  //     });
+  //  };
 
-  //  let heartStyle = { color: "white" };
-  //  if (isliked === true) {
-  //    heartStyle = { color: "red" };
-  //  } else {
-  //    heartStyle = { color: "white" };
-  //  }
+  // //  let heartStyle = { color: "white" };
+  // //  if (isliked === true) {
+  // //    heartStyle = { color: "red" };
+  // //  } else {
+  // //    heartStyle = { color: "white" };
+  // //  }
 
-          if(isliked) {
-            return;
-          } else {
+  //         if(isliked) {
+  //           return;
+  //         } else {
 
-              let eventId = [...results].map((data, i) => data._id)
-              console.log(eventId)
-            // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
-            // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
-            fetch(`http://localhost:3000/events/like/${token}/${eventId}`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data)
-              })
-            }
-          };
+  //             let eventId = [...results].map((data, i) => data._id)
+  //             console.log(eventId)
+  //           // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
+  //           // s'il est présent dans le tableau nbLike dans la BDD cette route retire 1 like 
+  //           fetch(`http://localhost:3000/events/like/${token}/${eventId}`, {
+  //             method: "PUT",
+  //             headers: { "Content-Type": "application/json" },
+  //           })
+  //             .then((response) => response.json())
+  //             .then((data) => {
+  //               console.log(data)
+  //             })
+  //           }
 
-    // State to keep track of how many results to display
+
+    // Mise à jour du nombre d'évènements à afficher 
     const [numberToShow, setNumberToShow] = useState(0);
 
-    // Sort the results as needed
+    // Affichage des résultats un par un, de la date la plus proche à la date la plus lointaine au click sur les icones
     let sortedResults = [...results].sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 
         // Function to handle "Show More" button click
@@ -96,7 +96,8 @@ useEffect(() => {
             console.log('no !')
         }
 
-    // Get the results to display based on the current state
+    // Affichage des résultats avec la posisibilité de cliquer sur l'image pour voir la page de l'évènement
+    // ainsi que navigation sur les différentes views
 
     const visibleResults = sortedResults.slice(numberToShow, numberToShow+1).map((data, i) => (
 
@@ -125,7 +126,7 @@ useEffect(() => {
 
     </div>
 )
-);
+)
     return (
         <div>
             <SearchBar/>
@@ -135,7 +136,6 @@ useEffect(() => {
             
              { numberToShow > sortedResults.length && <h1> Vous avez consultés tous 
               les évènements correspondant à votre recherche. Vous pouvez retrouver vos évènement likés dans votre liste de favoris </h1>}
-              {/* <h1>SWIPE</h1> */}
               
         </div>
   );

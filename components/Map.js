@@ -1,13 +1,12 @@
 import React, {useState, useEffect } from 'react';
 import SearchBar from "./SearchBar";
 import ResultView from "./ResultView";
-import 'leaflet/dist/leaflet.css';
 import { useSelector } from 'react-redux';
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import styles from '../styles/Results.module.css';
-import { useRouter } from "next/router";
+import 'leaflet/dist/leaflet.css';
 import "boxicons/css/boxicons.min.css";
-
 
   // Importation des composants Leaflet
   const MapContainer = dynamic(
@@ -32,63 +31,39 @@ const token = useSelector((state) => state.user.value.token);
 const results = useSelector((state) => state.event.value);
 const router = useRouter();
   
-
 // Etat pour mettre à jour le nombre de cartes d'évènements à afficher
-const [numberToShow, setNumberToShow] = useState(0);
 const [isClient, setIsClient] = useState(false);
-const [markers, setMarkers] = useState([])
-const [view, setView] = useState([])
-
+const [latitude, setLatitude] = useState(0)
+const [longitude, setLongitude] = useState(0)
+// const [markers, setMarkers] = useState([]);
+// const [mapBounds, setMapBounds] = useState(null);
+// const [bounds, setBounds] = useState(outerBounds)
 
 useEffect(() => {
 
-  // isClient est une variable pour leaflet (doit être à true)
-    setIsClient(true);
+  setIsClient(true);
 
-  // // je récupère l'id de "place" des évènements(résultats de la recherche) dans "events" + description/nom/photo pour les pop-up
-  // // je récupère la longitude/latitude dans "places"
+  const fetchPlaces = () => {
+    results.map((data) => {
+      fetch(`http://localhost:3000/places/${data.place}`)
+      .then(response => response.json())
+      .then(info => {
+          setLatitude(info.place[0].latitude)
+          setLongitude(info.place[0].longitude)
+  })
+})
+}
 
-    const fetchPlaces = async () => {
-      const markersData = await Promise.all(results.map(async (data) => {
+fetchPlaces();
 
-        const id = data._id;
-        const description = data.description;
-        const eventName = data.eventName;
-        const pictures = data.pictures;
-        const longitude = ''
-        const latitude = ''
+}, [results])
 
-        const response = await fetch(`http://localhost:3000/places/${data.place}`);
-        const info = await response.json();
-
-        for(let place of info.place) {
-
-        latitude = place.latitude;
-        longitude = place.longitude
-       }
-
-        return {
-          id: id,
-          description: description,
-          eventName: eventName,
-          latitude:  latitude,
-          longitude: longitude,
-          pictures: pictures,
-        };
-    
-      }));
-
-      setMarkers(markersData);
-      // console.log(markersData, markers)
-    };
-    fetchPlaces();
-  }, [results]);
+console.log(longitude, latitude)
 
 
 //// PARAMETRAGE DE LA MAP ////
 
 // Charger Leaflet seulement côté client (sinon ca ne marche pas)
-
 if (!isClient) {
   return null;
 }
@@ -99,7 +74,6 @@ const L = require("leaflet");
 // Importation des styles Leaflet
 require("leaflet/dist/leaflet.css");
 
-
 // Création de l'icône personnalisée IZI
 const customIcon = new L.Icon({
   iconUrl: "/pointeur_izi.png",
@@ -108,41 +82,27 @@ const customIcon = new L.Icon({
   popupAnchor: [0, -38], // Point d'ancrage du popup par rapport à l'icône
 })
 
-
-// création du marker 
-// const customMarker = new L.Marker([48.1119800, -1.6742900], {icon: customIcon});
-
-// je défini la position à rappeler dans la structure jsx de la Map
-let position = []
-
-
 // création des markers qui correspondent aux résultats de recherche()
-
-const visibleMarkers = markers.map((marker, i) => {
-
-  position = [marker.latitude, marker.longitude]
+const visibleMarkers = results.map((marker, i) => {
   
-  
-  // return <Marker 
-  // key={i}
-  // position={position}
-  // icon={customIcon}
-  // >
-  //   <Popup>
-  //     {marker.eventName}<br />{marker.description}
-  //     < img 
-  //     src={marker.pictures}
-  //     alt={marker.eventName}
-  //     width={100}
-  //     height={150} 
-  //     />
-  //      <i onClick={() => router.push(`/event?hash=${marker.id}`)} className={styles.link} class='bx bx-plus bx_xs' />
-  //   </Popup>
-  // </Marker> 
+  return <Marker 
+  key={i}
+  position={[latitude, longitude]}
+  icon={customIcon}
+  >
+    <Popup>
+      {marker.eventName}<br />{marker.description}
+      < img 
+      src={marker.pictures}
+      alt={marker.eventName}
+      width={100}
+      height={150} 
+      />
+       <i onClick={() => router.push(`/event?hash=${marker._id}`)} className={styles.link} class='bx bx-plus bx_xs' />
+    </Popup>
+  </Marker> 
 
-  return null;
 })
-
 
 return (
 
@@ -153,7 +113,7 @@ return (
 <div className={styles.mapContainer}>
 
 <MapContainer 
-  center={position}
+  center={[latitude, longitude]}
   zoom={13}
   style={{ height: "400px", width: "460px", borderRadius: "8px" }}>
   
@@ -164,9 +124,7 @@ return (
   
   {visibleMarkers}
   
-  
 </MapContainer>
-
 
 </div>
 </div>

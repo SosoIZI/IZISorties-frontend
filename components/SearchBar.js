@@ -173,6 +173,7 @@ const handleClick = () => {
   //   router.push("/Inscription")
   // } else 
   {
+    
     router.push('/Results')
   }
 }

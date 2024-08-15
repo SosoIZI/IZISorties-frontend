@@ -9,7 +9,6 @@ import ResultView from "./ResultView";
 function Results() {
 
     const results = useSelector((state) => state.event.value);
-    console.log("results : ", results);
     
     // l'état défini le nombre de cartes à afficher
     const [numberToShow, setNumberToShow] = useState(15);
@@ -28,6 +27,14 @@ function Results() {
     return (
         <div>
             <SearchBar />
+
+            {results.length === 0 ? 
+
+            <div>
+            <h1>Aucun évènement ne correspond à votre recherche</h1>
+            </div>   :
+            
+            <div>
             <ResultView />
 
             <div className={styles.displayContainer}>
@@ -50,6 +57,8 @@ function Results() {
             
             </div>
         </div>
+    </div>
+            }
     </div>
   );
 }
