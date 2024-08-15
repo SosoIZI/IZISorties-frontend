@@ -33,32 +33,38 @@ const router = useRouter();
   
 // Etat pour mettre à jour le nombre de cartes d'évènements à afficher
 const [isClient, setIsClient] = useState(false);
-const [latitude, setLatitude] = useState(0)
-const [longitude, setLongitude] = useState(0)
+const [latitude, setLatitude] = useState('')
+const [longitude, setLongitude] = useState('0')
 // const [markers, setMarkers] = useState([]);
 // const [mapBounds, setMapBounds] = useState(null);
 // const [bounds, setBounds] = useState(outerBounds)
+const [positions, setPositions] = useState([])
 
 useEffect(() => {
 
   setIsClient(true);
 
   const fetchPlaces = () => {
+    let newPositions = 
     results.map((data) => {
       fetch(`http://localhost:3000/places/${data.place}`)
       .then(response => response.json())
       .then(info => {
-          setLatitude(info.place[0].latitude)
-          setLongitude(info.place[0].longitude)
+
+        return {
+          latitude: info.place[0].latitude,
+          longitude: info.place[0].longitude,
+          eventName: data.eventName,
+          description: data.description,
+          picture: data.pictures
+        }
   })
 })
-}
-
+setPositions(newPositions)
+} 
 fetchPlaces();
-
 }, [results])
 
-console.log(longitude, latitude)
 
 
 //// PARAMETRAGE DE LA MAP ////
@@ -83,11 +89,11 @@ const customIcon = new L.Icon({
 })
 
 // création des markers qui correspondent aux résultats de recherche()
-const visibleMarkers = results.map((marker, i) => {
+const visibleMarkers = positions.map((marker, i) => {
   
   return <Marker 
   key={i}
-  position={[latitude, longitude]}
+  position={[marker.latitude, marker.longitude]}
   icon={customIcon}
   >
     <Popup>
