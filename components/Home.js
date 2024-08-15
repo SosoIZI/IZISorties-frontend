@@ -15,10 +15,6 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 
 function Home() {
-<<<<<<< HEAD
- 
-=======
->>>>>>> a3feca9d50ad32fae91d877578844fe1743f8db0
   const [geoError, setGeoError] = useState(null);
   const [topEvent, setTopEvent] = useState([]);
   const [eventThisWeek, setEventThisWeek] = useState([]);
@@ -36,18 +32,6 @@ function Home() {
     });
   }
 
-<<<<<<< HEAD
-  const handleClose = () => setModalVisible(false);
-  const login = useSelector((state) => state.user.value.token); // pour utiliser la modal dans event
-
-  const handleShow = () => {
-    login ? setModalVisible(false) : setModalVisible(true);
-  };
-
-  // console.log("modal visible : ", modalVisible);
-  
-=======
->>>>>>> a3feca9d50ad32fae91d877578844fe1743f8db0
   useEffect(() => {
     // CHARGEMENT DES EVENTS LES + LIKES
     fetch("http://localhost:3000/events/top/liked")
@@ -185,12 +169,7 @@ function Home() {
   // AFFICHAGE DES EVENTS de la semaine près de la localisation du l'utilisateur
   // si l'utilisateur a accepté d'être géoloc, alors afficher "les sorties de cette semaine, près de chez toi"
   // sinon, l'inviter à activer sa géoloc pour obtenir de meilleures reco.
-<<<<<<< HEAD
-
-  // console.log("eventThisWeek : ", eventThisWeek);
-=======
   //console.log("eventThisWeek : ", eventThisWeek);
->>>>>>> a3feca9d50ad32fae91d877578844fe1743f8db0
   const thisWeekEventCards = eventThisWeek ? (
     eventThisWeek.slice(0, 5).map((data, i) => {
       return <EventCard key={i} {...data} handleShow={handleShow} />;
