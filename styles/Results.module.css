@@ -27,7 +27,11 @@
         margin: 15px;
       }
       
-    
+      .button:hover {
+        background-color:black;
+        background-color: rgb(46, 70, 86);
+        font-weight: bold;
+    }
 
       .inactive {
         color: gray;
@@ -35,16 +39,21 @@
         border-color: lightgray;
       }
 
-
+.active{
+    border: 1px solid #e38d83;
+        border-radius: 20px;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+        color: white;
+        background-color: #e38d83;
+        margin: 15px;
+}
 
 
 
     
-    .button:hover {
-        background-color:black;
-        color: #e38d83;
-        font-weight: bold;
-    }
+   
 
     .icon {
     
