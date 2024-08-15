@@ -21,17 +21,6 @@
   width: 140px;
 }
 
-<<<<<<< HEAD
-.filterContainer{
-	border: 1px solid grey;
-    border-radius: 5px;
-    height: 35px;
-    width: 100%;
-    padding: 2px 23px 2px 30px;
-outline: none;
-  }
-
-=======
 .searchbar {
   border: 1px solid grey;
   border-radius: 5px;
@@ -40,7 +29,6 @@ outline: none;
   padding: 2px 23px 2px 30px;
   outline: none;
 }
->>>>>>> a3feca9d50ad32fae91d877578844fe1743f8db0
 
 .buttonContainer {
   display: flex;
@@ -76,21 +64,10 @@ outline: none;
 }
 
 .iconItem {
-<<<<<<< HEAD
-	display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
-	align-items: center;
-	gap: 10px;  /* Espace entre l'icône et le texte */
-  }
-  
-  
-	.icon{
-font-size: 35px;  /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */ 
-=======
   display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
   align-items: center;
   gap: 10px; /* Espace entre l'icône et le texte */
 }
->>>>>>> a3feca9d50ad32fae91d877578844fe1743f8db0
 
 .icon {
   font-size: 35px; /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */

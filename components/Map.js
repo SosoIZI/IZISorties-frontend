@@ -33,8 +33,8 @@ const router = useRouter();
   
 // Etat pour mettre à jour le nombre de cartes d'évènements à afficher
 const [isClient, setIsClient] = useState(false);
-const [latitude, setLatitude] = useState(0)
-const [longitude, setLongitude] = useState(0)
+const [latitude, setLatitude] = useState([])
+const [longitude, setLongitude] = useState([])
 // const [markers, setMarkers] = useState([]);
 // const [mapBounds, setMapBounds] = useState(null);
 // const [bounds, setBounds] = useState(outerBounds)
@@ -44,21 +44,21 @@ useEffect(() => {
   setIsClient(true);
 
   const fetchPlaces = () => {
+    let array1 = []
+    let array2 = []
     results.map((data) => {
       fetch(`http://localhost:3000/places/${data.place}`)
       .then(response => response.json())
       .then(info => {
-          setLatitude(info.place[0].latitude)
-          setLongitude(info.place[0].longitude)
+        array1.push(info.place[0].latitude)
+        array2.push(info.place[0].longitude)
+          setLatitude(array1)
+          setLongitude(array2)
   })
 })
 }
-
 fetchPlaces();
-
-}, [results])
-
-console.log(longitude, latitude)
+}, [results]);
 
 
 //// PARAMETRAGE DE LA MAP ////
