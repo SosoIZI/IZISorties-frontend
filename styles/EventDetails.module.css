@@ -216,6 +216,9 @@
 
 .description {
   margin: 15px;
+  max-height: 200px;
+  overflow-y: auto; /* permet de scroller si la description dépasse la div */
+  padding: 10px;
 }
 
 .iconButton {

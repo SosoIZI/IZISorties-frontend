@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: []
+  value: [],
 };
 
 export const eventSlice = createSlice({
@@ -20,5 +20,5 @@ export const eventSlice = createSlice({
 });
 
   
-  export const {displayEvent } = eventSlice.actions;
+  export const { displayEvent } = eventSlice.actions;
   export default eventSlice.reducer;

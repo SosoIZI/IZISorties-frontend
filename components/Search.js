@@ -7,7 +7,7 @@ import "boxicons/css/boxicons.min.css";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-
+import ResultView from "./ResultView"
 import Connexion from "./Connexion";
 
 const Search = () => {
@@ -33,6 +33,7 @@ return(
     </div>
 
 <div className={styles.netflixContainer}>
+<ResultView />
   {events}
  
    

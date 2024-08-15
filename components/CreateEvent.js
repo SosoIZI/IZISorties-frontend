@@ -640,7 +640,7 @@ function CreateEvent() {
                   onClick={() => addNewEvent()}
                   className={styles.submitButton}
                 >
-                  Soumettre
+                  Créer cet évènement
                 </button>
               </div>
             </div>
@@ -649,7 +649,7 @@ function CreateEvent() {
       </div>
       <div className={styles.previewContainer}>
         <div className={styles.cardPreviewContainer}>
-          <h3>Aperçu de votre evènement dans les résultats de recherche</h3>
+          <h3>Aperçu de votre évènement dans les résultats de recherche</h3>
           <EventCard
             pictures={[previewUrl]}
             eventName={eventName}

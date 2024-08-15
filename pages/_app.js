@@ -13,8 +13,11 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Script from 'next/script';
+import events from "../reducers/event";
+import { BrowserRouter } from "react-router-dom";
 
-const reducers = combineReducers({ user,event });
+const reducers = combineReducers({ user, event });
 const persistConfig = { key: "applicationName", storage };
 
 const store = configureStore({
@@ -29,6 +32,7 @@ function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <BrowserRouter>
       <GoogleOAuthProvider clientId="903216192231-20kptc7s73ds7qtdlvmt0qsg64hfnijv.apps.googleusercontent.com">
         <Head>
           <meta
@@ -45,6 +49,7 @@ function App({ Component, pageProps }) {
           </GoogleOAuthProvider>
 
         <Footer />
+        </BrowserRouter>
        
       </PersistGate>
     </Provider>

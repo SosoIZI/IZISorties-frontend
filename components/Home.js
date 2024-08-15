@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import SearchBar from "./SearchBar";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Connexion from "./Connexion";
@@ -41,7 +42,7 @@ function Home() {
 
     // CHARGEMENT DES EVENTS BOOKES
     if (token) {
-      fetch(`http://localhost:3000/events/bookinglist/user/${token}`)
+      fetch(`http://localhost:3000/events/bookinglist/booking/user/${token}`)
         .then((response) => response.json())
         .then((data) => {
           console.log("data.eventsBooked", data.eventsBooked);
@@ -54,6 +55,7 @@ function Home() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          // console.log(position)
           // 1- je récupère la géoloc de l'utilisateur
           const { latitude, longitude } = position.coords;
           //setCurrentPosition(position.coords);
@@ -177,19 +179,37 @@ function Home() {
   );
 
   return (
+<div>
+
+  < SearchBar />
     <div className={styles.netflixContainer}>
      
       <h2>Evènements les plus consultés en France:</h2>
       <div className={styles.mostConsultedContainer}>
         <Swiper
-          modules={[Navigation]}
+          style={{
+            paddingBottom: "30px",
+            "--swiper-pagination-color": "#2F4858",
+          }}
+          pagination={{ clickable: true }}
+          modules={[Navigation, Pagination]}
           spaceBetween={1}
           slidesPerView={5}
-          navigation
+          navigation={{
+            nextEl: ".customnext",
+            prevEl: ".customprev",
+          }}
         >
           {topEventCards}
         </Swiper>
-        {!token && ( //si pas connecté: affiche la modal de connexion/inscription)
+        
+        <div className={`${styles.customnext} customnext`}>
+          <i className="bx bx-right-arrow-alt"></i>
+        </div>
+        <div className={`${styles.customprev} customprev`}>
+          <i className="bx bx-left-arrow-alt"></i>
+        </div>
+        {!token && (
           <div>
             <button className={styles.roundButton} onClick={handleShow}>
               <i className="bx bx-right-arrow-alt"></i>
@@ -231,14 +251,27 @@ function Home() {
           {eventsBookedList.length > 5 ? (
             <div className={styles.eventsBookedContainer}>
               <Swiper
+                style={{
+                  paddingBottom: "10px",
+                  "--swiper-pagination-color": "#2F4858",
+                }}
                 spaceBetween={1}
                 slidesPerView={5}
-                navigation
+                navigation={{
+                  nextEl: ".customnextBooked",
+                  prevEl: ".customprevBooked",
+                }}
                 pagination={{ clickable: true }}
                 modules={[Navigation, Pagination]}
               >
                 {bookedEvents}
-              </Swiper>{" "}
+              </Swiper>
+              <div className={`${styles.customnext} customnextBooked`}>
+                <i className="bx bx-right-arrow-alt"></i>
+              </div>
+              <div className={`${styles.customprev} customprevBooked`}>
+                <i className="bx bx-left-arrow-alt"></i>
+              </div>
             </div>
           ) : (
             <div className={styles.eventsBookedContainer}>{bookedEvents}</div>
@@ -284,6 +317,7 @@ function Home() {
         </div>
       )}
     </div>
+  </div>
   );
 }
 
