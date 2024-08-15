@@ -1,152 +1,155 @@
-.texte{color:rgb(46,70,86)
+.texte {
+  color: rgb(46, 70, 86);
+}
 
+.mainContainer {
+  width: 100vw;
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalContainer {
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  padding: 30px;
 }
 
 .container {
-    margin-bottom: 50px;;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-   
-    width:100%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .top {
-    text-align: center;
+  text-align: center;
 }
 
-.formula, .connectionWay{
-    width: 100%;
-    padding: 10px;
-display: flex;
-box-sizing: border-box;
-border-radius: 15px;
-outline: none;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-	
+.formula,
+.connectionWay {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 15px;
+  border-color: #2F4858;
+  outline: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.connectionWay{
-    margin-top:-50px;
+.connectionWay {
+  margin-top: -50px;
 }
-
 
 .formula input {
-    width: 400px;
-    padding: 10px;
-    margin: 5px 0;
-    box-sizing: border-box;
-    border-radius: 15px;
-	cursor: pointer;
-    margin-left: 5px;
-outline: none;
+  width: 400px;
+  padding: 10px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-left: 5px;
+  outline: none;
 }
-
-
 
 .formula:hover {
-    color: rgb(242,175,119);
-font-weight: bold;
-cursor: pointer;
-        }
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+  cursor: pointer;
+}
 
 .button {
-font-size: 20px;
-	border: 1px solid grey;
-	border-radius: 15px;
-	width:400px;
-	height:40px;
-	cursor: pointer;
-	color:white;
-	background-color: rgb(242,175,119);
-    margin-top: 20px;
-   
-
-	
+  font-size: 20px;
+  border: 2px solid  #2F4858;
+  border-radius: 15px;
+  width: 400px;
+  height: 40px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(242, 175, 119);
+  margin-top: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .button:hover {
-	background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
 }
 
 .buttonter {
-    font-size: 20px;
-    border: 1px solid grey;
-    border-radius: 15px;
-    width: 400px;
-    height: 40px;
-    cursor: pointer;
-    color: white;
-    background-color: rgb(46, 70, 86);
-    margin-top: 10%;
-  }
-  
-.buttonbis {
-    display: flex;
-    align-items: center;
-
-font-size: 16px;
-	width:400px;
-	height:40px;
-	cursor: pointer;
-	color:black;
-    margin-top: 20px;
-    background-color:rgb(254,247,241);
+  font-size: 20px;
+  border: 1px solid grey;
+  border-radius: 15px;
+  width: 400px;
+  height: 40px;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(46, 70, 86);
+  margin-top: 10%;
 }
 
+.buttonbis {
+  display: flex;
+  align-items: center;
+
+  font-size: 16px;
+  width: 400px;
+  height: 40px;
+  cursor: pointer;
+  color: black;
+  margin-top: 20px;
+  background-color: rgb(254, 247, 241);
+}
 
 .buttonbis i {
-
-color:black;
-font-size: 32px;
-margin-right: 5%;
+  color: black;
+  font-size: 32px;
+  margin-right: 5%;
 }
-
 
 .buttonbis:hover {
-	background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
 }
 
-
-
-
-.stroke{
- 
-        width: 70%;  
-        height: 2px;  
-        background-color: black;  
-        margin: 20px auto;  /* Center the line horizontally */
-    
+.stroke {
+  width: 30%;
+  height: 2px;
+  background-color: black;
+  margin: 20px auto; /* Center the line horizontally */
 }
 
-.sentence{
-margin-top: 10px;
-
+.sentence {
+  margin-top: 10px;
 }
 
-.sentence:hover{
-    background-color: white;
-	color: rgb(242,175,119);
-	font-weight: bold;
-    cursor: pointer;
-    
-    }
+.sentence:hover {
+  background-color: white;
+  color: rgb(242, 175, 119);
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .passwordContainer {
-        display: flex;
-        align-items: center;
-      }
-      
-      .eyeIcon {
-        margin-left: -28px;
-        cursor: pointer;
-        font-size: 25px;
-      }
+.passwordContainer {
+  display: flex;
+  align-items: center;
+}
 
-
+.eyeIcon {
+  margin-left: -28px;
+  cursor: pointer;
+  font-size: 25px;
+}

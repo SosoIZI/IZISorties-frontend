@@ -157,7 +157,7 @@ function EventDetailsMaquette(props) {
             src={defaultMap}
             alt={props.eventName}
             width='500px'
-            height='530px'
+            height='500px'
           />)}
         </div>
 

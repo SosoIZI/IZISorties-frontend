@@ -4,11 +4,15 @@
 
 .mySoonEventsContainer {
   margin: 10px;
+  /* padding-left:30px; */
 }
 
 .eventsBookedContainer {
   display: flex;
   width: 75%;
+  position: relative;
+  /* padding-left:30px; */
+  margin-left: 60px;
 }
 
 /* hr c'est le trait */
@@ -22,32 +26,32 @@
 
 .calendarAndResultContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 10px;
-  width: 75%;
+  width: 85%;
 }
 
 .calendarContainer {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 40%;
+  width: 35%;
   height: 540px;
   background-color: #2e4656;
   border-radius: 8px;
   padding: 10px;
   color: #2e4656;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  margin-right: 20px;
 }
 
 .bookedEventsSpecificDate {
   position: relative;
-  width: 65%;
+  width: 54%;
   height: 300px;
   align-content: center;
+  margin-right:60px;
 }
 
 .buttonStyle {
@@ -75,4 +79,66 @@
   margin-top: 2px;
   margin-left: auto;
   margin-right: auto;
+}
+
+
+/* STYLE DES FLECHES DES SWIPERS */
+.customnext1,
+.customprev1 {
+  background-color: #f4a261; 
+  border-radius: 50%; 
+  width: 50px; 
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  position: absolute;
+  top: 80%; /* position verticale */
+  transform: translateY(-50%);
+}
+
+.customnext1 {
+  right: -60px; 
+}
+
+.customprev1 {
+  left: -60px;
+}
+
+.customnext1 i,
+.customprev1 i {
+  font-size: 24px; /* Taille de la flèche */
+  color: #fff;
+}
+
+.customnext2,
+.customprev2 {
+  background-color: #f4a261; 
+  border-radius: 50%; 
+  width: 50px; 
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  position: absolute;
+  top: 50%; /* Centré verticalement */
+  transform: translateY(-50%);
+}
+
+.customnext2 {
+  right: -60px; 
+}
+
+.customprev2 {
+  left: -60px;
+}
+
+.customnext2 i,
+.customprev2 i {
+  font-size: 24px; /* Taille de la flèche */
+  color: #fff;
 }

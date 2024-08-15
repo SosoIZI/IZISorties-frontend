@@ -41,12 +41,12 @@ function Google(props) {
   useEffect(() => {
     if (user) {
       user == [] ? console.log(user) : console.log("Empty user");
-      axios
+      axios  // = fetch    Axios will automatically transforms the server's response data, while with Fetch, you need to call the response. json method to parse the data into a JavaScript object.
         .get(
           `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
           {
             headers: {
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${user.access_token}`,// bearer authentification spécifique pour les token
               Accept: "application/json",
             },
           }
@@ -73,11 +73,11 @@ function Google(props) {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("dataaa googlllle : ", data);
+             // console.log("dataaa googlllle : ", data);
               if (data.result) {
-                console.log("Connexion réussie:", data);
+             //   console.log("Connexion réussie:", data);
                 dispatch(
-                  signIn({
+                  signIn({   // on rajoute l'utilisatur dans la base de données si pas déja existant 
                     username: res.data.name,
                     email: res.data.email,
                     token: data.token,
@@ -86,7 +86,7 @@ function Google(props) {
               props.handleClose() // on passe une props handleclose pour pouvoir l'intégrer au composant Google dans connexion
                 router.push("/Home");
                 
-                // Traiter la connexion réussie (par exemple, stocker le token, rediriger l'utilisateur, etc.)
+               
               } else {
                 console.log("Échec de la connexion:", data);
                 // Traiter l'échec de la connexion
