@@ -64,16 +64,20 @@
 }
 
 .iconItem {
+	display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
+	align-items: center;
+	gap: 10px;  /* Espace entre l'icône et le texte */
+  }
+  
+  
+	.icon{
+font-size: 35px;  /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */ 
   display: flex; /*pour placer l'icône et le texte sur la même ligne et centrer verticalement le texte par rapport à l'icône.  */
   align-items: center;
   gap: 10px; /* Espace entre l'icône et le texte */
-}
-
-.icon {
-  font-size: 35px; /* on utilise font-size pour régler la taille des icones ( comme si c'etait du texte  */
-
   cursor: pointer;
 }
+
 
 .nameicon {
   color: white;

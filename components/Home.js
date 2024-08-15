@@ -6,6 +6,7 @@ import styles from "../styles/Home.module.css";
 import "boxicons/css/boxicons.min.css";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import SearchBar from "./SearchBar";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Connexion from "./Connexion";
@@ -54,6 +55,7 @@ function Home() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          // console.log(position)
           // 1- je récupère la géoloc de l'utilisateur
           const { latitude, longitude } = position.coords;
           //setCurrentPosition(position.coords);
@@ -177,6 +179,9 @@ function Home() {
   );
 
   return (
+<div>
+
+  < SearchBar />
     <div className={styles.netflixContainer}>
      
       <h2>Evènements les plus consultés en France:</h2>
@@ -312,6 +317,7 @@ function Home() {
         </div>
       )}
     </div>
+  </div>
   );
 }
 

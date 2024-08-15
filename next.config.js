@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ['cibul.s3.amazonaws.com', 'localhost:3001', 'res.cloudinary.com'],
   },
+
+
 };
+
 
 module.exports = nextConfig;
