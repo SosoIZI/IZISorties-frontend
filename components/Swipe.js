@@ -15,7 +15,6 @@ function Swipe() {
     const results = useSelector((state) => state.event.value);
     const router = useRouter()
 
- 
 
 useEffect(() => {
 

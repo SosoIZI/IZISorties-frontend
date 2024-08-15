@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import styles from '../styles/Results.module.css';
 import 'leaflet/dist/leaflet.css';
 import "boxicons/css/boxicons.min.css";
-import { RotatingLines } from "react-loader-spinner";
 
   // Importation des composants Leaflet
   const MapContainer = dynamic(
