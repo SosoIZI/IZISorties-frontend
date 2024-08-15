@@ -3,14 +3,6 @@
   padding-top: 30px;
 }
 
-.mostConsultedContainer {
-  margin-left: 30px;
-  margin-bottom: 60px;
-  display: flex;
-  align-items: center;
-  width: 75%;
-}
-
 .roundButton {
   margin-left: 30px;
   font-size: 35px; /* taille de la flèche */
@@ -114,4 +106,47 @@
   display: flex;
   width: 75%;
   margin-left: 30px;
+  position: relative;
+}
+
+.mostConsultedContainer {
+  margin-left: 40px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  width: 77%;
+  position: relative;
+  overflow: visible;
+}
+
+/* STYLE DES FLECHES DES SWIPERS */
+.customnext,
+.customprev {
+  background-color: #f4a261; /* Couleur de fond de la flèche */
+  border-radius: 50%; /* Pour rendre le bouton rond */
+  width: 50px; /* Ajustez la taille selon votre besoin */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre pour l'effet d'élévation */
+  position: absolute;
+  top: 50%; /* Centré verticalement */
+  transform: translateY(-50%);
+  z-index: 1000; /* Augmentez le z-index pour vous assurer qu'elles sont visibles */
+}
+
+.customnext {
+  right: -60px; /* Ajustez la position pour qu'elle soit en dehors du conteneur */
+}
+
+.customprev {
+  left: -60px; /* Ajustez la position pour qu'elle soit en dehors du conteneur */
+}
+
+.customnext i,
+.customprev i {
+  font-size: 24px; /* Taille de l'icône */
+  color: #fff; /* Couleur de l'icône */
 }

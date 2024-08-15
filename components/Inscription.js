@@ -215,7 +215,7 @@ function Inscription() {
           </button>
         </span> */}
           <span className={styles.sentence} onClick={handleShow}>
-            J’ai déja un compte. Se connecter.
+            J’ai déjà un compte. Me connecter izi.
           </span>
           <Connexion showModal={modalVisible} handleClose={handleClose} />{" "}
           {/* utilisation de la modal pourpouvoir accèder à,la page de connexion directement sur le lien     */}
