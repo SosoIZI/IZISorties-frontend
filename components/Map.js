@@ -33,7 +33,12 @@ function MapView() {
 
   const [isClient, setIsClient] = useState(false);
   const [positions, setPositions] = useState([]);
-  const [bounds, setBounds] = useState(null); // met à jour la délimitation de la vue de la map (zoom et coordonnées) en fonction de la position des markeurs
+  // met à jour la délimitation de la vue de la map (zoom et coordonnées) en fonction de la position des markeurs
+  const [bounds, setBounds] = useState([ // initialisation de la vue à la france
+        [51.1241999, -5.3453745],  // Coin supérieur gauche (nord-ouest)
+        [41.333739, 9.559321],     // Coin inférieur droit (sud-est)
+      ]);
+
 
   useEffect(() => {
     setIsClient(true);
@@ -103,19 +108,21 @@ function MapView() {
         click: () => handleMarkerClick(marker.latitude, marker.longitude),
       }}
     >
-      <Popup>
-        {marker.eventName}<br />
-        {marker.description}
-        <img 
+      <Popup className={styles.popUp}>
+        <div className={styles.info}>
+          <img 
           src={marker.picture} 
           alt={marker.eventName}
           width={100}
           height={150}
+          className={styles.img}
         />
-        <i 
-          onClick={() => router.push(`/event?hash=${marker.id}`)} 
-          className={`${styles.link} bx bx-plus bx_xs`} 
-        />
+        <br />
+        {marker.eventName}<br /><br />
+        <div className={styles.description}>
+          {marker.description.slice(0, 250)} </div>
+        </div> <br />
+        <i onClick={() => router.push(`/event?hash=${marker.id}`)} class='bx bxs-plus-circle bx-sm style=color:#00ff26' />
       </Popup>
     </Marker>
   ));

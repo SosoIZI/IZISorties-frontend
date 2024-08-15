@@ -1,5 +1,4 @@
 import styles from '../styles/Results.module.css';
-import "boxicons/css/boxicons.min.css"; 
 import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import EventCard from "./EventCard";
@@ -24,41 +23,48 @@ function Results() {
         setNumberToShow(prev => prev + 15);
     };
 
+
     return (
         <div>
             <SearchBar />
 
-            {results.length === 0 ? 
+                {results.length === 0 ? 
 
-            <div>
-            <h1>Aucun évènement ne correspond à votre recherche</h1>
-            </div>   :
-            
-            <div>
-            <ResultView />
+                    <div>
+                    <h1>Aucun évènement ne correspond à votre recherche</h1>
+                    </div>   :
+                
+                        <div>
+                        <ResultView />
 
-            <div className={styles.displayContainer}>
+                        <div className={styles.displayContainer}>
 
-            {/* Afficher les résultats */}
-            {visibleResults.map((data, i) => (
-                <EventCard key={i} {...data} />
-            ))}
+                        {/* Afficher les résultats */}
+                        {visibleResults.map((data, i) => (
+                            <EventCard key={i} {...data} />
+                        ))} 
+                        
+                        </div>
 
-            <div>
+                        <div>
 
-            {/* Afficher le bouton 'Voir plus'*/}
-            {numberToShow < sortedResults.length && (
-                <i onClick={handleShowMore} 
-                className={styles.link}
-                class='bx bx-chevron-down bx-md' 
-                >Voir plus de Résultats 
-                </i>
-            )}
-            
+                        {/* Afficher le bouton 'Voir plus'*/}
+                        {numberToShow < sortedResults.length && (
+
+                            <div className={styles.btnContainer}>
+                                <button  className={styles.button}>
+                                    <i 
+                                        onClick={handleShowMore} 
+                                        class='bx bx-chevron-down bx-xs' 
+                                        className={styles.icon}>
+                                    </i>
+                                        Afficher plus de résultats
+                                </button>
+                           </div>
+                    )}
+                </div>
             </div>
-        </div>
-    </div>
-            }
+        }
     </div>
   );
 }

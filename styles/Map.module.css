@@ -1,0 +1,51 @@
+
+
+.mapContainer {
+    display: flex;
+    align-items: center;  
+    justify-content: center;  
+    width: 100vw;
+    height: 100vh;  
+    margin: 50px;
+  
+}
+
+.map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.popUp {
+    display: flex;
+    width: 20px;
+    height: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+   } 
+
+   .description {
+    max-height: 300px;
+    overflow-y: auto; /* permet de scroller si la description dépasse la div */
+    padding: 10px;
+  }
+
+  .img {
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    justify-content: space-evenly;
+    object-fit: cover;
+    height: 30px;
+    width: 15px;
+  }
+
+  /* .info {
+    justify-content: space-evenly;
+    align-items: center;
+  } */
+
+ 
+
+

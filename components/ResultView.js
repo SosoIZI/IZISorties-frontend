@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from '../styles/Results.module.css';
 import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function View() {
     const router = useRouter();
@@ -32,8 +33,12 @@ function View() {
                 <button
                     className={`${styles.button} ${activeButton === 'results' ? styles.active : styles.inactive}`}
                     onClick={() => handleButtonClick('Results')}
+            
                 >
                     Vue Liste
+
+                    {/* <i class='bx bx-list-ul bx-xs'></i> */}
+
                 </button>
 
                 <button
@@ -41,6 +46,8 @@ function View() {
                     onClick={() => handleButtonClick('Map')}
                 >
                     Vue Carte
+
+                    {/* <i class='bx bx-map-alt bx-xs'></i> */}
                 </button>
 
                 <button
@@ -48,6 +55,7 @@ function View() {
                     onClick={() => handleButtonClick('Swipe')}
                 >
                     Vue Swipe
+
                 </button>
             </div>
         </div>
