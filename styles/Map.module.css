@@ -1,51 +1,40 @@
-
-
 .mapContainer {
-    display: flex;
-    align-items: center;  
-    justify-content: center;  
-    width: 100vw;
-    height: 100vh;  
-    margin: 50px;
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .map {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+ 
+  margin-left: 50px;
 }
 
-
 .popUp {
-    display: flex;
-    width: 20px;
-    height: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
-   } 
+  display: flex;
+  width: 20px;
+  height: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
 
-   .description {
-    max-height: 300px;
-    overflow-y: auto; /* permet de scroller si la description dépasse la div */
-    padding: 10px;
-  }
+.description {
+  max-height: 300px;
+  overflow-y: auto; /* permet de scroller si la description dépasse la div */
+  padding: 10px;
+}
 
-  .img {
-    display: flex;
-    align-items: center;
-    border-radius: 15px;
-    justify-content: space-evenly;
-    object-fit: cover;
-    height: 30px;
-    width: 15px;
-  }
+.img {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  justify-content: space-evenly;
+  object-fit: cover;
+  height: 30px;
+  width: 15px;
+}
 
-  /* .info {
+/* .info {
     justify-content: space-evenly;
     align-items: center;
   } */
-
- 
-
-
