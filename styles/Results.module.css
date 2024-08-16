@@ -10,7 +10,10 @@
 }
 
 .displayContainer {
-  margin: 30px;
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -68,6 +71,11 @@
   
 }
 
+.inactive {
+  color: gray;
+  background-color: lightgray;
+  border-color: lightgray;
+}
 
 .icon {
   color: "white";

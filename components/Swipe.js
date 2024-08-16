@@ -80,13 +80,7 @@ function Swipe() {
   const handleSayNo = (idEvent) => {
     setNumberToShow((prev) => prev + 1);
     swipeLeft(idEvent);
-    console.log("no !");
   };
-
-//   let dateDebut = new Date(eventData.startDate);
-//   let dateDebutGoodFormat = dateDebut.toLocaleString().split(" ")[0];
-//   let dateFin = new Date(eventData.endDate);
-//   let dateFinGoodFormat = dateFin.toLocaleString().split(" ")[0];
 
   // Affichage des résultats avec la possibilité de cliquer sur l'image pour voir la page de l'évènement
   // ainsi que navigation sur les différentes views
@@ -140,13 +134,15 @@ function Swipe() {
       <SearchBar />
       <ResultView />
       {visibleResults}
-      {numberToShow > sortedResults.length && (
-        <h1>
+      {numberToShow > sortedResults.length-1 && (
+        <div className={styles.endMessage}>
+        <h3>
           {" "}
-          Vous avez consultés tous les évènements correspondant à votre
-          recherche. Vous pouvez retrouver vos évènement likés dans votre liste
-          de favoris{" "}
-        </h1>
+          Vous avez consulté tous les évènements correspondant à votre
+          recherche. <br></br> Vous pouvez retrouver les évènements likés dans votre liste
+          de favoris.
+        </h3>
+        </div>
       )}
     </div>
   );

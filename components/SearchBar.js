@@ -183,7 +183,7 @@ function searchBar() {
             onSelect={selectCity}
             style={{ width: 200 }}
             suffixIcon={<i class="bx bxs-map bx-sm style=color:#00ff26"></i>}
-            placeholder={locationPlaceholder}
+            placeholder={<span style={{ color: city ? "#2E4656" : "#aaa" }}>{locationPlaceholder}</span>}
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option?.label ?? "").includes(input)
@@ -205,11 +205,11 @@ function searchBar() {
                 >
                   <Button
                     type="primary"
-                    style={{ flex: "none", padding: "12", width: "100%" }}
+                    style={{ flex: "none", padding: "12", width: "100%", backgroundColor: "#2E4656" }}
                     onClick={selectGeoloc}
                   >
                     Autour de moi
-                    <i class="bx bx-target-lock bx-sm bx-sm style=color:#00ff26"></i>
+                    <i class="bx bx-target-lock bx-sm bx-sm" style={{color:"#fffff", backgroundColor: "#2E4656"}}></i>
                   </Button>
                 </div>
               </div>
