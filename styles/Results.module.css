@@ -10,10 +10,7 @@
 }
 
 .displayContainer {
-  margin-left: 100px;
-  margin-top: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin: 30px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -35,9 +32,10 @@
         align-items: center;
         justify-content: space-between; /* Ajoute de l'espace entre le texte et l'icône */
         padding: 8px 16px;
+
         background-color: #f0f0f0;
         cursor: pointer;
-       
+        border-radius: 4px;
 
 
 
@@ -81,21 +79,14 @@
   
 }
 
-.inactive {
-  color: gray;
-  background-color: lightgray;
-  border-color: lightgray;
-}
 
 .icon {
     margin-left: 8px; /* Ajoute un petit espace entre le texte et l'icône */
     display: flex; /* Assure que l'icône est bien alignée */
     align-items: center;
-    
 }
-.icon i {
-    font-size: 25px;
-}
+
+
 .navigation-buttons button {
   background-color: white;
   color: #e38d83;
