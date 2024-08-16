@@ -28,6 +28,16 @@
         color: white;
         background-color: #e38d83;
         margin: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Ajoute de l'espace entre le texte et l'icône */
+        padding: 8px 16px;
+        background-color: #f0f0f0;
+        cursor: pointer;
+       
+
+
+
       }
       
       .button:hover {
@@ -70,15 +80,14 @@
 
 
 .icon {
-  color: "white";
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  font-size: 35px;
-  cursor: pointer;
+    margin-left: 8px; /* Ajoute un petit espace entre le texte et l'icône */
+    display: flex; /* Assure que l'icône est bien alignée */
+    align-items: center;
+    
 }
-
+.icon i {
+    font-size: 25px;
+}
 .navigation-buttons button {
   background-color: white;
   color: #e38d83;

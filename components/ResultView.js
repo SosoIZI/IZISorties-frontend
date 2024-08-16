@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Results.module.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import "boxicons/css/boxicons.min.css"
 
 function View() {
     const router = useRouter();
@@ -36,9 +37,8 @@ function View() {
             
                 >
                     Vue Liste
-
-                    {/* <i class='bx bx-list-ul bx-xs'></i> */}
-
+                    <span className={styles.icon}>
+                    <i class='bx bx-list-ul '></i> </span>
                 </button>
 
                 <button
@@ -46,17 +46,22 @@ function View() {
                     onClick={() => handleButtonClick('Map')}
                 >
                     Vue Carte
-
-                    {/* <i class='bx bx-map-alt bx-xs'></i> */}
+                    <span className={styles.icon}>
+                     <i class='bx bx-map-alt '></i>
+                     </span>
                 </button>
 
                 <button
                     className={`${styles.button} ${activeButton === 'swipe' ? styles.active : styles.inactive}`}
                     onClick={() => handleButtonClick('Swipe')}
                 >
+                    
                     Vue Swipe
-
+                    <span className={styles.icon}>
+                    <i class='bx bxs-hand-right'></i>
+                 </span>
                 </button>
+            
             </div>
         </div>
     );
