@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import styles from '../styles/Results.module.css';
+import styles from '../styles/ResultsView.module.css';
 import { useState, useEffect } from 'react';
 
 function View() {
@@ -22,7 +22,6 @@ function View() {
         setActiveButton(view.toLowerCase());//toLowerCase() assure que toutes les comparaisons et les mises à jour d'état sont cohérentes, indépendamment des variations de casse dans les URL.
         router.push(`/${view}`, undefined, { shallow: true });//au clic, enclenche le button et déclenche la route associée
         //Le paramètre { shallow: true } permet de changer l'URL sans ajouter une nouvelle entrée dans l'historique du navigateur, ce qui est plus fluide pour les mises à jour d'état en réponse aux changements de chemin.
-
     };
 
     return (
