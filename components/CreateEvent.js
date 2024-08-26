@@ -72,7 +72,7 @@ function CreateEvent() {
 
   useEffect(() => {
     // 1- je fetch pour récupérer les données de la BDD places
-    fetch(`http://localhost:3000/places/`)
+    fetch(`https://izi-sorties-backend.vercel.app/places/`)
       .then((response) => response.json())
       .then((data) => {
         //console.log('data' ,data)
@@ -80,7 +80,7 @@ function CreateEvent() {
       });
 
       // 2- je fetch pour récupérer la liste des categories
-      fetch(`http://localhost:3000/categories/`)
+      fetch(`https://izi-sorties-backend.vercel.app/categories/`)
       .then((response) => response.json())
       .then((datacateg) => {
         //console.log('data' ,data)
@@ -149,7 +149,7 @@ function CreateEvent() {
     }
 
     // Envoie les fichiers au backend
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch("https://izi-sorties-backend.vercel.app/upload", {
       method: "POST",
       body: formData,
     });
@@ -274,7 +274,7 @@ function CreateEvent() {
         setLongitude(dataAPI.features[0].geometry.coordinates[0]);
 
         // une fois que j'ai récupéré longitude et latitude, je rentre la place dans ma BDD
-        const responseAddPlace = await fetch(`http://localhost:3000/places`, {
+        const responseAddPlace = await fetch(`https://izi-sorties-backend.vercel.app/places`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -313,7 +313,7 @@ function CreateEvent() {
       token &&
       placeId
     ) {
-      fetch(`http://localhost:3000/events/${token}`, {
+      fetch(`https://izi-sorties-backend.vercel.app/events/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -335,7 +335,7 @@ function CreateEvent() {
         .then((data) => {
           console.log("data", data);
           // lancer la route pu de places pour MAJ le tableau "event" dans la coll "places"
-          fetch(`http://localhost:3000/places/newevent`, {
+          fetch(`https://izi-sorties-backend.vercel.app/places/newevent`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

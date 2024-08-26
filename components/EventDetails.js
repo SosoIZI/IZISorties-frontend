@@ -46,14 +46,14 @@ function EventDetails() {
     const url = new URL(window.location.href);
     const eventId = url.searchParams.get("hash");
 
-    fetch(`http://localhost:3000/events/${eventId}`)
+    fetch(`https://izi-sorties-backend.vercel.app/events/${eventId}`)
       .then((response) => response.json())
       .then((data) => {
         setEventData(data.events);
         console.log("data.events :  ", data.events);
 
         // Je récupère aussi les infos du lieu de l'event
-        fetch(`http://localhost:3000/places/${data.events.place}`)
+        fetch(`https://izi-sorties-backend.vercel.app/places/${data.events.place}`)
           .then((response) => response.json())
           .then((place) => {
             console.log("place.place", place.place[0].address);
@@ -68,7 +68,7 @@ function EventDetails() {
             setPlaceLongitude(place.place[0].longitude);
             // je vais récupérer l'id du user, si cet id est compris dans le NbLike de cet event
             // alors isLiked est true
-            fetch(`http://localhost:3000/users/infos/${token}`)
+            fetch(`https://izi-sorties-backend.vercel.app/users/infos/${token}`)
               .then((response) => response.json())
               .then((dataUser) => {
                 console.log("data info : ", dataUser.user[0]._id);
@@ -158,7 +158,7 @@ function EventDetails() {
   // Ajoute un like si l'utilisateur clique sur le coeur, le retire si l'user avait déjà liké
   const addNewLike = () => {
     setIsLiked(!isliked);
-    fetch(`http://localhost:3000/events/like/${token}/${hash}`, {
+    fetch(`https://izi-sorties-backend.vercel.app/events/like/${token}/${hash}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     })
@@ -173,7 +173,7 @@ function EventDetails() {
   // alors isLiked est true
   const addAgenda = () => {
     setIsBooked(!isBooked);
-    fetch(`http://localhost:3000/events/booking/${token}/${hash}`, {
+    fetch(`https://izi-sorties-backend.vercel.app/events/booking/${token}/${hash}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     })

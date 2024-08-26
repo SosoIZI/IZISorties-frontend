@@ -60,7 +60,7 @@ function Google(props) {
             return;
           }
 
-          fetch("http://localhost:3000/users/google-auth", {
+          fetch("https://izi-sorties-backend.vercel.app/users/google-auth", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

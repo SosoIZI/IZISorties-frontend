@@ -46,7 +46,7 @@ function Header() {
 
   const handleKeyDown = (e) => {
     if(e.key === "Enter"){// le fetch se déclenche lorsqu'on appuye sur la touche enter 
-      fetch(`http://localhost:3000/events/search/${searchInput}`)
+      fetch(`https://izi-sorties-backend.vercel.app/events/search/${searchInput}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.events && data.events.length > 0) {
@@ -99,7 +99,7 @@ function Header() {
     if (proceed.isConfirmed) {
       // proceed.isConfirmed car lié à swal.)
       //  on appelle la route delete avec le param token ( pas besoin de req.body on veut tt supprimer)
-      fetch(`http://localhost:3000/users/delete/${token}`, {
+      fetch(`https://izi-sorties-backend.vercel.app/users/delete/${token}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       })

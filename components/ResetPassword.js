@@ -30,7 +30,7 @@ function ResetPassword() {
 // Si signInPassword=confirmPassword alors fetch la route resetPassword
 
 
-    fetch(`http://localhost:3000/users/reset-password/${token}`, {
+    fetch(`https://izi-sorties-backend.vercel.app/users/reset-password/${token}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: signInPassword }),

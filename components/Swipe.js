@@ -18,7 +18,7 @@ function Swipe() {
     if (token) {
       // je vais récupérer l'id du user, si cet id est compris dans le NbLike de cet event
       // alors isLiked est true
-      fetch(`http://localhost:3000/users/infos/${token}`)
+      fetch(`https://izi-sorties-backend.vercel.app/users/infos/${token}`)
         .then((response) => response.json())
         .then((data) => {
           setIdUser(data.user[0]._id);
@@ -40,7 +40,7 @@ function Swipe() {
       // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
       // s'il est présent dans le tableau nbLike dans la BDD cette route ne fait rien
       fetch(
-        `http://localhost:3000/events/swipe/droite/droite/${token}/${idevent}`,
+        `https://izi-sorties-backend.vercel.app/events/swipe/droite/droite/${token}/${idevent}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ function Swipe() {
     if (token) {
       // Cette route ajoute un like si le token de l'user n'est pas présent dans le tableau nbLike dans la BDD
       // s'il est présent dans le tableau nbLike dans la BDD cette route ne fait rien
-      fetch(`http://localhost:3000/events/swipe/gauche/gauche/${token}/${idevent}`,
+      fetch(`https://izi-sorties-backend.vercel.app/events/swipe/gauche/gauche/${token}/${idevent}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

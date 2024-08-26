@@ -10,7 +10,7 @@ function ForgotPassword({ showModal, handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault(); // Éviter le comportement par défaut du formulaire.
 
-    fetch('http://localhost:3000/users/forgot-password', {
+    fetch('https://izi-sorties-backend.vercel.app/users/forgot-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: signInMail }), // Envoyer l'email pour réinitialiser le mot de passe.

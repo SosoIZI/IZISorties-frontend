@@ -43,7 +43,7 @@ function MapView() {
     const fetchPlaces = async () => {
       try {
         const promises = results.map(async (data) => {
-          const response = await fetch(`http://localhost:3000/places/${data.place}`);
+          const response = await fetch(`https://izi-sorties-backend.vercel.app/places/${data.place}`);
           const info = await response.json();
           return {
             latitude: info.place[0].latitude,

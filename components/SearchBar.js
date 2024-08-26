@@ -31,7 +31,7 @@ function searchBar() {
 
   useEffect(() => {
 
-    fetch('http://localhost:3000/places')
+    fetch('https://izi-sorties-backend.vercel.app/places')
     .then(response => response.json())
     .then(data => {
       const array = []
@@ -46,7 +46,7 @@ function searchBar() {
         setEventCity(array)
      });
 
-     fetch("http://localhost:3000/categories")
+     fetch("https://izi-sorties-backend.vercel.app/categories")
      .then((response) => response.json())
      .then((data) => {
        const array = [];
@@ -142,7 +142,7 @@ function searchBar() {
   // fonction pour chercher les évènements correspondant aux filtres sélectionnés par le user
   // le résultat est envoyé dans le reducer events pour les récupérer sur les pages de résultats
   const findResults = (query) => {
-    const url = `http://localhost:3000/events/${startDate}/${endDate}/${city}${
+    const url = `https://izi-sorties-backend.vercel.app/events/${startDate}/${endDate}/${city}${
       query ? query : ""
     }`;
     fetch(url)

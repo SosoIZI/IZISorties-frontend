@@ -58,7 +58,7 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
       return;
     }
 
-    fetch("http://localhost:3000/users/signin", {
+    fetch("https://izi-sorties-backend.vercel.app/users/signin", {
       //Fait une requête POST au backend pour vérifier les informations de connexion.
 
       method: "POST",
