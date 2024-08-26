@@ -97,7 +97,7 @@ function Swipe() {
               width={300}
               height={350}
               className={styles.img}
-              onClick={() => router.push(`/event/${data._id}`)}
+              onClick={() => router.push(`/event/?hash=${data._id}`)}
             />
           </Link>
         </div>

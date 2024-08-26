@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Router, useRouter } from "next/router";
 
-
 function EventCard(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.value.token);

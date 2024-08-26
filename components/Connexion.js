@@ -15,12 +15,10 @@ function Connexion({ isConnected = true, showModal, handleClose }) {
   const [SignInEmail, setSignInEmail] = useState("");
   const [SignInPassword, setSignInPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [forgotPasswordModalVisible, setForgotPasswordModalVisible] =
-    useState(false);
+  const [forgotPasswordModalVisible, setForgotPasswordModalVisible] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
-
 
   const toggleShowPassword = () => {
     // montre ou cache le mot de passe lors de la saisie.
