@@ -21,7 +21,7 @@ function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [eventsBookedList, setEventsBookedList] = useState([]);
   const router = useRouter();
-  const token = useSelector((state) => state.user.value.token); // pour utiliser la modal dans event
+  const token = useSelector((state) => state.user.value.token); // pour utiliser la modal dans event //
 
   const event = useSelector((state) => state.event.value);
   let events = [];
